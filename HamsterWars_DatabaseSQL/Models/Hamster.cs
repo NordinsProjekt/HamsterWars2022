@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,5 +18,6 @@ namespace HamsterWars_DatabaseSQL.Models
         public int Wins { get; set; }
         public int Losses { get; set; }
         public int Games { get; set; }
+        public List<Match> Matches { get; set; }
    }
 }
