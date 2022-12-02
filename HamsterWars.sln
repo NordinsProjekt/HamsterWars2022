@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HamsterAPI", "HamsterAPI\HamsterAPI.csproj", "{C90F8E94-A3FC-4D0E-A74E-0852E9E92741}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Infrastructure", "1. Infrastructure", "{C40DE091-BADD-47A6-905C-B000D18DBBE6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Application", "2. Application", "{82ECDD71-52C2-408A-9371-57A740CAA54E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HamsterWars_Core", "HamsterWars_Core\HamsterWars_Core.csproj", "{A9F449F5-FDC4-49E5-8EA8-C0469840EA73}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "9. Unittest", "9. Unittest", "{57FD9E85-572E-434D-9FAC-2A8B4645C3BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HamsterWars_Test", "HamsterWars_Test\HamsterWars_Test.csproj", "{61E5152B-D17B-4FBF-ACA3-070093AFF0D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HamsterWars_DatabaseSQL", "HamsterWars_DatabaseSQL\HamsterWars_DatabaseSQL.csproj", "{7F7AC951-BA4E-4FAD-A9A6-AE6B9576B4EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0. Presentation", "0. Presentation", "{92F81140-E64D-4743-81DF-17F89D79729F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C90F8E94-A3FC-4D0E-A74E-0852E9E92741}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C90F8E94-A3FC-4D0E-A74E-0852E9E92741}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C90F8E94-A3FC-4D0E-A74E-0852E9E92741}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C90F8E94-A3FC-4D0E-A74E-0852E9E92741}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9F449F5-FDC4-49E5-8EA8-C0469840EA73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9F449F5-FDC4-49E5-8EA8-C0469840EA73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9F449F5-FDC4-49E5-8EA8-C0469840EA73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9F449F5-FDC4-49E5-8EA8-C0469840EA73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61E5152B-D17B-4FBF-ACA3-070093AFF0D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61E5152B-D17B-4FBF-ACA3-070093AFF0D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61E5152B-D17B-4FBF-ACA3-070093AFF0D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61E5152B-D17B-4FBF-ACA3-070093AFF0D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F7AC951-BA4E-4FAD-A9A6-AE6B9576B4EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F7AC951-BA4E-4FAD-A9A6-AE6B9576B4EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F7AC951-BA4E-4FAD-A9A6-AE6B9576B4EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F7AC951-BA4E-4FAD-A9A6-AE6B9576B4EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C90F8E94-A3FC-4D0E-A74E-0852E9E92741} = {C40DE091-BADD-47A6-905C-B000D18DBBE6}
+		{A9F449F5-FDC4-49E5-8EA8-C0469840EA73} = {82ECDD71-52C2-408A-9371-57A740CAA54E}
+		{61E5152B-D17B-4FBF-ACA3-070093AFF0D2} = {57FD9E85-572E-434D-9FAC-2A8B4645C3BD}
+		{7F7AC951-BA4E-4FAD-A9A6-AE6B9576B4EB} = {C40DE091-BADD-47A6-905C-B000D18DBBE6}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {00105C6D-D752-4FD1-8648-04B9E1DB0B60}
+	EndGlobalSection
+EndGlobal
