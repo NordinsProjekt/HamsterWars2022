@@ -18,7 +18,7 @@ namespace HamsterWars_DatabaseSQL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
-        .UseSqlServer(@"Server=DESKTOP-MBPUR5V\SQLEXPRESS;Database=HamsterWars_MN_2022;Trusted_Connection=True");
+        .UseSqlServer(@"Server=DESKTOP-MBPUR5V\SQLEXPRESS;Database=HamsterWars_MN_2022;Trusted_Connection=True;Encrypt=False");
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Hamster>()
@@ -40,6 +40,7 @@ namespace HamsterWars_DatabaseSQL
             modelBuilder.Entity<HamsterMatches>().HasData(
                 new HamsterMatches { HamsterId= 1, MatchId= 1,},
                 new HamsterMatches { HamsterId = 2, MatchId = 1 });
+            modelBuilder.Entity<Vote>().HasData(new Vote { Id = 1, MatchId = 1, HamsterId = 2 });
         }
     }
 }
