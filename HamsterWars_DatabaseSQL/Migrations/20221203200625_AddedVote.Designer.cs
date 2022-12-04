@@ -4,6 +4,7 @@ using HamsterWars_DatabaseSQL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HamsterWarsDatabaseSQL.Migrations
 {
     [DbContext(typeof(HamsterContext))]
-    partial class HamsterContextModelSnapshot : ModelSnapshot
+    [Migration("20221203200625_AddedVote")]
+    partial class AddedVote
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,7 +157,7 @@ namespace HamsterWarsDatabaseSQL.Migrations
                         {
                             Id = 1,
                             IsCompleted = false,
-                            StartDate = new DateTime(2022, 12, 4, 0, 1, 56, 75, DateTimeKind.Local).AddTicks(9270)
+                            StartDate = new DateTime(2022, 12, 3, 21, 6, 25, 194, DateTimeKind.Local).AddTicks(5126)
                         });
                 });
 
