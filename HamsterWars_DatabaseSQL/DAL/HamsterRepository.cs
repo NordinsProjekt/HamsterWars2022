@@ -7,6 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Mapster;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
+using System.Numerics;
 
 namespace HamsterWars_DatabaseSQL.DAL
 {
@@ -34,11 +39,6 @@ namespace HamsterWars_DatabaseSQL.DAL
 
         public async Task Save() => await _context.SaveChangesAsync();
 
-        public bool UpdateHamster(object changes)
-        {
-            throw new NotImplementedException();
-        }
-
         IEnumerable<HamsterFullDTO> IHamsterRepository.GetHamsters()
             => MappingFunctions.MapHamsterToHamsterFullDTOList(_context.Hamsters.Include(match => match.Matches).ToList());
 
@@ -56,12 +56,6 @@ namespace HamsterWars_DatabaseSQL.DAL
             return MappingFunctions.MapHamsterToHamsterFullDTO(hamsterEntity);
         }
 
-        public bool UpdateHamster(HamsterDTO changes)
-        {
-            _context.Entry(changes).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            return true;
-        }
-
         async Task<bool> IHamsterRepository.DeleteHamster(int hamsterId)
         {
             Hamster hamster = _context.Hamsters.Where(x=>x.Id == hamsterId).FirstOrDefault();
@@ -73,10 +67,25 @@ namespace HamsterWars_DatabaseSQL.DAL
             }
             return false;
         }
-
-        Task<bool> IHamsterRepository.UpdateHamster(HamsterDTO changes)
+        async Task<bool> IHamsterRepository.UpdateHamster(HamsterPatchDTO changes,int hamsterId)
         {
-            throw new NotImplementedException();
+            Hamster org = _context.Hamsters.Where(x=>x.Id==hamsterId).FirstOrDefault();
+            if (org != null)
+            {
+                foreach (var item in changes.GetType().GetProperties())
+                {
+                    var value = item.GetValue(changes, null);
+                    if (value != null)
+                    {
+                        org.GetType().GetProperty(item.Name).SetValue(org, value, null);
+                    }
+                }
+                _context.Update(org);
+                await Save();
+                return true;
+            }
+            else
+                return false;
         }
     }
 }

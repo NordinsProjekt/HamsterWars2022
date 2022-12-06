@@ -13,7 +13,7 @@ namespace HamsterWars_Core.Interfaces
         HamsterFullDTO RandomHamster();
         HamsterFullDTO GetHamsterByID(int hamsterId);
         Task<HamsterFullDTO> InsertHamsterAsync(HamsterCreateDTO hamster);
-        Task<bool> UpdateHamster(HamsterDTO changes);
+        Task<bool> UpdateHamster(HamsterPatchDTO changes,int hamsterId);
         public Task<bool> DeleteHamster(int hamsterId);
         public Task Save();
     }

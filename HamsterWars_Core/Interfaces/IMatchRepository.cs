@@ -14,8 +14,8 @@ namespace HamsterWars_HamsterWars_Core.Interfaces
         object InsertMatch(MatchDTO match);
         bool DeleteMatch(int matchId);
         MatchDTO[] GetAllWonMatches(int hamsterId);
-        HamsterDTO[] GetTop5WinnerHamsters();
-        HamsterDTO[] GetTop5LoserHamsters();
+        HamsterFullDTO[] GetTop5WinnerHamsters();
+        HamsterFullDTO[] GetTop5LoserHamsters();
         public void Save();
     }
 }

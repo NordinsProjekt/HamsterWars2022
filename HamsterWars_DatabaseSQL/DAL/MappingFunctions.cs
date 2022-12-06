@@ -28,5 +28,8 @@ namespace HamsterWars_DatabaseSQL.DAL
 
         public static Hamster MapHamsterCreateDTOToHamsterEntity(HamsterCreateDTO hamster)
             => hamster.Adapt<Hamster>();
+
+        public static Hamster MapHamsterPatchDTOToHamsterEntity(HamsterPatchDTO hamster)
+            => hamster.Adapt<Hamster>();
     }
 }

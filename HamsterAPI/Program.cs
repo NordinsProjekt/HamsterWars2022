@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddTransient<HamsterContext>();
+builder.Services.AddScoped<HamsterContext>();
 builder.Services.AddTransient<HamsterRepository>();
 builder.Services.AddTransient<IHamsterRepository, HamsterRepository>();
 

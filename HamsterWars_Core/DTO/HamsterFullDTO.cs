@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace HamsterWars_Core.DTO
 {
-    public sealed record HamsterFullDTO(int Id, string Name, int Age, string FavFood, string Loves, string ImgName, int Wind, int Losses, int Games, List<MatchDTO> Matches);
+    public sealed record HamsterFullDTO(int Id, string Name, int Age, string FavFood, string Loves, string ImgName, int Wins, int Losses, int Games, List<MatchDTO> Matches);
 }
