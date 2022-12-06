@@ -45,10 +45,8 @@ namespace HamsterAPI.Controllers
             }
             catch (Exception)
             {
-
                 return StatusCode(500);
             }
-            
         }
 
         // GET api/<HamsterController>/5

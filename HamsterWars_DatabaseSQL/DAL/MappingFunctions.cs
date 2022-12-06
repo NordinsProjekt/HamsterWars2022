@@ -11,7 +11,6 @@ namespace HamsterWars_DatabaseSQL.DAL
 {
     public static class MappingFunctions
     {
-
         public static HamsterFullDTO MapHamsterToHamsterFullDTO(Hamster hamster)
         {
             var hamsterDTO = hamster.Adapt<HamsterFullDTO>();
@@ -31,5 +30,14 @@ namespace HamsterWars_DatabaseSQL.DAL
 
         public static Hamster MapHamsterPatchDTOToHamsterEntity(HamsterPatchDTO hamster)
             => hamster.Adapt<Hamster>();
+        public static IEnumerable<MatchDTO> MapMatchListToMatchDTOList(List<Match> matches)
+        {
+            List<MatchDTO> list = new List<MatchDTO>();
+            foreach (var match in matches)
+                list.Add(match.Adapt<MatchDTO>());
+            return list;
+        }
+        public static MatchFullDTO MapMatchToMatchFullDTO(Match match)
+            => match.Adapt<MatchFullDTO>();
     }
 }

@@ -5,17 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HamsterWars_HamsterWars_Core.Interfaces
+namespace HamsterWars_Core.Interfaces
 {
     public interface IMatchRepository
     {
         IEnumerable<MatchDTO> GetMatches();
-        MatchDTO GetMatchByID(int matchId);
-        object InsertMatch(MatchDTO match);
-        bool DeleteMatch(int matchId);
+        MatchFullDTO GetMatchByID(int matchId);
+        MatchCreateDTO InsertMatch(MatchDTO match);
+        Task<bool> DeleteMatch(int matchId);
         MatchDTO[] GetAllWonMatches(int hamsterId);
-        HamsterFullDTO[] GetTop5WinnerHamsters();
-        HamsterFullDTO[] GetTop5LoserHamsters();
-        public void Save();
+        HamsterDTO[] GetTop5WinnerHamsters();
+        HamsterDTO[] GetTop5LoserHamsters();
+        public Task Save();
     }
 }

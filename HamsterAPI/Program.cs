@@ -13,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<HamsterContext>();
 builder.Services.AddTransient<HamsterRepository>();
 builder.Services.AddTransient<IHamsterRepository, HamsterRepository>();
+builder.Services.AddTransient<IMatchRepository, MatchRepository>();
 
 var app = builder.Build();
 
