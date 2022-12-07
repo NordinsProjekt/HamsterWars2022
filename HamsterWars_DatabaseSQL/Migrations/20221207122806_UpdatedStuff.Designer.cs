@@ -4,6 +4,7 @@ using HamsterWars_DatabaseSQL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HamsterWarsDatabaseSQL.Migrations
 {
     [DbContext(typeof(HamsterContext))]
-    partial class HamsterContextModelSnapshot : ModelSnapshot
+    [Migration("20221207122806_UpdatedStuff")]
+    partial class UpdatedStuff
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

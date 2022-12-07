@@ -88,5 +88,45 @@ namespace HamsterWars_DatabaseSQL.DAL
                 throw new ArgumentException("Hamster or Hamsters doesnt exists");
             }
         }
+
+        public async Task<bool> EndMatchAndCountVotes(int id)
+        {
+            Match m = _context.Matches.Where(x=>x.Id == id).FirstOrDefault();
+            if (m != null)
+            {
+                m.IsCompleted = true;
+                var result = _context.Votes.Where(x => x.MatchId == id).ToList();
+                if (result.Count > 0)
+                {
+                    var winner = result.GroupBy(h => new { h.HamsterId },
+                        (key, items) => new { key.HamsterId, Count = items.Count() }).OrderByDescending(x => x.Count).ToList();
+                    MatchResult mr = new MatchResult();
+                    mr.MatchId = id;
+                    foreach (var hamster in m.Contestants)
+                    {
+                        if (hamster.Id == winner[0].HamsterId)
+                        {
+                            hamster.Wins++;
+                            mr.Winner = hamster;
+                            mr.WinnerScore = winner[0].Count;
+                        }
+                            
+                        else
+                        {
+                            hamster.Losses++;
+                            mr.Looser = hamster;
+                            mr.LooserScore = winner[1].Count;
+                        }
+                        hamster.Games++;
+                    }
+                    _context.Remove(result);
+                    _context.Add(mr);
+                }
+                _context.Update(m);
+                await Save();
+                return true;
+            }
+            return false;
+        }
     }
 }

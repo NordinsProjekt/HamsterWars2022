@@ -73,6 +73,26 @@ namespace HamsterAPI.Controllers
                 }
             }
             return BadRequest();
+        }
+        [HttpGet("EndMatch/{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> EndMatch(int id)
+        {
+            try
+            {
+                if (await _matchRep.EndMatchAndCountVotes(id))
+                    return Ok();
+                else
+                    return NotFound();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                return StatusCode(500);
+            }
 
         }
 

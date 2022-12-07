@@ -14,6 +14,8 @@ namespace HamsterWars_DatabaseSQL
     {
         public DbSet<Hamster> Hamsters { get; set; }
         public DbSet<Match> Matches { get; set; }
+        public DbSet<Vote> Votes { get; set; }
+        public DbSet<MatchResult> MatchResults { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder

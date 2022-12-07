@@ -16,6 +16,7 @@ namespace HamsterWars_Core.Interfaces
         MatchDTO[] GetAllWonMatches(int hamsterId);
         HamsterDTO[] GetTop5WinnerHamsters();
         HamsterDTO[] GetTop5LoserHamsters();
+        public Task<bool> EndMatchAndCountVotes(int id);
         public Task Save();
     }
 }

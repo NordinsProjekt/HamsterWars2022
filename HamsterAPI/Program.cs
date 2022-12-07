@@ -29,5 +29,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<HamsterContext>();
+    dbContext.Database.EnsureCreated();
+}
 app.Run();
