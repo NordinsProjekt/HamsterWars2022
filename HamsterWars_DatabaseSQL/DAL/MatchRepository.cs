@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -67,9 +68,25 @@ namespace HamsterWars_DatabaseSQL.DAL
 
         public async Task Save() => await _context.SaveChangesAsync();
 
-        MatchCreateDTO IMatchRepository.InsertMatch(MatchDTO match)
+        public async Task<MatchFullDTO> InsertMatch(MatchCreateDTO match)
         {
-            throw new NotImplementedException();
+            Hamster cons1 = await _context.Hamsters.Where(x=>x.Id == match.Hamster1Id).FirstOrDefaultAsync();
+            Hamster cons2 = await _context.Hamsters.Where(x => x.Id == match.Hamster2Id).FirstOrDefaultAsync();
+            if (cons1!= null && cons2 != null)
+            {
+                Match m = new Match();
+                m.Contestants.Add(cons1);
+                m.Contestants.Add(cons2);
+                m.StartDate = match.StartDate;
+                m.EndDate = match.EndDate;
+                _context.Add(m);
+                await Save();
+                return MappingFunctions.MapMatchToMatchFullDTO(m);
+            }
+            else
+            {
+                throw new ArgumentException("Hamster or Hamsters doesnt exists");
+            }
         }
     }
 }

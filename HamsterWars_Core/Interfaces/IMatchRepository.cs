@@ -11,7 +11,7 @@ namespace HamsterWars_Core.Interfaces
     {
         IEnumerable<MatchDTO> GetMatches();
         MatchFullDTO GetMatchByID(int matchId);
-        MatchCreateDTO InsertMatch(MatchDTO match);
+        Task<MatchFullDTO> InsertMatch(MatchCreateDTO match);
         Task<bool> DeleteMatch(int matchId);
         MatchDTO[] GetAllWonMatches(int hamsterId);
         HamsterDTO[] GetTop5WinnerHamsters();

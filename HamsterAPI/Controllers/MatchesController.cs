@@ -47,13 +47,33 @@ namespace HamsterAPI.Controllers
             {
                 return StatusCode(500);
             }
-
         }
 
         // POST api/<MatchesController>
         [HttpPost]
-        public void Post([FromBody] MatchCreateDTO value)
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> Post([FromBody] MatchCreateDTO value)
         {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    return Ok(await _matchRep.InsertMatch(value));
+                }
+                catch (ArgumentException ae)
+                {
+                    return NotFound(ae.Message);
+                }
+                catch(Exception ex)
+                {
+                    return StatusCode(500);
+                }
+            }
+            return BadRequest();
+
         }
 
         // DELETE api/<MatchesController>/5
