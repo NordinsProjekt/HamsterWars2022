@@ -89,8 +89,6 @@ namespace HamsterAPI.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
                 return StatusCode(500);
             }
 

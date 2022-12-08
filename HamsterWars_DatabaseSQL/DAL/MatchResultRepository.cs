@@ -1,5 +1,6 @@
 ﻿using HamsterWars_Core.DTO;
 using HamsterWars_Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,14 +30,13 @@ namespace HamsterWars_DatabaseSQL.DAL
         }
 
         public IEnumerable<HamsterDTO> GetTop5Hamsters()
-        {
-            throw new NotImplementedException();
-        }
+            => MappingFunctions.MapHamsterListToHamsterDTOList(_context.Hamsters.OrderByDescending(x => x.Wins).Take(5).ToList());
 
         public IEnumerable<HamsterDTO> GetLow5Hamsters()
-        {
-            throw new NotImplementedException();
-        }
+            => MappingFunctions.MapHamsterListToHamsterDTOList(_context.Hamsters.OrderByDescending(x => x.Losses).Take(5).ToList());
+        public IEnumerable<MatchResultDTO> GetMatchWinners(int hamsterId)
+            => MappingFunctions.MapMatchResultListToMatchResultDTOList(_context.MatchResults.Include(x=>x.Winner)
+                .Include(y=>y.Looser).Where(hamster=>hamster.WinnerId == hamsterId).ToList());
         public async Task Save() => await _context.SaveChangesAsync();
     }
 }

@@ -32,7 +32,7 @@ namespace HamsterWars_DatabaseSQL
                 new Hamster { Id = 1, Age = 2, FavFood = "Carrot", ImgName = "hamster-1.jpg",
                     Name = "Destroyer of Worlds", Games = 1, Losses = 0, Loves = "Killing babies", Wins = 1 },
                 new Hamster { Id = 2, Age = 1, FavFood = "Cucumber", ImgName = "hamster-2.jpg",
-                    Name = "Savior of Worlds", Games = 2, Losses = 0, Loves = "Helping elderly", Wins = 2 },
+                    Name = "Savior of Worlds", Games = 3, Losses = 0, Loves = "Helping elderly", Wins = 3 },
                 new Hamster { Id = 3, Age = 0, FavFood = "Apple", ImgName = "hamster-3.jpg",
                     Name = "Protector of the Wastelands", Games = 3, Losses = 2, Loves = "Confronting Evil", Wins = 1 },
                 new Hamster { Id = 4, Age = 4, FavFood = "Pepper", ImgName = "hamster-4.jpg",
