@@ -37,9 +37,14 @@ namespace HamsterWars_DatabaseSQL.DAL
 
         public IEnumerable<HamsterDTO> GetLow5Hamsters()
             => MappingFunctions.MapHamsterListToHamsterDTOList(_context.Hamsters.OrderByDescending(x => x.Losses).Take(5).ToList());
-        public IEnumerable<MatchResultDTO> GetMatchWinners(int hamsterId)
-            => MappingFunctions.MapMatchResultListToMatchResultDTOList(_context.MatchResults.Include(x=>x.Winner)
-                .Include(y=>y.Looser).Where(hamster=>hamster.WinnerId == hamsterId).ToList());
+        public MatchResultDTO[] GetMatchWinners(int hamsterId)
+        {
+            var result = MappingFunctions.MapMatchResultListToMatchResultDTOList(_context.MatchResults.Include(x => x.Winner)
+                .Include(y => y.Looser).Where(hamster => hamster.WinnerId == hamsterId).ToList());
+            MatchResultDTO[] arr = result.ToArray();
+            return arr;
+        }
+
         public async Task Save() => await _context.SaveChangesAsync();
 
         public int[] GetDefeatedHamsters(int winnerHamsterId)

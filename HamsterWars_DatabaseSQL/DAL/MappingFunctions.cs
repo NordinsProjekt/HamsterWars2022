@@ -55,5 +55,8 @@ namespace HamsterWars_DatabaseSQL.DAL
             return list;
         }
 
+        public static Vote MapVoteDTOToVote(VoteDTO vote)
+            => vote.Adapt<Vote>();
+
     }
 }

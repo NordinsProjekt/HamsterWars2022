@@ -19,7 +19,7 @@ namespace HamsterWars_DatabaseSQL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
-        .UseSqlServer(@"Server=DESKTOP-MBPUR5V\SQLEXPRESS;Database=HamsterWars_MN_2022;Trusted_Connection=True;Encrypt=False");
+        .UseSqlServer(@"Server=DESKTOP-T2GL85N\SQLEXPRESS2019;Database=HamsterWars_MN_2022;Trusted_Connection=True;Encrypt=False");
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Hamster>()
@@ -27,8 +27,21 @@ namespace HamsterWars_DatabaseSQL
                     .WithMany(a => a.Contestants)
                     .UsingEntity<HamsterMatches>(ab => ab.HasOne<Match>().WithMany(),
                     ab => ab.HasOne<Hamster>().WithMany());
-                //Seed
-                modelBuilder.Entity<Hamster>().HasData(
+
+            modelBuilder.Entity<MatchResult>()
+                .HasOne(x => x.Winner)
+                .WithMany(y=> y.MatchResultsWinner)
+                .HasForeignKey(a => a.WinnerId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<MatchResult>()
+                .HasOne(x => x.Looser)
+                .WithMany(y => y.MatchResultsLooser)
+                .HasForeignKey(a => a.LooserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            //Seed
+            modelBuilder.Entity<Hamster>().HasData(
                 new Hamster { Id = 1, Age = 2, FavFood = "Carrot", ImgName = "hamster-1.jpg",
                     Name = "Destroyer of Worlds", Games = 1, Losses = 0, Loves = "Killing babies", Wins = 1 },
                 new Hamster { Id = 2, Age = 1, FavFood = "Cucumber", ImgName = "hamster-2.jpg",
@@ -105,7 +118,7 @@ namespace HamsterWars_DatabaseSQL
 
                 );
             modelBuilder.Entity<Vote>().HasData(
-                new Vote { Id = 1, MatchId = 1, HamsterId = 4 },
+                new Vote { Id = 1, MatchId = 1, HamsterId = 2 },
                 new Vote { Id = 2, MatchId = 2, HamsterId = 4 },
                 new Vote { Id = 3, MatchId = 2, HamsterId = 7 },
                 new Vote { Id = 4, MatchId = 2, HamsterId = 7 },
@@ -129,7 +142,7 @@ namespace HamsterWars_DatabaseSQL
                 new MatchResult { Id = 7, MatchId = 14, WinnerId = 7, LooserId = 9, WinnerScore = 5, LooserScore = 4 },
                 new MatchResult { Id = 8, MatchId = 15, WinnerId = 2, LooserId = 3, WinnerScore = 12, LooserScore = 8 },
                 new MatchResult { Id = 9, MatchId = 16, WinnerId = 4, LooserId = 5, WinnerScore = 12, LooserScore = 7 }
-    );
+                );
         }
     }
 }

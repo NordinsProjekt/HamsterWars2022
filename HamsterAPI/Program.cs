@@ -15,6 +15,7 @@ builder.Services.AddTransient<HamsterRepository>();
 builder.Services.AddTransient<IHamsterRepository, HamsterRepository>();
 builder.Services.AddTransient<IMatchRepository, MatchRepository>();
 builder.Services.AddTransient<IMatchResultRepository, MatchResultRepository>();
+builder.Services.AddTransient<IVoteRepository, VoteRepository>();
 
 var app = builder.Build();
 
