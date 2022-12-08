@@ -59,33 +59,27 @@ namespace HamsterWars_DatabaseSQL.DAL
         async Task<bool> IHamsterRepository.DeleteHamster(int hamsterId)
         {
             Hamster hamster = _context.Hamsters.Where(x=>x.Id == hamsterId).FirstOrDefault();
-            if (hamster != null)
-            {
-                _context.Remove(hamster);
-                await Save();
-                return true;
-            }
-            return false;
+            if (hamster == null)
+                return false;
+            _context.Remove(hamster);
+            await Save();
+            return true;
         }
         async Task<bool> IHamsterRepository.UpdateHamster(HamsterPatchDTO changes,int hamsterId)
         {
             Hamster org = _context.Hamsters.Where(x=>x.Id==hamsterId).FirstOrDefault();
-            if (org != null)
-            {
-                foreach (var item in changes.GetType().GetProperties())
-                {
-                    var value = item.GetValue(changes, null);
-                    if (value != null)
-                    {
-                        org.GetType().GetProperty(item.Name).SetValue(org, value, null);
-                    }
-                }
-                _context.Update(org);
-                await Save();
-                return true;
-            }
-            else
+            if (org == null)
                 return false;
+
+            foreach (var item in changes.GetType().GetProperties())
+            {
+                var value = item.GetValue(changes, null);
+                if (value != null)
+                    org.GetType().GetProperty(item.Name).SetValue(org, value, null);
+            }
+            _context.Update(org);
+            await Save();
+            return true;
         }
     }
 }

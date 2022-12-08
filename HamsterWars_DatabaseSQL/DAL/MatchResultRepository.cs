@@ -1,9 +1,11 @@
 ﻿using HamsterWars_Core.DTO;
 using HamsterWars_Core.Interfaces;
+using HamsterWars_DatabaseSQL.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,5 +40,16 @@ namespace HamsterWars_DatabaseSQL.DAL
             => MappingFunctions.MapMatchResultListToMatchResultDTOList(_context.MatchResults.Include(x=>x.Winner)
                 .Include(y=>y.Looser).Where(hamster=>hamster.WinnerId == hamsterId).ToList());
         public async Task Save() => await _context.SaveChangesAsync();
+
+        public int[] GetDefeatedHamsters(int winnerHamsterId)
+        {
+            Hamster winner = _context.Hamsters.Where(x=>x.Id== winnerHamsterId).FirstOrDefault();
+            if (winner == null)
+                throw new ArgumentException("Hamstern finns inte");
+            var result = _context.MatchResults.Include(winner => winner.Winner).Include(loser=>loser.Looser)
+                .Where(x=>x.WinnerId== winnerHamsterId).Select(los=>los.LooserId).Distinct().ToArray();
+            return result;
+
+        }
     }
 }

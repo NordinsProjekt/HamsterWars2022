@@ -13,10 +13,7 @@ namespace HamsterWars_DatabaseSQL.DAL
     public static class MappingFunctions
     {
         public static HamsterFullDTO MapHamsterToHamsterFullDTO(Hamster hamster)
-        {
-            var hamsterDTO = hamster.Adapt<HamsterFullDTO>();
-            return hamsterDTO;
-        }
+            => hamster.Adapt<HamsterFullDTO>();
 
         public static IEnumerable<HamsterFullDTO> MapHamsterToHamsterFullDTOList(List<Hamster> hamsterList)
         {

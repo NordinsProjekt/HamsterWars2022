@@ -33,25 +33,8 @@ namespace HamsterAPI.Controllers
             }
             
         }
-
-        /// <summary>
-        /// Creates a TodoItem.
-        /// </summary>
-        /// <param name="item"></param>
-        /// <returns>A newly created TodoItem</returns>
-        /// <remarks>
-        /// Sample request:
-        ///
-        ///     POST /Todo
-        ///     {
-        ///        "id": 1,
-        ///        "name": "Item #1",
-        ///        "isComplete": true
-        ///     }
-        ///
-        /// </remarks>
-        /// <response code="201">Returns the newly created item</response>
-        /// <response code="400">If the item is null</response>
+        
+        // GET api/<HamsterCotroller>/Random
         [HttpGet("random")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
