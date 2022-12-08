@@ -7,24 +7,19 @@ namespace HamsterAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class ScoreController : ControllerBase
+    public class ManyMatchesController : ControllerBase
     {
         IMatchResultRepository _matchResultRep;
-        public ScoreController(IMatchResultRepository _rep) => _matchResultRep = _rep;
-        // GET: api/<ScoreController>
-        [HttpGet("{challenger}/{defender}")]
+        public ManyMatchesController(IMatchResultRepository _rep) => _matchResultRep = _rep;
+        // GET: <ManyMatches>
+        [HttpGet]
         [ProducesResponseType(200)]
-        [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public IActionResult Get(int challenger, int defender)
+        public IActionResult Get()
         {
             try
             {
-                return Ok(_matchResultRep.GetChallengerScoreCard(challenger, defender));
-            }
-            catch (ArgumentException ae)
-            {
-                return NotFound(ae.Message);
+                return Ok(_matchResultRep.GetHighestGamesTop5());
             }
             catch (Exception)
             {

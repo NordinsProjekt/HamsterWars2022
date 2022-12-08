@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -49,7 +50,31 @@ namespace HamsterWars_DatabaseSQL.DAL
             var result = _context.MatchResults.Include(winner => winner.Winner).Include(loser=>loser.Looser)
                 .Where(x=>x.WinnerId== winnerHamsterId).Select(los=>los.LooserId).Distinct().ToArray();
             return result;
-
         }
+
+        public ScoreCardDTO GetChallengerScoreCard(int challenger, int defender)
+        {
+            Hamster cHamster = _context.Hamsters.Where(x=>x.Id== challenger).FirstOrDefault();
+            Hamster dHamster = _context.Hamsters.Where(x => x.Id == defender).FirstOrDefault();
+            if (dHamster == null || cHamster == null)
+                throw new ArgumentException("Hamstern finns inte");
+
+            var challengerScore = _context.MatchResults.Where(chall => chall.WinnerId == challenger)
+                .Where(loss => loss.LooserId == defender).Select(x => x.WinnerId).Count();
+            var defenderScore = _context.MatchResults.Where(chall => chall.WinnerId == defender)
+                .Where(loss => loss.LooserId == challenger).Select(x => x.WinnerId).Count();
+            ScoreCardDTO card = new ScoreCardDTO(challengerScore, defenderScore,
+                MappingFunctions.MapHamsterToHamsterDTO(cHamster),
+                MappingFunctions.MapHamsterToHamsterDTO(dHamster));
+            return card;
+        }
+
+        public int[] GetLowestGamesTop5()
+            => _context.Hamsters.OrderBy(x => x.Games).Select(y=>y.Id).Take(5).ToArray();
+
+        public int[] GetHighestGamesTop5()
+            => _context.Hamsters.OrderByDescending(x => x.Games).Select(y => y.Id).Take(5).ToArray();
+
+        
     }
 }

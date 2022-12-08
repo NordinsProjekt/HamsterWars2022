@@ -118,17 +118,6 @@ namespace HamsterWars_DatabaseSQL
                 new Vote { Id = 11, MatchId = 6, HamsterId = 10 }, 
                 new Vote { Id = 12, MatchId = 7, HamsterId = 8 }
                 );
-            //modelBuilder.Entity<MatchResult>().HasData(
-            //    new MatchResult { Id = 1, MatchId = 8, Winner = new Hamster { Id = 2 }, Looser = new Hamster { Id = 4 }, WinnerScore = 5, LooserScore = 2 },
-            //    new MatchResult { Id = 2, MatchId = 9, Winner = new Hamster { Id = 4 }, Looser = new Hamster { Id = 6 }, WinnerScore = 3, LooserScore = 1 },
-            //    new MatchResult { Id = 3, MatchId = 10, Winner = new Hamster { Id = 8 }, Looser = new Hamster { Id = 10 }, WinnerScore = 15, LooserScore = 9 },
-            //    new MatchResult { Id = 4, MatchId = 11, Winner = new Hamster { Id = 1 }, Looser = new Hamster { Id = 3 }, WinnerScore = 5, LooserScore = 2 },
-            //    new MatchResult { Id = 5, MatchId = 12, Winner = new Hamster { Id = 3 }, Looser = new Hamster { Id = 5 }, WinnerScore = 8, LooserScore = 4 },
-            //    new MatchResult { Id = 6, MatchId = 13, Winner = new Hamster { Id = 5 }, Looser = new Hamster { Id = 7 }, WinnerScore = 2, LooserScore = 0 },
-            //    new MatchResult { Id = 7, MatchId = 14, Winner = new Hamster { Id = 7 }, Looser = new Hamster { Id = 9 }, WinnerScore = 5, LooserScore = 4 },
-            //    new MatchResult { Id = 8, MatchId = 15, Winner = new Hamster { Id = 2 }, Looser = new Hamster { Id = 3 }, WinnerScore = 12, LooserScore = 8 },
-            //    new MatchResult { Id = 9, MatchId = 16, Winner = new Hamster { Id = 4 }, Looser = new Hamster { Id = 5 }, WinnerScore = 12, LooserScore = 7 }
-            //    );
 
             modelBuilder.Entity<MatchResult>().HasData(
                 new MatchResult { Id = 1, MatchId = 8, WinnerId = 2, LooserId = 4, WinnerScore = 5, LooserScore = 2 },
