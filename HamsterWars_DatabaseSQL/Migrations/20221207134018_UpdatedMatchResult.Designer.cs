@@ -4,6 +4,7 @@ using HamsterWars_DatabaseSQL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HamsterWarsDatabaseSQL.Migrations
 {
     [DbContext(typeof(HamsterContext))]
-    partial class HamsterContextModelSnapshot : ModelSnapshot
+    [Migration("20221207134018_UpdatedMatchResult")]
+    partial class UpdatedMatchResult
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,69 +71,69 @@ namespace HamsterWarsDatabaseSQL.Migrations
                             Id = 1,
                             Age = 2,
                             FavFood = "Carrot",
-                            Games = 1,
+                            Games = 0,
                             ImgName = "hamster-1.jpg",
                             Losses = 0,
                             Loves = "Killing babies",
                             Name = "Destroyer of Worlds",
-                            Wins = 1
+                            Wins = 0
                         },
                         new
                         {
                             Id = 2,
                             Age = 1,
                             FavFood = "Cucumber",
-                            Games = 2,
+                            Games = 0,
                             ImgName = "hamster-2.jpg",
                             Losses = 0,
                             Loves = "Helping elderly",
                             Name = "Savior of Worlds",
-                            Wins = 2
+                            Wins = 0
                         },
                         new
                         {
                             Id = 3,
                             Age = 0,
                             FavFood = "Apple",
-                            Games = 3,
+                            Games = 0,
                             ImgName = "hamster-3.jpg",
-                            Losses = 2,
+                            Losses = 0,
                             Loves = "Confronting Evil",
                             Name = "Protector of the Wastelands",
-                            Wins = 1
+                            Wins = 0
                         },
                         new
                         {
                             Id = 4,
                             Age = 4,
                             FavFood = "Pepper",
-                            Games = 3,
+                            Games = 0,
                             ImgName = "hamster-4.jpg",
-                            Losses = 1,
+                            Losses = 0,
                             Loves = "Sleeping",
                             Name = "Grand Hamster",
-                            Wins = 2
+                            Wins = 0
                         },
                         new
                         {
                             Id = 5,
                             Age = 2,
                             FavFood = "Banana",
-                            Games = 3,
+                            Games = 0,
                             ImgName = "hamster-5.jpg",
-                            Losses = 2,
+                            Losses = 0,
                             Loves = "Yellow things",
                             Name = "Yellow Devil",
-                            Wins = 1
+                            Wins = 0
                         },
                         new
                         {
                             Id = 6,
                             Age = 1,
                             FavFood = "Snickers",
-                            Games = 1,
+                            Games = 0,
                             ImgName = "hamster-6.jpg",
-                            Losses = 1,
+                            Losses = 0,
                             Loves = "Helping others",
                             Name = "Wingman",
                             Wins = 0
@@ -140,33 +143,33 @@ namespace HamsterWarsDatabaseSQL.Migrations
                             Id = 7,
                             Age = 1,
                             FavFood = "Sugar",
-                            Games = 2,
+                            Games = 0,
                             ImgName = "hamster-7.jpg",
-                            Losses = 1,
+                            Losses = 0,
                             Loves = "Reading books",
                             Name = "Rincewind",
-                            Wins = 1
+                            Wins = 0
                         },
                         new
                         {
                             Id = 8,
                             Age = 7,
                             FavFood = "Candy",
-                            Games = 1,
+                            Games = 0,
                             ImgName = "hamster-8.jpg",
                             Losses = 0,
                             Loves = "Small things",
                             Name = "Red dwarf",
-                            Wins = 1
+                            Wins = 0
                         },
                         new
                         {
                             Id = 9,
                             Age = 4,
                             FavFood = "Ice cream",
-                            Games = 1,
+                            Games = 0,
                             ImgName = "hamster-9.jpg",
-                            Losses = 1,
+                            Losses = 0,
                             Loves = "IoT",
                             Name = "Snowden",
                             Wins = 0
@@ -176,9 +179,9 @@ namespace HamsterWarsDatabaseSQL.Migrations
                             Id = 10,
                             Age = 3,
                             FavFood = "Ice cream",
-                            Games = 1,
+                            Games = 0,
                             ImgName = "hamster-10.jpg",
-                            Losses = 1,
+                            Losses = 0,
                             Loves = "Snowmen",
                             Name = "Ice Queen",
                             Wins = 0
@@ -269,96 +272,6 @@ namespace HamsterWarsDatabaseSQL.Migrations
                         {
                             HamsterId = 3,
                             MatchId = 7
-                        },
-                        new
-                        {
-                            HamsterId = 2,
-                            MatchId = 8
-                        },
-                        new
-                        {
-                            HamsterId = 4,
-                            MatchId = 8
-                        },
-                        new
-                        {
-                            HamsterId = 4,
-                            MatchId = 9
-                        },
-                        new
-                        {
-                            HamsterId = 6,
-                            MatchId = 9
-                        },
-                        new
-                        {
-                            HamsterId = 8,
-                            MatchId = 10
-                        },
-                        new
-                        {
-                            HamsterId = 10,
-                            MatchId = 10
-                        },
-                        new
-                        {
-                            HamsterId = 1,
-                            MatchId = 11
-                        },
-                        new
-                        {
-                            HamsterId = 3,
-                            MatchId = 11
-                        },
-                        new
-                        {
-                            HamsterId = 3,
-                            MatchId = 12
-                        },
-                        new
-                        {
-                            HamsterId = 5,
-                            MatchId = 12
-                        },
-                        new
-                        {
-                            HamsterId = 5,
-                            MatchId = 13
-                        },
-                        new
-                        {
-                            HamsterId = 7,
-                            MatchId = 13
-                        },
-                        new
-                        {
-                            HamsterId = 7,
-                            MatchId = 14
-                        },
-                        new
-                        {
-                            HamsterId = 9,
-                            MatchId = 14
-                        },
-                        new
-                        {
-                            HamsterId = 2,
-                            MatchId = 15
-                        },
-                        new
-                        {
-                            HamsterId = 3,
-                            MatchId = 15
-                        },
-                        new
-                        {
-                            HamsterId = 4,
-                            MatchId = 16
-                        },
-                        new
-                        {
-                            HamsterId = 5,
-                            MatchId = 16
                         });
                 });
 
@@ -388,97 +301,43 @@ namespace HamsterWarsDatabaseSQL.Migrations
                         {
                             Id = 1,
                             IsCompleted = false,
-                            StartDate = new DateTime(2022, 12, 8, 0, 58, 25, 464, DateTimeKind.Local).AddTicks(6077)
+                            StartDate = new DateTime(2022, 12, 7, 14, 40, 18, 119, DateTimeKind.Local).AddTicks(3159)
                         },
                         new
                         {
                             Id = 2,
                             IsCompleted = true,
-                            StartDate = new DateTime(2022, 12, 8, 0, 58, 25, 464, DateTimeKind.Local).AddTicks(6108)
+                            StartDate = new DateTime(2022, 12, 7, 14, 40, 18, 119, DateTimeKind.Local).AddTicks(3189)
                         },
                         new
                         {
                             Id = 3,
                             IsCompleted = false,
-                            StartDate = new DateTime(2022, 12, 8, 0, 58, 25, 464, DateTimeKind.Local).AddTicks(6110)
+                            StartDate = new DateTime(2022, 12, 7, 14, 40, 18, 119, DateTimeKind.Local).AddTicks(3191)
                         },
                         new
                         {
                             Id = 4,
                             IsCompleted = false,
-                            StartDate = new DateTime(2022, 12, 8, 0, 58, 25, 464, DateTimeKind.Local).AddTicks(6111)
+                            StartDate = new DateTime(2022, 12, 7, 14, 40, 18, 119, DateTimeKind.Local).AddTicks(3193)
                         },
                         new
                         {
                             Id = 5,
                             IsCompleted = true,
-                            StartDate = new DateTime(2022, 12, 8, 0, 58, 25, 464, DateTimeKind.Local).AddTicks(6113)
+                            StartDate = new DateTime(2022, 12, 7, 14, 40, 18, 119, DateTimeKind.Local).AddTicks(3194)
                         },
                         new
                         {
                             Id = 6,
                             IsCompleted = true,
-                            StartDate = new DateTime(2022, 12, 8, 0, 58, 25, 464, DateTimeKind.Local).AddTicks(6115)
+                            StartDate = new DateTime(2022, 12, 7, 14, 40, 18, 119, DateTimeKind.Local).AddTicks(3196)
                         },
                         new
                         {
                             Id = 7,
                             IsCompleted = true,
-                            StartDate = new DateTime(2022, 12, 8, 0, 58, 25, 464, DateTimeKind.Local).AddTicks(6116)
-                        },
-                        new
-                        {
-                            Id = 8,
-                            IsCompleted = true,
-                            StartDate = new DateTime(2022, 12, 8, 0, 58, 25, 464, DateTimeKind.Local).AddTicks(6118)
-                        },
-                        new
-                        {
-                            Id = 9,
-                            IsCompleted = true,
-                            StartDate = new DateTime(2022, 12, 8, 0, 58, 25, 464, DateTimeKind.Local).AddTicks(6119)
-                        },
-                        new
-                        {
-                            Id = 10,
-                            IsCompleted = true,
-                            StartDate = new DateTime(2022, 12, 8, 0, 58, 25, 464, DateTimeKind.Local).AddTicks(6121)
-                        },
-                        new
-                        {
-                            Id = 11,
-                            IsCompleted = true,
-                            StartDate = new DateTime(2022, 12, 8, 0, 58, 25, 464, DateTimeKind.Local).AddTicks(6122)
-                        },
-                        new
-                        {
-                            Id = 12,
-                            IsCompleted = true,
-                            StartDate = new DateTime(2022, 12, 8, 0, 58, 25, 464, DateTimeKind.Local).AddTicks(6124)
-                        },
-                        new
-                        {
-                            Id = 13,
-                            IsCompleted = true,
-                            StartDate = new DateTime(2022, 12, 8, 0, 58, 25, 464, DateTimeKind.Local).AddTicks(6126)
-                        },
-                        new
-                        {
-                            Id = 14,
-                            IsCompleted = true,
-                            StartDate = new DateTime(2022, 12, 8, 0, 58, 25, 464, DateTimeKind.Local).AddTicks(6127)
-                        },
-                        new
-                        {
-                            Id = 15,
-                            IsCompleted = true,
-                            StartDate = new DateTime(2022, 12, 8, 0, 58, 25, 464, DateTimeKind.Local).AddTicks(6129)
-                        },
-                        new
-                        {
-                            Id = 16,
-                            IsCompleted = true,
-                            StartDate = new DateTime(2022, 12, 8, 0, 58, 25, 464, DateTimeKind.Local).AddTicks(6131)
+                            StartDate = new DateTime(2022, 12, 7, 14, 40, 18, 119, DateTimeKind.Local).AddTicks(3198)
                         });
                 });
 
@@ -512,89 +371,6 @@ namespace HamsterWarsDatabaseSQL.Migrations
                     b.HasIndex("WinnerId");
 
                     b.ToTable("MatchResults");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            LooserId = 4,
-                            LooserScore = 2,
-                            MatchId = 8,
-                            WinnerId = 2,
-                            WinnerScore = 5
-                        },
-                        new
-                        {
-                            Id = 2,
-                            LooserId = 6,
-                            LooserScore = 1,
-                            MatchId = 9,
-                            WinnerId = 4,
-                            WinnerScore = 3
-                        },
-                        new
-                        {
-                            Id = 3,
-                            LooserId = 10,
-                            LooserScore = 9,
-                            MatchId = 10,
-                            WinnerId = 8,
-                            WinnerScore = 15
-                        },
-                        new
-                        {
-                            Id = 4,
-                            LooserId = 3,
-                            LooserScore = 2,
-                            MatchId = 11,
-                            WinnerId = 1,
-                            WinnerScore = 5
-                        },
-                        new
-                        {
-                            Id = 5,
-                            LooserId = 5,
-                            LooserScore = 4,
-                            MatchId = 12,
-                            WinnerId = 2,
-                            WinnerScore = 8
-                        },
-                        new
-                        {
-                            Id = 6,
-                            LooserId = 7,
-                            LooserScore = 0,
-                            MatchId = 13,
-                            WinnerId = 5,
-                            WinnerScore = 2
-                        },
-                        new
-                        {
-                            Id = 7,
-                            LooserId = 9,
-                            LooserScore = 4,
-                            MatchId = 14,
-                            WinnerId = 7,
-                            WinnerScore = 5
-                        },
-                        new
-                        {
-                            Id = 8,
-                            LooserId = 3,
-                            LooserScore = 8,
-                            MatchId = 15,
-                            WinnerId = 2,
-                            WinnerScore = 12
-                        },
-                        new
-                        {
-                            Id = 9,
-                            LooserId = 5,
-                            LooserScore = 7,
-                            MatchId = 16,
-                            WinnerId = 4,
-                            WinnerScore = 12
-                        });
                 });
 
             modelBuilder.Entity("HamsterWars_DatabaseSQL.Models.Vote", b =>

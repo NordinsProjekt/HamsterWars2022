@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HamsterWars_Core.DTO;
+using HamsterWars_Core.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +10,23 @@ namespace HamsterAPI.Controllers
     [ApiController]
     public class WinnersController : ControllerBase
     {
+        IMatchResultRepository _matchResultRep;
+        public WinnersController(IMatchResultRepository _rep) => _matchResultRep = _rep;
         // GET: api/<WinnersController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<WinnersController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<WinnersController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<WinnersController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<WinnersController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            try
+            {
+                return Ok(_matchResultRep.GetTop5Hamsters());
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+            
         }
     }
 }

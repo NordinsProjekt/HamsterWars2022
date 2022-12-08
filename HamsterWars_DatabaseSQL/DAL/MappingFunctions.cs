@@ -39,5 +39,7 @@ namespace HamsterWars_DatabaseSQL.DAL
         }
         public static MatchFullDTO MapMatchToMatchFullDTO(Match match)
             => match.Adapt<MatchFullDTO>();
+        public static MatchResultDTO MapMatchResultToMatResultDTO(MatchResult mr)
+            => mr.Adapt<MatchResultDTO>();
     }
 }
