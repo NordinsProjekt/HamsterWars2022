@@ -4,8 +4,10 @@
     try {
         result = await $.ajax({
             url: url,
-            type: 'POST',
-            data: args
+            method: 'POST',
+            data: JSON.stringify(args),
+            dataType: 'json',
+            contentType: 'application/json'
         });
 
         return result;

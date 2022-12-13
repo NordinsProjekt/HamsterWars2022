@@ -1,9 +1,10 @@
 ﻿@using DTO
 @if (infoHamster != null)
 {
+    <h3>@infoHamster.Name</h3>
     <div class="d-flex align-content-stretch flex-row">
         <div class="p-2 bd-highlight" id="HamsterMoreInfo">
-            <img id="large" src="img/hamsters/@infoHamster.ImgName">
+            <img id="large" src="img/hamsters/@infoHamster.ImgName" />
         </div>
         <div class="p-2 bd-highlight" id="HamsterMoreInfo">
             <p><b>Age: </b>@infoHamster.Age</p>
@@ -13,9 +14,18 @@
             <p><b>Wins: </b>@infoHamster.Wins</p>
             <p><b>Losses: </b>@infoHamster.Losses</p>
         </div>
+        <div class="p-2 bd-highlight">
+            <h3>Killed:</h3>
+            @foreach (var victim in Killed)
+            {
+                <p>@victim.Name</p>
+            }
+        </div>
     </div>
 }
 @code {
     [Parameter]
-    public HamsterDTO infoHamster { get; set; }
+    public HamsterDTO? infoHamster { get; set; }
+    [Parameter]
+    public List<HamsterDTO> Killed { get; set; } = new List<HamsterDTO>();
 }

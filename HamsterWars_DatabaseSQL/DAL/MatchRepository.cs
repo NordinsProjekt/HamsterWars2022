@@ -36,7 +36,7 @@ namespace HamsterWars_DatabaseSQL.DAL
             => MappingFunctions.MapMatchListToMatchDTOList(_context.Matches.Include(hamster => hamster.Contestants).ToList());
 
         public MatchFullDTO GetMatchByID(int matchId)
-            => MappingFunctions.MapMatchToMatchFullDTO(_context.Matches
+            => MappingFunctions.MapMatchToMatchFullDTO(_context.Matches.Include(hamster => hamster.Contestants)
                 .Where(match => match.Id == matchId).FirstOrDefault());
 
         public async Task<bool> DeleteMatch(int matchId)

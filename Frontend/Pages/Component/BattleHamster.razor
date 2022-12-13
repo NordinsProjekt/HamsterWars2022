@@ -1,0 +1,24 @@
+﻿@using DTO
+<div>
+    @foreach (var hamster in Battle.Contestants)
+    {
+        <div d-flex align-content-stretch flex-wrap flex-row @onclick="(() => HamsterBattle(hamster.Id))">
+            <h3>@hamster.Name</h3>
+            <p><b>Age: </b>@hamster.Age</p>
+            <p><b>Fav food: </b>@hamster.FavFood</p>
+            <p><b>Loves: </b>@hamster.Loves</p>
+            <img id="large" src="img/hamsters/@hamster.ImgName" />
+        </div>
+    }
+</div>
+@code {
+    [Parameter]
+    public MatchDTO Battle { get; set; }
+    [Parameter]
+    public EventCallback<int[]> onBattleWinner { get; set; }
+
+    public async Task HamsterBattle(int hamsterId)
+        => await onBattleWinner.InvokeAsync(new int[2] { Battle.Id, hamsterId });
+};
+
+}

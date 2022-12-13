@@ -1,31 +1,49 @@
 ﻿@page "/battle"
+@using Frontend.Pages.Component
 @using DTO
 @inject IJSRuntime JS
 @using System.Text.Json
 @using System.Text.Json.Serialization
 @inject IHttpClientFactory ClientFactory
-<h3>Battle</h3>
+<h1>Battle</h1>
+@if (score != null)
+{
+    foreach (var hamster in score.Contestants)
+    {
+        <HamsterInfo infoHamster="hamster" />
+    }   
+}
+@if (battle != null)
+{
+    <BattleHamster Battle="@battle" onBattleWinner="Vote" />
+}
+else
+{
+    <button @onclick="CreateBattle">Generate match</button>
+}
 
 @code {
+    MatchDTO? battle;
+    MatchDTO? score;
 
-    protected override async Task OnInitializedAsync()
+    public async Task CreateBattle()
     {
-        var request = new HttpRequestMessage(HttpMethod.Get,
-            "https://localhost:7232/hamsters");
-        //request.Headers.Add("Accept", "application/vnd.github.v3+json");
-        //request.Headers.Add("User-Agent", "HttpClientFactory-Sample");
-
-        var client = ClientFactory.CreateClient();
-
-        var response = await client.SendAsync(request);
-
-        if (response.IsSuccessStatusCode)
-        {
-            using var responseStream = await response.Content.ReadAsStreamAsync();
-            var obj = await JsonSerializer.DeserializeAsync<object>(responseStream);
-        }
-
+        score = null;
+        var hamster1 = await JS.InvokeAsync<HamsterDTO>("getAPI", "https://localhost:7232/hamsters/random");
+        var hamster2 = await JS.InvokeAsync<HamsterDTO>("getAPI", "https://localhost:7232/hamsters/random");
+        while (hamster1 == hamster2)
+            hamster2 = await JS.InvokeAsync<HamsterDTO>("getAPI", "https://localhost:7232/hamsters/random");
+        MatchCreateDTO m = new MatchCreateDTO(hamster1.Id, hamster2.Id, DateTime.Now, DateTime.Now);
+        battle = await JS.InvokeAsync<MatchDTO>("postAPI", "https://localhost:7232/matches/", m);
+        StateHasChanged();
     }
 
-
+    public async Task Vote(int[] matchVote)
+    {
+        VoteDTO vote = new VoteDTO(matchVote[0], matchVote[1]);
+        await JS.InvokeVoidAsync("postAPI", "https://localhost:7232/vote/", vote);
+        await JS.InvokeVoidAsync("getAPI", "https://localhost:7232/matches/EndMatch/"+matchVote[0]);
+        score = await JS.InvokeAsync<MatchDTO>("getAPI", "https://localhost:7232/matches/" + matchVote[0]);
+        battle = null;
+    }
 }

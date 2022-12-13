@@ -1,6 +1,7 @@
 ﻿@page "/gallery"
 @using Frontend.Pages.Component
 @inject IJSRuntime JS
-<h3>Galleri</h3>
-<HamsterInfo infoHamster=infoHamster />
+<h1>Galleri</h1>
+<p>Choose a hamster to view more information</p>
+<HamsterInfo infoHamster=infoHamster Killed="hamsterKilled" />
 <HamsterGallery galleryList="galleryList" onShowMore="ShowMore" />
