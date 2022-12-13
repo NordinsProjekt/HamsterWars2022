@@ -14,13 +14,17 @@
             <p><b>Wins: </b>@infoHamster.Wins</p>
             <p><b>Losses: </b>@infoHamster.Losses</p>
         </div>
-        <div class="p-2 bd-highlight">
-            <h3>Killed:</h3>
-            @foreach (var victim in Killed)
-            {
-                <p>@victim.Name</p>
-            }
-        </div>
+        @if (Killed.Count > 0)
+        {
+            <div class="p-2 bd-highlight">
+                <h3>Killed:</h3>
+                @foreach (var victim in Killed)
+                {
+                    <p>@victim.Name</p>
+                }
+            </div>
+        }
+
     </div>
 }
 @code {

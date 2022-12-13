@@ -1,5 +1,25 @@
-﻿<h3>Statistics</h3>
-
+﻿@page "/statistics"
+@using Frontend.Pages.Component
+@using DTO
+@inject IJSRuntime JS
+<h1>Statistics</h1>
+<h2>Top 5 ATH</h2>
+@foreach (var hamster in top5List)
+{
+    <HamsterInfo infoHamster="hamster" />
+}
+<h2>Worst 5 ATH</h2>
+@foreach (var hamster in low5List)
+{
+    <HamsterInfo infoHamster="hamster" />
+}
 @code {
+    public List<HamsterDTO> top5List = new List<HamsterDTO>();
+    public List<HamsterDTO> low5List = new List<HamsterDTO>();
 
+    protected override async Task OnInitializedAsync()
+    {
+        top5List = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/Winners");
+        low5List = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/Losers");
+    }
 }

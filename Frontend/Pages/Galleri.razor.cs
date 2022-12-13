@@ -16,6 +16,7 @@ namespace Frontend.Pages
 
         public async void ShowMore(int id)
         {
+            hamsterKilled.Clear();
             infoHamster = galleryList.Where(x => x.Id == id).FirstOrDefault();
             var result = await JS.InvokeAsync<int[]>("getAPI", "https://localhost:7232/Defeated/" + infoHamster.Id);
             for (int i = 0; i < result.Length; i++)
