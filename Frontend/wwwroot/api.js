@@ -28,3 +28,7 @@ async function getAPI(url) {
         console.error(error);
     }
 }
+
+function OnScrollEvent() {
+    document.documentElement.scrollTop = 0;
+}

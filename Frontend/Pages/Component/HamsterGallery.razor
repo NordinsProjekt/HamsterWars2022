@@ -1,0 +1,21 @@
+﻿@using DTO
+@if (galleryList != null)
+{
+    <div class="d-flex align-content-stretch flex-wrap">
+    @foreach (var hamster in galleryList)
+    {
+        <div class="p-2 bd-highlight">
+            <p><b>Name: </b>@hamster.Name</p>
+            <img id="small" src="img/hamsters/@hamster.ImgName" @onclick="(() => ShowMore(hamster.Id))">
+        </div>
+    }
+    </div>
+}
+@code {
+    [Parameter]
+    public List<HamsterDTO> galleryList { get; set; }
+    [Parameter]
+    public EventCallback<int> onShowMore { get; set; }
+
+    private async Task ShowMore(int id) => await onShowMore.InvokeAsync(id);
+}

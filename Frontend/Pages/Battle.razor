@@ -5,19 +5,9 @@
 @using System.Text.Json.Serialization
 @inject IHttpClientFactory ClientFactory
 <h3>Battle</h3>
-@if (galleryList !=null)
-{   
-    <div id="galleryFlex">
-    @foreach (var hamster in galleryList)
-    {
-        <div>
-            <p>@hamster.Name</p>
-        </div>
-    }
-    </div>
-}
+
 @code {
-    public List<HamsterDTO> galleryList;
+
     protected override async Task OnInitializedAsync()
     {
         var request = new HttpRequestMessage(HttpMethod.Get,
@@ -37,8 +27,5 @@
 
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        galleryList = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/hamsters");
-    }
+
 }

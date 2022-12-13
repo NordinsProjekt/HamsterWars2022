@@ -1,0 +1,21 @@
+﻿@using DTO
+@if (infoHamster != null)
+{
+    <div class="d-flex align-content-stretch flex-row">
+        <div class="p-2 bd-highlight" id="HamsterMoreInfo">
+            <img id="large" src="img/hamsters/@infoHamster.ImgName">
+        </div>
+        <div class="p-2 bd-highlight" id="HamsterMoreInfo">
+            <p><b>Age: </b>@infoHamster.Age</p>
+            <p><b>Fav Food: </b>@infoHamster.FavFood</p>
+            <p><b>Loves: </b>@infoHamster.Loves</p>
+            <p><b>Games: </b>@infoHamster.Games</p>
+            <p><b>Wins: </b>@infoHamster.Wins</p>
+            <p><b>Losses: </b>@infoHamster.Losses</p>
+        </div>
+    </div>
+}
+@code {
+    [Parameter]
+    public HamsterDTO infoHamster { get; set; }
+}

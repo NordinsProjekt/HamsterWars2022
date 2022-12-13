@@ -1,26 +1,6 @@
 ﻿@page "/gallery"
+@using Frontend.Pages.Component
 @inject IJSRuntime JS
-@using DTO
 <h3>Galleri</h3>
-@if (galleryList != null)
-{
-    <div id="galleryFlex">
-        @foreach (var hamster in galleryList)
-        {
-            <div>
-                <p><b>Name: </b>@hamster.Name</p>
-                <p><b>Age: </b>@hamster.Age</p>
-                <p><b>Fav Food: </b>@hamster.FavFood</p>
-                <p><b>Loves: </b>@hamster.Loves</p>
-                <img 
-            </div>
-        }
-    </div>
-}
-@code {
-    public List<HamsterDTO> galleryList;
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        galleryList = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/hamsters");
-    }
-}
+<HamsterInfo infoHamster=infoHamster />
+<HamsterGallery galleryList="galleryList" onShowMore="ShowMore" />
