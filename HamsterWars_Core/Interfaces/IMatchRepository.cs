@@ -13,9 +13,6 @@ namespace HamsterWars_Core.Interfaces
         MatchFullDTO GetMatchByID(int matchId);
         Task<MatchFullDTO> InsertMatch(MatchCreateDTO match);
         Task<bool> DeleteMatch(int matchId);
-        MatchDTO[] GetAllWonMatches(int hamsterId);
-        HamsterDTO[] GetTop5WinnerHamsters();
-        HamsterDTO[] GetTop5LoserHamsters();
         public Task<bool> EndMatchAndCountVotes(int id);
         public Task Save();
     }

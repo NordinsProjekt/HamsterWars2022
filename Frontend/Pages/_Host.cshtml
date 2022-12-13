@@ -1,0 +1,10 @@
+﻿@page "/"
+@namespace Frontend.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_Layout";
+}
+
+<component type="typeof(App)" render-mode="Server" />
+<script src="~/api.js"></script>
+<script src="~/jquery-3.6.1.min.js"></script>

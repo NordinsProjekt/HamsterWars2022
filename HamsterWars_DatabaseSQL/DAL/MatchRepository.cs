@@ -51,21 +51,6 @@ namespace HamsterWars_DatabaseSQL.DAL
             return false;
         }
 
-        public MatchDTO[] GetAllWonMatches(int hamsterId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public HamsterDTO[] GetTop5WinnerHamsters()
-        {
-            throw new NotImplementedException();
-        }
-
-        public HamsterDTO[] GetTop5LoserHamsters()
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task Save() => await _context.SaveChangesAsync();
 
         public async Task<MatchFullDTO> InsertMatch(MatchCreateDTO match)
