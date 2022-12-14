@@ -1,0 +1,33 @@
+﻿@using Frontend.Pages.Component
+@using DTO
+@inject IJSRuntime JS
+@using System.Text.Json
+@using System.Text.Json.Serialization
+
+<div>
+@if (HamsterId != null && KillIt == false)
+{
+    <button class="btn btn-warning" @onclick="ConfirmDelete">Delete</button>
+}
+@if (KillIt && HamsterId != null)
+{
+        <button class="btn btn-danger" @onclick="(() => Delete(HamsterId))">Confirm</button>
+}
+</div>
+@code {
+    public bool KillIt { get; set; } = false;
+    [Parameter]
+    public int? HamsterId { get; set; } = 0;
+    [Parameter]
+    public EventCallback<int?> onDelete { get; set; }
+
+    public async Task Delete(int? id)
+    {
+        if (id == null || id<=0)
+            return;
+        await onDelete.InvokeAsync(id);
+    }
+
+    public async Task ConfirmDelete()
+        => KillIt = true;
+}

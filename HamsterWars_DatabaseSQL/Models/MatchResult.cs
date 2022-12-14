@@ -11,13 +11,13 @@ namespace HamsterWars_DatabaseSQL.Models
     {
         public int Id { get; set; }
         public int MatchId { get; set; }
-        public int WinnerId { get; set; }
-        public int LooserId { get; set; }
+        public int? WinnerId { get; set; }
+        public int? LooserId { get; set; }
         [ForeignKey("WinnerId")]
-        public virtual Hamster Winner { get; set; }
+        public virtual Hamster? Winner { get; set; }
         public int WinnerScore { get; set; }
         [ForeignKey("LooserId")]
-        public virtual Hamster Looser { get; set; }
+        public virtual Hamster? Looser { get; set; }
         public int LooserScore { get; set; }
     }
 }

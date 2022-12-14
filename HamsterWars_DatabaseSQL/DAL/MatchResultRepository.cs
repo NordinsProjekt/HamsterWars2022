@@ -47,7 +47,7 @@ namespace HamsterWars_DatabaseSQL.DAL
 
         public async Task Save() => await _context.SaveChangesAsync();
 
-        public int[] GetDefeatedHamsters(int winnerHamsterId)
+        public int?[] GetDefeatedHamsters(int winnerHamsterId)
         {
             Hamster winner = _context.Hamsters.Where(x=>x.Id== winnerHamsterId).FirstOrDefault();
             if (winner == null)

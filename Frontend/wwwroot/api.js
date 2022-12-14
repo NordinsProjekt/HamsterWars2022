@@ -31,6 +31,21 @@ async function getAPI(url) {
     }
 }
 
+async function delAPI(url) {
+    let result;
+
+    try {
+        result = await $.ajax({
+            url: url,
+            method: 'DELETE'
+        });
+
+        return result;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 function OnScrollEvent() {
     document.documentElement.scrollTop = 0;
 }

@@ -16,29 +16,33 @@ namespace HamsterWars_DatabaseSQL
         public DbSet<Match> Matches { get; set; }
         public DbSet<Vote> Votes { get; set; }
         public DbSet<MatchResult> MatchResults { get; set; }
+        public DbSet<HamsterMatches> HamsterMatches { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
-        .UseSqlServer(@"Server=DESKTOP-MBPUR5V\SQLEXPRESS;Database=HamsterWars_MN_2022;Trusted_Connection=True;Encrypt=False");
+        //.UseSqlServer(@"Server=DESKTOP-MBPUR5V\SQLEXPRESS;Database=HamsterWars_MN_2022;Trusted_Connection=True;Encrypt=False");
+        .UseSqlServer(@"Server=LAPTOP-JG820AED\SQLEXPRESS;Database=HamsterWars_MN_2022;Trusted_Connection=True;Encrypt=False");
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Hamster>()
                     .HasMany(b => b.Matches)
                     .WithMany(a => a.Contestants)
                     .UsingEntity<HamsterMatches>(ab => ab.HasOne<Match>().WithMany(),
-                    ab => ab.HasOne<Hamster>().WithMany());
+                    ab => ab.HasOne<Hamster>().WithMany()
+                    .OnDelete(DeleteBehavior.Restrict)
+                    );
 
             modelBuilder.Entity<MatchResult>()
                 .HasOne(x => x.Winner)
                 .WithMany(y=> y.MatchResultsWinner)
                 .HasForeignKey(a => a.WinnerId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<MatchResult>()
                 .HasOne(x => x.Looser)
                 .WithMany(y => y.MatchResultsLooser)
                 .HasForeignKey(a => a.LooserId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
 
             //Seed
             modelBuilder.Entity<Hamster>().HasData(

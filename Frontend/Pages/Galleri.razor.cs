@@ -5,8 +5,8 @@ namespace Frontend.Pages
 {
     public partial class Galleri
     {
-        public List<HamsterDTO> galleryList;
-        public HamsterDTO infoHamster;
+        public List<HamsterDTO>? galleryList;
+        public HamsterDTO? infoHamster;
         public List<HamsterDTO> hamsterKilled = new List<HamsterDTO>();
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -25,6 +25,15 @@ namespace Frontend.Pages
                 hamsterKilled.Add(hamster);
             }
             await JS.InvokeVoidAsync("OnScrollEvent");
+            StateHasChanged();
+        }
+
+        public async Task DeleteHamster(int? id)
+        {
+            if (id == null || id <= 0)
+                return;
+            await JS.InvokeVoidAsync("delAPI", "https://localhost:7232/hamsters/" + id);
+            infoHamster = null;
             StateHasChanged();
         }
     }

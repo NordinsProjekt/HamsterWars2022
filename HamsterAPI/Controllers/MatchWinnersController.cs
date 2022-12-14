@@ -33,7 +33,6 @@ namespace HamsterAPI.Controllers
                 //500
                 return StatusCode(500);
             }
-            return Ok();
         }
 
     }

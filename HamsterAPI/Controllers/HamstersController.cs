@@ -139,8 +139,9 @@ namespace HamsterAPI.Controllers
                 else
                     return NotFound();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return StatusCode(500);
             }
 

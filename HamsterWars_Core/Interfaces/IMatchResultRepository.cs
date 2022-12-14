@@ -12,7 +12,7 @@ namespace HamsterWars_Core.Interfaces
         public IEnumerable<HamsterDTO> GetTop5Hamsters();
         public IEnumerable<HamsterDTO> GetLow5Hamsters();
         public MatchResultDTO[] GetMatchWinners(int id);
-        public int[] GetDefeatedHamsters(int winnerHamsterId);
+        public int?[] GetDefeatedHamsters(int winnerHamsterId);
         public ScoreCardDTO GetChallengerScoreCard(int challenger, int defender);
         public int[] GetLowestGamesTop5();
         public int[] GetHighestGamesTop5();

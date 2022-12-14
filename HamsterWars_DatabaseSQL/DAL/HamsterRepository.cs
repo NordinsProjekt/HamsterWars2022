@@ -58,9 +58,14 @@ namespace HamsterWars_DatabaseSQL.DAL
 
         async Task<bool> IHamsterRepository.DeleteHamster(int hamsterId)
         {
-            Hamster hamster = _context.Hamsters.Where(x=>x.Id == hamsterId).FirstOrDefault();
+            Hamster hamster = _context.Hamsters.Include(y=>y.Matches).Where(x=>x.Id == hamsterId).FirstOrDefault();
             if (hamster == null)
                 return false;
+            List<MatchResult> matchlist = _context.MatchResults.Where(x=>x.WinnerId== hamster.Id || x.LooserId == hamster.Id).ToList();
+            _context.RemoveRange(matchlist);
+            List<HamsterMatches> hamMatch = _context.HamsterMatches.Where(x=>x.HamsterId== hamsterId).ToList();
+            _context.RemoveRange(hamMatch);
+            _context.RemoveRange(hamster.Matches.ToList());
             _context.Remove(hamster);
             await Save();
             return true;

@@ -4,4 +4,8 @@
 <h1>Galleri</h1>
 <p>Choose a hamster to view more information</p>
 <HamsterInfo infoHamster=infoHamster Killed="hamsterKilled" />
+@if (infoHamster != null)
+{
+    <DeleteHamster onDelete="DeleteHamster" HamsterId="infoHamster.Id" />
+}
 <HamsterGallery galleryList="galleryList" onShowMore="ShowMore" />
