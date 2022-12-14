@@ -70,3 +70,7 @@ a, .btn-link {
 #large {
     width: 300px;
 }
+.battleCons {
+    padding-left: 20px;
+    padding-right: 20px;
+}

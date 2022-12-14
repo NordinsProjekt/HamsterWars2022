@@ -1,8 +1,8 @@
 ﻿@using DTO
-<div>
+<div class="d-flex align-content-stretch flex-wrap flex-row">
     @foreach (var hamster in Battle.Contestants)
     {
-        <div d-flex align-content-stretch flex-wrap flex-row @onclick="(() => HamsterBattle(hamster.Id))">
+        <div class="battleCons" @onclick="(() => HamsterBattle(hamster.Id))">
             <h3>@hamster.Name</h3>
             <p><b>Age: </b>@hamster.Age</p>
             <p><b>Fav food: </b>@hamster.FavFood</p>
@@ -19,6 +19,4 @@
 
     public async Task HamsterBattle(int hamsterId)
         => await onBattleWinner.InvokeAsync(new int[2] { Battle.Id, hamsterId });
-};
-
 }
