@@ -18,6 +18,7 @@ namespace HamsterWars_DatabaseSQL.Models
         public int Wins { get; set; }
         public int Losses { get; set; }
         public int Games { get; set; }
+        public bool IsDeleted { get; set; } = false;
         public List<Match>? Matches { get; set; }
         public List<MatchResult>? MatchResultsWinner { get; set; }
         public List<MatchResult>? MatchResultsLooser { get; set; }
