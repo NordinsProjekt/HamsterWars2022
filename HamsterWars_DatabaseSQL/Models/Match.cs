@@ -12,8 +12,10 @@ namespace HamsterWars_DatabaseSQL.Models
         public int Id { get; set; }
         public bool IsCompleted { get; set; }
         public List<Hamster> Contestants { get; set; } = new List<Hamster>();
+        public int? TId { get; set; } //is it part of a tournament?
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set;}
+        public Tournament? Tour { get; set; }
 
     }
 }
