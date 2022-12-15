@@ -8,6 +8,10 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="Hub\" />
+    <Folder Include="Pages\Betting\" />
+    <Folder Include="Pages\Users\" />
+    <Folder Include="Pages\Tournament\" />
   </ItemGroup>
 
   <ItemGroup>
