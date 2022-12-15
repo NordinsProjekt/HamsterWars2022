@@ -20,6 +20,8 @@ namespace HamsterWars_DatabaseSQL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
+            
+            //.UseSqlServer(@"Server=DESKTOP-T2GL85N\SQLEXPRESS2019;Database=HamsterWars_MN_2022;Trusted_Connection=True;Encrypt=False");
         .UseSqlServer(@"Server=DESKTOP-MBPUR5V\SQLEXPRESS;Database=HamsterWars_MN_2022;Trusted_Connection=True;Encrypt=False");
         //.UseSqlServer(@"Server=LAPTOP-JG820AED\SQLEXPRESS;Database=HamsterWars_MN_2022;Trusted_Connection=True;Encrypt=False");
         protected override void OnModelCreating(ModelBuilder modelBuilder)
