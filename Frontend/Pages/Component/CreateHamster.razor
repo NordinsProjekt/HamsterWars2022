@@ -1,0 +1,52 @@
+﻿@using DTO
+<h3>Add Hamster</h3>
+<EditForm Model="hamster" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+    <table>
+        <tr>
+            <td><label for="HamsterName">Name</label></td>
+            <td><InputText id="HamsterName" @bind-Value="hamster.Name" /></td>
+            
+        </tr>
+        <tr>
+            <td><label for="HamsterName">Age</label></td>
+            <td><InputNumber id="HamsterAge" @bind-Value="hamster.Age" /></td>
+        </tr>
+        <tr>
+            <td><label for="HamsterName">FavFood</label></td>
+            <td><InputText id="HamsterFavFood" @bind-Value="hamster.FavFood" /></td>
+        </tr>
+        <tr>
+            <td><label for="HamsterName">Loves</label></td>
+            <td><InputText id="HamsterLoves" @bind-Value="hamster.Loves" /></td>
+        </tr>
+        <tr>
+            <td><label for="HamsterName">ImgName</label></td>
+            <td><InputSelect id="HamsterImgName" @bind-Value="hamster.ImgName">
+                    @foreach (var img in files)
+                    {
+                        <option>@img.Name</option>
+                    }
+                </InputSelect>
+            </td>
+        </tr>
+        <tr><td><button class="btn-primary" type="submit">Save</button></td></tr>
+    </table>
+</EditForm>
+
+@code {
+
+    public CreateHamsterDTO hamster = new();
+    [Parameter]
+    public EventCallback<CreateHamsterDTO> onCreated { get; set; }
+    public List<FileInfo> files;
+    protected override void OnInitialized()
+    {
+            DirectoryInfo d = new DirectoryInfo(@"wwwroot\img\hamsters");
+            files = d.GetFiles().ToList();
+    }
+    public async Task HandleValidSubmit()
+        => await onCreated.InvokeAsync(hamster);
+        
+}

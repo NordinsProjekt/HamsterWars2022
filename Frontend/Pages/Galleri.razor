@@ -4,8 +4,17 @@
 <h1>Galleri</h1>
 <p>Choose a hamster to view more information</p>
 <HamsterInfo infoHamster=infoHamster Killed="hamsterKilled" />
+@if (ShowInputField)
+{
+    <CreateHamster onCreated="CreateHamsterObjekt" />
+}
+else
+{
+    <button class="btn btn-primary" @onclick="ShowCreateHamster">Create Hamster</button>
+}
 @if (infoHamster != null)
 {
     <DeleteHamster onDelete="DeleteHamster" HamsterId="infoHamster.Id" />
 }
 <HamsterGallery galleryList="galleryList" onShowMore="ShowMore" />
+
