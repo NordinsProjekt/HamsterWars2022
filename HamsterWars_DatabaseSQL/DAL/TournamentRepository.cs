@@ -1,4 +1,7 @@
-﻿using System;
+﻿using HamsterWars_Core.DTO;
+using HamsterWars_Core.Interfaces;
+using HamsterWars_DatabaseSQL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HamsterWars_DatabaseSQL.DAL
 {
-    public class TournamentRepository : IDisposable
+    public class TournamentRepository :ITournamentRepository , IDisposable
     {
         private bool disposedValue;
         private HamsterContext _context;
@@ -25,6 +28,73 @@ namespace HamsterWars_DatabaseSQL.DAL
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+        }
+
+        public IEnumerable<TournamentDTO> GetTournaments()
+        {
+            throw new NotImplementedException();
+        }
+
+        public TournamentDTO GetTournamentByID(int tournamentId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> CreateTournament(int[] hamsters, string title)
+        {
+            if (string.IsNullOrWhiteSpace(title))
+                return false;
+            if (hamsters.Length % 2 != 0)
+                return false;
+            var hList = GetHamstersFromIdArray(hamsters);
+            if (hList.Count == 0)
+                return false;
+            var mList = GetMatchesFromHamsterList(hList);
+            _context.AddRange(mList);
+            Tournament t = new Tournament();
+            t.Title= title;
+            t.StartDate = DateTime.Now;
+            t.matches = mList;
+            _context.Add(t);
+            await _context.SaveChangesAsync();
+            return true;
+
+        }
+
+        private List<Hamster> GetHamstersFromIdArray(int[] hamsters)
+        {
+            List<Hamster> hList = new List<Hamster>();
+            for (int i = 0; i < hamsters.Length; i++)
+            {
+                var h = _context.Hamsters.Where(x => x.Id == hamsters[i]).FirstOrDefault();
+                if (h != null)
+                    hList.Add(h);
+                else
+                    return new List<Hamster>();
+            }
+            return hList;
+        }
+
+        private List<Match> GetMatchesFromHamsterList(List<Hamster> hamsterList)
+        {
+            Random rnd = new Random();
+            List<Match> matches = new List<Match>();
+            int x = 1;
+            while(hamsterList.Count != 0)
+            {
+                Match m = new Match();
+                m.StartDate = DateTime.Now;
+                int index = rnd.Next(hamsterList.Count);
+                m.Contestants.Add(hamsterList[index]);
+                hamsterList.RemoveAt(index);
+
+                index = rnd.Next(hamsterList.Count);
+                m.Contestants.Add(hamsterList[index]);
+                hamsterList.RemoveAt(index);
+                m.TId = x++; //should be bracket
+                matches.Add(m);
+            }
+            return matches;
         }
     }
 }
