@@ -23,14 +23,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/GetTournamentByID/{id}", (int id, [FromServices] ITournamentRepository _rep) =>
-{
-    var request = _rep.GetTournamentByID(id);
-    if (request != null)
-        return Results.Ok(request);
-    else
-        return Results.BadRequest();
-}).WithName("GetTournamentByID");
+//app.MapGet("/GetTournamentByID/{id}", (int id, [FromServices] ITournamentRepository _rep) =>
+//{
+//    var request = _rep.GetTournamentByID(id);
+//    if (request != null)
+//        return Results.Ok(request);
+//    else
+//        return Results.BadRequest();
+//}).WithName("GetTournamentByID");
+
 app.MapPost("/CreateTournament", async ([FromBody]int[] hamstersId, string title, [FromServices] ITournamentRepository _rep) =>
 {
     var request = await _rep.CreateTournament(hamstersId,title);
@@ -39,6 +40,22 @@ app.MapPost("/CreateTournament", async ([FromBody]int[] hamstersId, string title
     else
         return Results.BadRequest();
 }).WithName("PostCreateTournament");
+
+app.MapPost("/EndGame/{id}", async (int id,[FromServices] IMatchRepository _rep) =>
+{
+    try
+    {
+        var request = await _rep.EndMatchAndCountVotes(id);
+        if (request)
+            return Results.Ok();
+        else
+            return Results.NotFound();
+    }
+    catch (Exception)
+    {
+        return Results.Problem("Internal Server Error", null, 500);
+    }
+}).WithName("EndGameAndUpdateStats");
 
 app.MapDelete("/hamster/{id}", async (int id,[FromServices] IHamsterRepository _rep) =>
 {
