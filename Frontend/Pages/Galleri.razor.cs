@@ -7,7 +7,7 @@ namespace Frontend.Pages
     {
         public List<HamsterDTO>? galleryList;
         public HamsterDTO? infoHamster;
-        public List<HamsterDTO> hamsterKilled = new List<HamsterDTO>();
+        public List<HamsterDTO> hamsterKilled = new();
         public bool ShowInputField { get; set; } = false;
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -15,10 +15,10 @@ namespace Frontend.Pages
             StateHasChanged();
         }
 
-        public async void ShowMore(int id)
+        public async Task ShowMore(int id)
         {
             hamsterKilled.Clear();
-            infoHamster = galleryList.Where(x => x.Id == id).FirstOrDefault();
+            infoHamster = galleryList.FirstOrDefault(x => x.Id == id);
             var result = await JS.InvokeAsync<int[]>("getAPI", "https://localhost:7232/Defeated/" + infoHamster.Id);
             for (int i = 0; i < result.Length; i++)
             {
@@ -37,7 +37,7 @@ namespace Frontend.Pages
             infoHamster = null;
             StateHasChanged();
         }
-        public async Task ShowCreateHamster()
+        public void ShowCreateHamster()
         {
             ShowInputField = true;
             infoHamster = null;

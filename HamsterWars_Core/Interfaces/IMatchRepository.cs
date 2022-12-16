@@ -9,8 +9,8 @@ namespace HamsterWars_Core.Interfaces
 {
     public interface IMatchRepository
     {
-        IEnumerable<MatchDTO> GetMatches();
-        MatchFullDTO GetMatchByID(int matchId);
+        Task<IEnumerable<MatchDTO>> GetMatches();
+        Task<MatchFullDTO> GetMatchByID(int matchId);
         Task<MatchFullDTO> InsertMatch(MatchCreateDTO match);
         Task<bool> DeleteMatch(int matchId);
         public Task<bool> EndMatchAndCountVotes(int id);

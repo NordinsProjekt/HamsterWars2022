@@ -14,8 +14,8 @@ namespace HamsterWars_DatabaseSQL.DAL
     public class MatchRepository : IMatchRepository, IDisposable
     {
         private bool disposedValue;
-        private HamsterContext _context;
-        private Random rnd = new Random();
+        private readonly HamsterContext _context;
+        private readonly Random rnd = new();
         public MatchRepository(HamsterContext context) => _context = context;
         protected virtual void Dispose(bool disposing)
         {
@@ -32,12 +32,12 @@ namespace HamsterWars_DatabaseSQL.DAL
             GC.SuppressFinalize(this);
         }
 
-        public IEnumerable<MatchDTO> GetMatches() 
-            => MappingFunctions.MapMatchListToMatchDTOList(_context.Matches.Include(hamster => hamster.Contestants).ToList());
+        public async Task<IEnumerable<MatchDTO>> GetMatches() 
+            => MappingFunctions.MapMatchListToMatchDTOList(await _context.Matches.Include(hamster => hamster.Contestants).ToListAsync());
 
-        public MatchFullDTO GetMatchByID(int matchId)
-            => MappingFunctions.MapMatchToMatchFullDTO(_context.Matches.Include(hamster => hamster.Contestants)
-                .Where(match => match.Id == matchId).FirstOrDefault());
+        public async Task<MatchFullDTO> GetMatchByID(int matchId)
+            => MappingFunctions.MapMatchToMatchFullDTO(await _context.Matches.Include(hamster => hamster.Contestants)
+                .Where(match => match.Id == matchId).FirstOrDefaultAsync());
 
         public async Task<bool> DeleteMatch(int matchId)
         {
@@ -55,11 +55,11 @@ namespace HamsterWars_DatabaseSQL.DAL
 
         public async Task<MatchFullDTO> InsertMatch(MatchCreateDTO match)
         {
-            Hamster cons1 = await _context.Hamsters.Where(x=>x.Id == match.Hamster1Id).Where(y => y.IsDeleted == false).FirstOrDefaultAsync();
-            Hamster cons2 = await _context.Hamsters.Where(x => x.Id == match.Hamster2Id).Where(y => y.IsDeleted == false).FirstOrDefaultAsync();
+            Hamster? cons1 = await _context.Hamsters.Where(x=>x.Id == match.Hamster1Id).Where(y => y.IsDeleted == false).FirstOrDefaultAsync();
+            Hamster? cons2 = await _context.Hamsters.Where(x => x.Id == match.Hamster2Id).Where(y => y.IsDeleted == false).FirstOrDefaultAsync();
             if (cons1!= null && cons2 != null)
             {
-                Match m = new Match();
+                Match m = new();
                 m.Contestants.Add(cons1);
                 m.Contestants.Add(cons2);
                 m.StartDate = match.StartDate;
@@ -76,7 +76,7 @@ namespace HamsterWars_DatabaseSQL.DAL
 
         public async Task<bool> EndMatchAndCountVotes(int id)
         {
-            Match m = _context.Matches.Include(h=>h.Contestants).Where(x=>x.Id == id).FirstOrDefault();
+            Match? m = _context.Matches.Include(h=>h.Contestants).Where(x=>x.Id == id).FirstOrDefault();
             if (m == null)
                 return false;
 

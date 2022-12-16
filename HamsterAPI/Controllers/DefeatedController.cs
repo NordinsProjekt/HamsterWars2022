@@ -18,11 +18,11 @@ namespace HamsterAPI.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public IActionResult Get(int hamsterId)
+        public async Task<IActionResult> Get(int hamsterId)
         {
             try
             {
-                return Ok(_matchResultRep.GetDefeatedHamsters(hamsterId));
+                return Ok(await _matchResultRep.GetDefeatedHamsters(hamsterId));
             }
             catch (ArgumentException ae)
             {

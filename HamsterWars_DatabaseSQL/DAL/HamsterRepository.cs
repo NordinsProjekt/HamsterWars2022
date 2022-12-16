@@ -39,14 +39,14 @@ namespace HamsterWars_DatabaseSQL.DAL
 
         public async Task Save() => await _context.SaveChangesAsync();
 
-        IEnumerable<HamsterFullDTO> IHamsterRepository.GetHamsters()
-            => MappingFunctions.MapHamsterToHamsterFullDTOList(_context.Hamsters.Include(match => match.Matches).Where(y => y.IsDeleted == false).ToList());
+        async Task<IEnumerable<HamsterFullDTO>> IHamsterRepository.GetHamsters()
+            => MappingFunctions.MapHamsterToHamsterFullDTOList(await _context.Hamsters.Include(match => match.Matches).Where(y => y.IsDeleted == false).ToListAsync());
 
         HamsterFullDTO IHamsterRepository.RandomHamster()
             => MappingFunctions.MapHamsterToHamsterFullDTO(_context.Hamsters.Include(match => match.Matches).Where(y => y.IsDeleted == false).ToList()
                 .ElementAt(rnd.Next(_context.Hamsters.Count())));
-        HamsterFullDTO IHamsterRepository.GetHamsterByID(int hamsterId) 
-            => MappingFunctions.MapHamsterToHamsterFullDTO(_context.Hamsters.Where(hamster => hamster.Id == hamsterId).Where(y => y.IsDeleted == false).FirstOrDefault());
+        async Task<HamsterFullDTO> IHamsterRepository.GetHamsterByID(int hamsterId) 
+            => MappingFunctions.MapHamsterToHamsterFullDTO(await _context.Hamsters.Where(hamster => hamster.Id == hamsterId).Where(y => y.IsDeleted == false).FirstOrDefaultAsync());
 
         public async Task<HamsterFullDTO> InsertHamsterAsync(HamsterCreateDTO hamster)
         {
@@ -73,8 +73,7 @@ namespace HamsterWars_DatabaseSQL.DAL
             foreach (var item in changes.GetType().GetProperties())
             {
                 var value = item.GetValue(changes, null);
-                if (value != null)
-                    org.GetType().GetProperty(item.Name).SetValue(org, value, null);
+                if (value != null) org.GetType().GetProperty(item.Name).SetValue(org, value, null);
             }
             _context.Update(org);
             await Save();

@@ -14,20 +14,20 @@ namespace HamsterAPI.Controllers
     [ApiController]
     public class HamstersController : ControllerBase
     {
-        IHamsterRepository _hamsterRep;
+        readonly IHamsterRepository _hamsterRep;
         public HamstersController(IHamsterRepository _rep) => _hamsterRep = _rep;
 
         // GET: api/<HamsterController>
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
             try
             {
-                return Ok(_hamsterRep.GetHamsters());
+                return Ok(await _hamsterRep.GetHamsters());
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(500);
             }
@@ -55,11 +55,11 @@ namespace HamsterAPI.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             try
             {
-                var hamster = _hamsterRep.GetHamsterByID(id);
+                var hamster = await _hamsterRep.GetHamsterByID(id);
                 if (hamster != null)
                     return Ok(hamster);
                 else
@@ -87,7 +87,7 @@ namespace HamsterAPI.Controllers
                     if (result.Id > 0) { return Ok(result); }
                     return BadRequest();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return StatusCode(500);
                 }
@@ -124,27 +124,5 @@ namespace HamsterAPI.Controllers
             return BadRequest();
 
         }
-
-        // DELETE api/<HamsterController>/5
-        //[HttpDelete("{id}")]
-        //[ProducesResponseType(200)]
-        //[ProducesResponseType(404)]
-        //[ProducesResponseType(500)]
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //    try
-        //    {
-        //        if (await _hamsterRep.DeleteHamster(id))
-        //            return Ok();
-        //        else
-        //            return NotFound();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex);
-        //        return StatusCode(500);
-        //    }
-
-        //}
     }
 }

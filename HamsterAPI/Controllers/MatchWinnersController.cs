@@ -17,18 +17,18 @@ namespace HamsterAPI.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public IActionResult Get(int hamsterId)
+        public async Task<IActionResult> Get(int hamsterId)
         {
             try
             {
-                var result = _matchResultRep.GetMatchWinners(hamsterId);
+                var result = await _matchResultRep.GetMatchWinners(hamsterId);
                 if (result.Count() == 0) 
                 {
                     return NotFound();
                 }
                 return Ok(result);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //500
                 return StatusCode(500);

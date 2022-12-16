@@ -15,7 +15,7 @@ namespace HamsterWars_DatabaseSQL.DAL
     public class MatchResultRepository : IMatchResultRepository, IDisposable
     {
         private bool disposedValue;
-        private HamsterContext _context;
+        private readonly HamsterContext _context;
         public MatchResultRepository(HamsterContext context) => _context = context;
         protected virtual void Dispose(bool disposing)
         {
@@ -32,24 +32,24 @@ namespace HamsterWars_DatabaseSQL.DAL
             GC.SuppressFinalize(this);
         }
 
-        public IEnumerable<HamsterDTO> GetTop5Hamsters()
-            => MappingFunctions.MapHamsterListToHamsterDTOList(_context.Hamsters.OrderByDescending(x => x.Wins).Take(5).ToList());
+        public async Task<IEnumerable<HamsterDTO>> GetTop5Hamsters()
+            => MappingFunctions.MapHamsterListToHamsterDTOList(await _context.Hamsters.OrderByDescending(x => x.Wins).Take(5).ToListAsync());
 
-        public IEnumerable<HamsterDTO> GetLow5Hamsters()
-            => MappingFunctions.MapHamsterListToHamsterDTOList(_context.Hamsters.OrderByDescending(x => x.Losses).Take(5).ToList());
-        public MatchResultDTO[] GetMatchWinners(int hamsterId)
+        public async Task<IEnumerable<HamsterDTO>> GetLow5Hamsters()
+            => MappingFunctions.MapHamsterListToHamsterDTOList(await _context.Hamsters.OrderByDescending(x => x.Losses).Take(5).ToListAsync());
+        public async Task<MatchResultDTO[]> GetMatchWinners(int hamsterId)
         {
-            var result = MappingFunctions.MapMatchResultListToMatchResultDTOList(_context.MatchResults.Include(x => x.Winner)
-                .Include(y => y.Looser).Where(hamster => hamster.WinnerId == hamsterId).ToList());
+            var result = MappingFunctions.MapMatchResultListToMatchResultDTOList(await _context.MatchResults.Include(x => x.Winner)
+                .Include(y => y.Looser).Where(hamster => hamster.WinnerId == hamsterId).ToListAsync());
             MatchResultDTO[] arr = result.ToArray();
             return arr;
         }
 
         public async Task Save() => await _context.SaveChangesAsync();
 
-        public int?[] GetDefeatedHamsters(int winnerHamsterId)
+        public async Task<int?[]> GetDefeatedHamsters(int winnerHamsterId)
         {
-            Hamster winner = _context.Hamsters.Where(x=>x.Id== winnerHamsterId).FirstOrDefault();
+            Hamster? winner = await _context.Hamsters.Where(x => x.Id == winnerHamsterId).FirstOrDefaultAsync();
             if (winner == null)
                 throw new ArgumentException("Hamstern finns inte");
             var result = _context.MatchResults.Include(winner => winner.Winner).Include(loser=>loser.Looser)
@@ -57,28 +57,28 @@ namespace HamsterWars_DatabaseSQL.DAL
             return result;
         }
 
-        public ScoreCardDTO GetChallengerScoreCard(int challenger, int defender)
+        public async Task<ScoreCardDTO> GetChallengerScoreCard(int challenger, int defender)
         {
-            Hamster cHamster = _context.Hamsters.Where(x=>x.Id== challenger).FirstOrDefault();
-            Hamster dHamster = _context.Hamsters.Where(x => x.Id == defender).FirstOrDefault();
+            Hamster? cHamster = await _context.Hamsters.Where(x=>x.Id== challenger).FirstOrDefaultAsync();
+            Hamster? dHamster = await _context.Hamsters.Where(x => x.Id == defender).FirstOrDefaultAsync();
             if (dHamster == null || cHamster == null)
                 throw new ArgumentException("Hamstern finns inte");
 
-            var challengerScore = _context.MatchResults.Where(chall => chall.WinnerId == challenger)
-                .Where(loss => loss.LooserId == defender).Select(x => x.WinnerId).Count();
-            var defenderScore = _context.MatchResults.Where(chall => chall.WinnerId == defender)
-                .Where(loss => loss.LooserId == challenger).Select(x => x.WinnerId).Count();
-            ScoreCardDTO card = new ScoreCardDTO(challengerScore, defenderScore,
+            var challengerScore = await _context.MatchResults.Where(chall => chall.WinnerId == challenger)
+                .Where(loss => loss.LooserId == defender).Select(x => x.WinnerId).CountAsync();
+            var defenderScore = await _context.MatchResults.Where(chall => chall.WinnerId == defender)
+                .Where(loss => loss.LooserId == challenger).Select(x => x.WinnerId).CountAsync();
+            ScoreCardDTO card = new(challengerScore, defenderScore,
                 MappingFunctions.MapHamsterToHamsterDTO(cHamster),
                 MappingFunctions.MapHamsterToHamsterDTO(dHamster));
             return card;
         }
 
-        public int[] GetLowestGamesTop5()
-            => _context.Hamsters.OrderBy(x => x.Games).Select(y=>y.Id).Take(5).ToArray();
+        public async Task<int[]> GetLowestGamesTop5()
+            => await _context.Hamsters.OrderBy(x => x.Games).Select(y=>y.Id).Take(5).ToArrayAsync();
 
-        public int[] GetHighestGamesTop5()
-            => _context.Hamsters.OrderByDescending(x => x.Games).Select(y => y.Id).Take(5).ToArray();
+        public async Task<int[]> GetHighestGamesTop5()
+            => await _context.Hamsters.OrderByDescending(x => x.Games).Select(y => y.Id).Take(5).ToArrayAsync();
 
         
     }

@@ -16,11 +16,11 @@ namespace HamsterAPI.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public IActionResult Get(int challenger, int defender)
+        public async Task<IActionResult> Get(int challenger, int defender)
         {
             try
             {
-                return Ok(_matchResultRep.GetChallengerScoreCard(challenger, defender));
+                return Ok(await _matchResultRep.GetChallengerScoreCard(challenger, defender));
             }
             catch (ArgumentException ae)
             {

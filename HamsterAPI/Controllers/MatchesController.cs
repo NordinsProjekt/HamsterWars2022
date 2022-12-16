@@ -22,7 +22,7 @@ namespace HamsterAPI.Controllers
             {
                 return Ok(_matchRep.GetMatches());
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(500);
             }
@@ -67,7 +67,7 @@ namespace HamsterAPI.Controllers
                 {
                     return NotFound(ae.Message);
                 }
-                catch(Exception ex)
+                catch(Exception)
                 {
                     return StatusCode(500);
                 }
@@ -87,7 +87,7 @@ namespace HamsterAPI.Controllers
                 else
                     return NotFound();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(500);
             }

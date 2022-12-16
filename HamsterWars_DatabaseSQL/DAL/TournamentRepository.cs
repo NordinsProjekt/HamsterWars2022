@@ -31,12 +31,12 @@ namespace HamsterWars_DatabaseSQL.DAL
             GC.SuppressFinalize(this);
         }
 
-        public IEnumerable<TournamentDTO> GetTournaments()
-            => MappingFunctions.MapTournamentListToTournamentDTOList(_context.Tournaments.ToList());
+        public async Task<IEnumerable<TournamentDTO>> GetTournaments()
+            => MappingFunctions.MapTournamentListToTournamentDTOList(await _context.Tournaments.ToListAsync());
 
-        public TournamentDTO GetTournamentByID(int tournamentId)
-            => MappingFunctions.MapTournamentToTournamentDTO(_context.Tournaments.Include(m=>m.Matches).ThenInclude(h=>h.Contestants)
-             .Where(x => x.Id == tournamentId).FirstOrDefault());
+        public async Task<TournamentDTO> GetTournamentByID(int tournamentId)
+            => MappingFunctions.MapTournamentToTournamentDTO(await _context.Tournaments.Include(m=>m.Matches).ThenInclude(h=>h.Contestants)
+             .Where(x => x.Id == tournamentId).FirstOrDefaultAsync());
 
         public async Task<bool> CreateTournament(int[] hamsters, string title)
         {
@@ -45,9 +45,9 @@ namespace HamsterWars_DatabaseSQL.DAL
             if (hamsters.Length % 2 != 0)
                 return false;
             var hList = GetHamstersFromIdArray(hamsters);
-            if (hList.Count == 0)
+            if (hList.Result.Count == 0)
                 return false;
-            var mList = GetMatchesFromHamsterList(hList);
+            var mList = GetMatchesFromHamsterList(hList.Result);
             _context.AddRange(mList);
             Tournament t = new Tournament();
             t.Title= title;
@@ -59,14 +59,13 @@ namespace HamsterWars_DatabaseSQL.DAL
 
         }
 
-        private List<Hamster> GetHamstersFromIdArray(int[] hamsters)
+        private async Task<List<Hamster>> GetHamstersFromIdArray(int[] hamsters)
         {
             List<Hamster> hList = new List<Hamster>();
             for (int i = 0; i < hamsters.Length; i++)
             {
-                var h = _context.Hamsters.Where(x => x.Id == hamsters[i]).FirstOrDefault();
-                if (h != null)
-                    hList.Add(h);
+                Hamster? h = await _context.Hamsters.Where(x => x.Id == hamsters[i]).FirstOrDefaultAsync();
+                if (h != null) hList.Add(h);
                 else
                     return new List<Hamster>();
             }

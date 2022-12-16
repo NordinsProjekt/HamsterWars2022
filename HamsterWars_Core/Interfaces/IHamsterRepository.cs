@@ -9,9 +9,9 @@ namespace HamsterWars_Core.Interfaces
 {
     public interface IHamsterRepository
     {
-        IEnumerable<HamsterFullDTO> GetHamsters();
+        Task<IEnumerable<HamsterFullDTO>> GetHamsters();
         HamsterFullDTO RandomHamster();
-        HamsterFullDTO GetHamsterByID(int hamsterId);
+        Task<HamsterFullDTO> GetHamsterByID(int hamsterId);
         Task<HamsterFullDTO> InsertHamsterAsync(HamsterCreateDTO hamster);
         Task<bool> UpdateHamster(HamsterPatchDTO changes,int hamsterId);
         Task<bool> RestoreHamster(int id);

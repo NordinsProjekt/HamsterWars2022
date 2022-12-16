@@ -9,13 +9,13 @@ namespace HamsterWars_Core.Interfaces
 {
     public interface IMatchResultRepository
     {
-        public IEnumerable<HamsterDTO> GetTop5Hamsters();
-        public IEnumerable<HamsterDTO> GetLow5Hamsters();
-        public MatchResultDTO[] GetMatchWinners(int id);
-        public int?[] GetDefeatedHamsters(int winnerHamsterId);
-        public ScoreCardDTO GetChallengerScoreCard(int challenger, int defender);
-        public int[] GetLowestGamesTop5();
-        public int[] GetHighestGamesTop5();
+        public Task<IEnumerable<HamsterDTO>> GetTop5Hamsters();
+        public Task<IEnumerable<HamsterDTO>> GetLow5Hamsters();
+        public Task<MatchResultDTO[]> GetMatchWinners(int id);
+        public Task<int?[]> GetDefeatedHamsters(int winnerHamsterId);
+        public Task<ScoreCardDTO> GetChallengerScoreCard(int challenger, int defender);
+        public Task<int[]> GetLowestGamesTop5();
+        public Task<int[]> GetHighestGamesTop5();
         public Task Save();
     }
 }
