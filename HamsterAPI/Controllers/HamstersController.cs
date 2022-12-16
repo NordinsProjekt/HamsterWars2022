@@ -126,25 +126,25 @@ namespace HamsterAPI.Controllers
         }
 
         // DELETE api/<HamsterController>/5
-        [HttpDelete("{id}")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(404)]
-        [ProducesResponseType(500)]
-        public async Task<IActionResult> Delete(int id)
-        {
-            try
-            {
-                if (await _hamsterRep.DeleteHamster(id))
-                    return Ok();
-                else
-                    return NotFound();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                return StatusCode(500);
-            }
+        //[HttpDelete("{id}")]
+        //[ProducesResponseType(200)]
+        //[ProducesResponseType(404)]
+        //[ProducesResponseType(500)]
+        //public async Task<IActionResult> Delete(int id)
+        //{
+        //    try
+        //    {
+        //        if (await _hamsterRep.DeleteHamster(id))
+        //            return Ok();
+        //        else
+        //            return NotFound();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex);
+        //        return StatusCode(500);
+        //    }
 
-        }
+        //}
     }
 }
