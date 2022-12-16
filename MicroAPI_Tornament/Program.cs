@@ -51,4 +51,22 @@ app.MapDelete("/hamster/{id}", async (int id,[FromServices] IHamsterRepository _
 })
 .WithName("DeleteHamster");
 
+app.MapPut("/hamster/{id}/Restore", async (int id, [FromServices] IHamsterRepository _rep) =>
+{
+    try
+    {
+        var request = await _rep.RestoreHamster(id);
+        if (request)
+            return Results.Ok();
+        else
+            return Results.BadRequest();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex);
+        return Results.Problem("Internal Server Error", null, 500);
+    }
+})
+    .WithName("RestoreHamster");
+
 app.Run();

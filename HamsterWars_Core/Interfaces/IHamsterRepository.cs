@@ -14,6 +14,7 @@ namespace HamsterWars_Core.Interfaces
         HamsterFullDTO GetHamsterByID(int hamsterId);
         Task<HamsterFullDTO> InsertHamsterAsync(HamsterCreateDTO hamster);
         Task<bool> UpdateHamster(HamsterPatchDTO changes,int hamsterId);
+        Task<bool> RestoreHamster(int id);
         public Task<bool> DeleteHamster(int hamsterId);
         public Task Save();
     }

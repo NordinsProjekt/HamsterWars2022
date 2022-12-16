@@ -59,8 +59,7 @@ namespace HamsterWars_DatabaseSQL.DAL
         async Task<bool> IHamsterRepository.DeleteHamster(int hamsterId) //Softdelete
         {
             Hamster hamster = _context.Hamsters.Where(x=>x.Id == hamsterId).Where(y => y.IsDeleted == false).FirstOrDefault();
-            if (hamster == null)
-                return false;
+            if (hamster == null) return false;
             hamster.IsDeleted = true;
             _context.Update(hamster);
             await Save();
@@ -69,8 +68,7 @@ namespace HamsterWars_DatabaseSQL.DAL
         async Task<bool> IHamsterRepository.UpdateHamster(HamsterPatchDTO changes,int hamsterId)
         {
             Hamster org = _context.Hamsters.Where(x=>x.Id==hamsterId).Where(y=>y.IsDeleted == false).FirstOrDefault();
-            if (org == null)
-                return false;
+            if (org == null) return false;
 
             foreach (var item in changes.GetType().GetProperties())
             {
@@ -79,6 +77,16 @@ namespace HamsterWars_DatabaseSQL.DAL
                     org.GetType().GetProperty(item.Name).SetValue(org, value, null);
             }
             _context.Update(org);
+            await Save();
+            return true;
+        }
+
+        async Task<bool> IHamsterRepository.RestoreHamster(int id)
+        {
+            Hamster h = _context.Hamsters.Where(x => x.Id == id).FirstOrDefault();
+            if (h == null) return false;
+            h.IsDeleted = false;
+            _context.Update(h);
             await Save();
             return true;
         }
