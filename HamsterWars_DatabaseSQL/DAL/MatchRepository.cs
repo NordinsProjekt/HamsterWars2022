@@ -41,7 +41,7 @@ namespace HamsterWars_DatabaseSQL.DAL
 
         public async Task<bool> DeleteMatch(int matchId)
         {
-            Match match = _context.Matches.Where(x=> x.Id == matchId).FirstOrDefault();
+            Match? match = await _context.Matches.Where(x=> x.Id == matchId).FirstOrDefaultAsync();
             if (match != null)
             {
                 _context.Matches.Remove(match);
@@ -76,12 +76,12 @@ namespace HamsterWars_DatabaseSQL.DAL
 
         public async Task<bool> EndMatchAndCountVotes(int id)
         {
-            Match? m = _context.Matches.Include(h=>h.Contestants).Where(x=>x.Id == id).FirstOrDefault();
+            Match? m = await _context.Matches.Include(h=>h.Contestants).Where(x=>x.Id == id).FirstOrDefaultAsync();
             if (m == null)
                 return false;
 
             m.IsCompleted = true;
-            var result = _context.Votes.Where(x => x.MatchId == id).ToList();
+            var result = await _context.Votes.Where(x => x.MatchId == id).ToListAsync();
 
             if (result.Count == 0)
                 return true;

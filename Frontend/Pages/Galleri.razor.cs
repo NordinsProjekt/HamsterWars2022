@@ -11,6 +11,7 @@ namespace Frontend.Pages
         public bool ShowInputField { get; set; } = false;
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
+            galleryList= new List<HamsterDTO>();
             galleryList = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/hamsters");
             StateHasChanged();
         }
