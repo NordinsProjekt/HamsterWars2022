@@ -23,6 +23,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.MapGet("/GetTournamentByID/{id}", (int id, [FromServices] ITournamentRepository _rep) =>
+{
+    var request = _rep.GetTournamentByID(id);
+    if (request != null)
+        return Results.Ok(request);
+    else
+        return Results.BadRequest();
+}).WithName("GetTournamentByID");
 app.MapPost("/CreateTournament", async ([FromBody]int[] hamstersId, string title, [FromServices] ITournamentRepository _rep) =>
 {
     var request = await _rep.CreateTournament(hamstersId,title);
@@ -30,8 +38,7 @@ app.MapPost("/CreateTournament", async ([FromBody]int[] hamstersId, string title
         return Results.Ok();
     else
         return Results.BadRequest();
-})
-.WithName("PostCreateTournament");
+}).WithName("PostCreateTournament");
 
 app.MapDelete("/hamster/{id}", async (int id,[FromServices] IHamsterRepository _rep) =>
 {
@@ -48,8 +55,7 @@ app.MapDelete("/hamster/{id}", async (int id,[FromServices] IHamsterRepository _
         Console.WriteLine(ex);
         return Results.Problem("Internal Server Error", null, 500);
     }
-})
-.WithName("DeleteHamster");
+}).WithName("DeleteHamster");
 
 app.MapPut("/hamster/{id}/Restore", async (int id, [FromServices] IHamsterRepository _rep) =>
 {
@@ -66,7 +72,6 @@ app.MapPut("/hamster/{id}/Restore", async (int id, [FromServices] IHamsterReposi
         Console.WriteLine(ex);
         return Results.Problem("Internal Server Error", null, 500);
     }
-})
-    .WithName("RestoreHamster");
+}).WithName("RestoreHamster");
 
 app.Run();

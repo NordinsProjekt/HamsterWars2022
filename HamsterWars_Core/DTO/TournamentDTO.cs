@@ -7,23 +7,6 @@ using System.Threading.Tasks;
 
 namespace HamsterWars_Core.DTO
 {
-    public class TournamentDTO
-    {
-        private int id;
-        private string name;
-        private List<MatchFullDTO> matches;
-        private DateTime startdate;
-        private DateTime? enddate;
-        private bool isCompleted;
-        public TournamentDTO(int id, string name, List<MatchFullDTO> matches, DateTime startdate,DateTime enddate, bool isCompleted) 
-        { 
-            this.id = id;
-            this.name = name;
-            this.matches = matches;
-            this.startdate = startdate;
-            this.enddate = enddate;
-            this.isCompleted = isCompleted;
-        }
-
-    }
+    public sealed record TournamentDTO(int Id, string Title,List<MatchFullDTO> Matches, 
+        DateTime StartDate, DateTime EndDate, bool IsCompleted);
 }

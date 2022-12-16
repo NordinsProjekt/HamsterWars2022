@@ -1,6 +1,7 @@
 ﻿using HamsterWars_Core.DTO;
 using HamsterWars_Core.Interfaces;
 using HamsterWars_DatabaseSQL.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,14 +32,11 @@ namespace HamsterWars_DatabaseSQL.DAL
         }
 
         public IEnumerable<TournamentDTO> GetTournaments()
-        {
-            throw new NotImplementedException();
-        }
+            => MappingFunctions.MapTournamentListToTournamentDTOList(_context.Tournaments.ToList());
 
         public TournamentDTO GetTournamentByID(int tournamentId)
-        {
-            throw new NotImplementedException();
-        }
+            => MappingFunctions.MapTournamentToTournamentDTO(_context.Tournaments.Include(m=>m.Matches).ThenInclude(h=>h.Contestants)
+             .Where(x => x.Id == tournamentId).FirstOrDefault());
 
         public async Task<bool> CreateTournament(int[] hamsters, string title)
         {
@@ -54,7 +52,7 @@ namespace HamsterWars_DatabaseSQL.DAL
             Tournament t = new Tournament();
             t.Title= title;
             t.StartDate = DateTime.Now;
-            t.matches = mList;
+            t.Matches = mList;
             _context.Add(t);
             await _context.SaveChangesAsync();
             return true;
