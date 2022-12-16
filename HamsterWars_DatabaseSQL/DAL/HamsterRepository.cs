@@ -40,13 +40,13 @@ namespace HamsterWars_DatabaseSQL.DAL
         public async Task Save() => await _context.SaveChangesAsync();
 
         IEnumerable<HamsterFullDTO> IHamsterRepository.GetHamsters()
-            => MappingFunctions.MapHamsterToHamsterFullDTOList(_context.Hamsters.Include(match => match.Matches).ToList());
+            => MappingFunctions.MapHamsterToHamsterFullDTOList(_context.Hamsters.Include(match => match.Matches).Where(y => y.IsDeleted == false).ToList());
 
         HamsterFullDTO IHamsterRepository.RandomHamster()
-            => MappingFunctions.MapHamsterToHamsterFullDTO(_context.Hamsters.Include(match => match.Matches).ToList()
+            => MappingFunctions.MapHamsterToHamsterFullDTO(_context.Hamsters.Include(match => match.Matches).Where(y => y.IsDeleted == false).ToList()
                 .ElementAt(rnd.Next(_context.Hamsters.Count())));
         HamsterFullDTO IHamsterRepository.GetHamsterByID(int hamsterId) 
-            => MappingFunctions.MapHamsterToHamsterFullDTO(_context.Hamsters.Where(hamster => hamster.Id == hamsterId).FirstOrDefault());
+            => MappingFunctions.MapHamsterToHamsterFullDTO(_context.Hamsters.Where(hamster => hamster.Id == hamsterId).Where(y => y.IsDeleted == false).FirstOrDefault());
 
         public async Task<HamsterFullDTO> InsertHamsterAsync(HamsterCreateDTO hamster)
         {
@@ -56,23 +56,19 @@ namespace HamsterWars_DatabaseSQL.DAL
             return MappingFunctions.MapHamsterToHamsterFullDTO(hamsterEntity);
         }
 
-        async Task<bool> IHamsterRepository.DeleteHamster(int hamsterId)
+        async Task<bool> IHamsterRepository.DeleteHamster(int hamsterId) //Softdelete
         {
-            Hamster hamster = _context.Hamsters.Include(y=>y.Matches).Where(x=>x.Id == hamsterId).FirstOrDefault();
+            Hamster hamster = _context.Hamsters.Where(x=>x.Id == hamsterId).Where(y => y.IsDeleted == false).FirstOrDefault();
             if (hamster == null)
                 return false;
-            List<MatchResult> matchlist = _context.MatchResults.Where(x=>x.WinnerId== hamster.Id || x.LooserId == hamster.Id).ToList();
-            _context.RemoveRange(matchlist);
-            List<HamsterMatches> hamMatch = _context.HamsterMatches.Where(x=>x.HamsterId== hamsterId).ToList();
-            _context.RemoveRange(hamMatch);
-            _context.RemoveRange(hamster.Matches.ToList());
-            _context.Remove(hamster);
+            hamster.IsDeleted = true;
+            _context.Update(hamster);
             await Save();
             return true;
         }
         async Task<bool> IHamsterRepository.UpdateHamster(HamsterPatchDTO changes,int hamsterId)
         {
-            Hamster org = _context.Hamsters.Where(x=>x.Id==hamsterId).FirstOrDefault();
+            Hamster org = _context.Hamsters.Where(x=>x.Id==hamsterId).Where(y=>y.IsDeleted == false).FirstOrDefault();
             if (org == null)
                 return false;
 

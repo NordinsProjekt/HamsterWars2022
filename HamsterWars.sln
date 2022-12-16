@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0. Presentation", "0. Prese
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frontend", "Frontend\Frontend.csproj", "{748F428E-9A1E-4159-BC4A-E58A9A1529D1}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroAPI_Tournament", "MicroAPI_Tornament\MicroAPI_Tournament.csproj", "{E49DBF5C-8A96-4601-B0B1-E0C7C08712F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{748F428E-9A1E-4159-BC4A-E58A9A1529D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{748F428E-9A1E-4159-BC4A-E58A9A1529D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{748F428E-9A1E-4159-BC4A-E58A9A1529D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E49DBF5C-8A96-4601-B0B1-E0C7C08712F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E49DBF5C-8A96-4601-B0B1-E0C7C08712F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E49DBF5C-8A96-4601-B0B1-E0C7C08712F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E49DBF5C-8A96-4601-B0B1-E0C7C08712F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{61E5152B-D17B-4FBF-ACA3-070093AFF0D2} = {57FD9E85-572E-434D-9FAC-2A8B4645C3BD}
 		{7F7AC951-BA4E-4FAD-A9A6-AE6B9576B4EB} = {C40DE091-BADD-47A6-905C-B000D18DBBE6}
 		{748F428E-9A1E-4159-BC4A-E58A9A1529D1} = {92F81140-E64D-4743-81DF-17F89D79729F}
+		{E49DBF5C-8A96-4601-B0B1-E0C7C08712F7} = {C40DE091-BADD-47A6-905C-B000D18DBBE6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {00105C6D-D752-4FD1-8648-04B9E1DB0B60}

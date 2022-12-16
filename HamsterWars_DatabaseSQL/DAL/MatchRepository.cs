@@ -55,8 +55,8 @@ namespace HamsterWars_DatabaseSQL.DAL
 
         public async Task<MatchFullDTO> InsertMatch(MatchCreateDTO match)
         {
-            Hamster cons1 = await _context.Hamsters.Where(x=>x.Id == match.Hamster1Id).FirstOrDefaultAsync();
-            Hamster cons2 = await _context.Hamsters.Where(x => x.Id == match.Hamster2Id).FirstOrDefaultAsync();
+            Hamster cons1 = await _context.Hamsters.Where(x=>x.Id == match.Hamster1Id).Where(y => y.IsDeleted == false).FirstOrDefaultAsync();
+            Hamster cons2 = await _context.Hamsters.Where(x => x.Id == match.Hamster2Id).Where(y => y.IsDeleted == false).FirstOrDefaultAsync();
             if (cons1!= null && cons2 != null)
             {
                 Match m = new Match();
