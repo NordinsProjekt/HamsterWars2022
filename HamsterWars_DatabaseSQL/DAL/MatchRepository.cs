@@ -33,7 +33,7 @@ namespace HamsterWars_DatabaseSQL.DAL
         }
 
         public async Task<IEnumerable<MatchDTO>> GetMatches() 
-            => MappingFunctions.MapMatchListToMatchDTOList(await _context.Matches.Include(hamster => hamster.Contestants).ToListAsync());
+            => MappingFunctions.MapMatchListToMatchDTOList(await _context.Matches.Include(hamster => hamster.Contestants).Include(ma=>ma.Result).ToListAsync());
 
         public async Task<MatchFullDTO> GetMatchByID(int matchId)
             => MappingFunctions.MapMatchToMatchFullDTO(await _context.Matches.Include(hamster => hamster.Contestants)

@@ -16,11 +16,11 @@ namespace HamsterAPI.Controllers
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
             try
             {
-                return Ok(_matchRep.GetMatches());
+                return Ok(await _matchRep.GetMatches());
             }
             catch (Exception)
             {

@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace HamsterWars_Core.DTO
 {
-    public sealed record MatchDTO(int Id, List<HamsterDTO> Contestants);   
+    public sealed record MatchDTO(int Id, List<HamsterDTO> Contestants,MatchResultDTO Result);   
 }

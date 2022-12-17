@@ -5,13 +5,12 @@ namespace Frontend.Pages
 {
     public partial class Galleri
     {
-        public List<HamsterDTO>? galleryList;
-        public HamsterDTO? infoHamster;
-        public List<HamsterDTO> hamsterKilled = new();
+        public List<HamsterDTO>? galleryList { get; set; } = new List<HamsterDTO>();
+        public HamsterDTO? infoHamster { get; set; }
+        public List<HamsterDTO> hamsterKilled { get; set; } = new List<HamsterDTO>();
         public bool ShowInputField { get; set; } = false;
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            galleryList= new List<HamsterDTO>();
             galleryList = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/hamsters");
             StateHasChanged();
         }
@@ -19,7 +18,8 @@ namespace Frontend.Pages
         public async Task ShowMore(int id)
         {
             hamsterKilled.Clear();
-            infoHamster = galleryList.FirstOrDefault(x => x.Id == id);
+            var h = galleryList.FirstOrDefault(x => x.Id == id);
+            if (h != null) { infoHamster = h; }
             var result = await JS.InvokeAsync<int[]>("getAPI", "https://localhost:7232/Defeated/" + infoHamster.Id);
             for (int i = 0; i < result.Length; i++)
             {
