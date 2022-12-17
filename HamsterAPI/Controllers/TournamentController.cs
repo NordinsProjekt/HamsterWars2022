@@ -13,9 +13,10 @@ namespace HamsterAPI.Controllers
         public TournamentController(ITournamentRepository _rep) => _tournamentRep = _rep;
         // GET: api/<TournamentController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            var request = await _tournamentRep.GetTournaments();
+            return Ok(request);
         }
 
         // GET api/<TournamentController>/5

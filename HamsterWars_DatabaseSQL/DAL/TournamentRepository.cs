@@ -33,7 +33,8 @@ namespace HamsterWars_DatabaseSQL.DAL
         }
 
         public async Task<IEnumerable<TournamentDTO>> GetTournaments()
-            => MappingFunctions.MapTournamentListToTournamentDTOList(await _context.Tournaments.ToListAsync());
+            => MappingFunctions.MapTournamentListToTournamentDTOList(await _context.Tournaments.Include(m => m.Matches)
+                .ThenInclude(mr => mr.Result).ThenInclude(w => w.Winner).ToListAsync());
 
         public async Task<TournamentDTO> GetTournamentByID(int tournamentId)
             => MappingFunctions.MapTournamentToTournamentDTO(await _context.Tournaments.Include(m=>m.Matches).ThenInclude(h=>h.Contestants)
@@ -62,16 +63,26 @@ namespace HamsterWars_DatabaseSQL.DAL
 
         public async Task<bool> CheckTournamentMatches(int tourId)
         {
-            Tournament? t = await _context.Tournaments.FirstOrDefaultAsync(x=>x.Id == tourId);
+            Tournament? t = await _context.Tournaments.Include(m=>m.Matches).ThenInclude(mr=>mr.Result).ThenInclude(w=>w.Winner).FirstOrDefaultAsync(x=>x.Id == tourId);
             if (t == null) return false;
             if (t.IsCompleted) return false;
 
             int cMatches = t.Matches.Count;
             int cMatchesDone = t.Matches.Count(x => x.IsCompleted == true);
+
+            if ((t.NumberOfConsestants - cMatchesDone) == 1)
+            {
+                t.IsCompleted = true;
+                _context.Update(t);
+                await _context.SaveChangesAsync();
+                return true;
+            }
             if (cMatches != cMatchesDone) return false;
+
             int numOfCon = t.NumberOfConsestants;
             Match[] matchArr = t.Matches.OrderByDescending(t => t.TId).ToArray();
-            for (int i = 0; i < ((numOfCon-cMatchesDone)/2); i+=2)
+            int max = (numOfCon - cMatchesDone) / 2;
+            for (int i = 0; i <= max; i+=2)
             {
                 List<Hamster> hList = new List<Hamster>();
                 hList.Add(matchArr[i].Result.Winner);

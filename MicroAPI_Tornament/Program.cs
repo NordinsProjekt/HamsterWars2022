@@ -12,6 +12,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<HamsterContext>();
 builder.Services.AddTransient<ITournamentRepository, TournamentRepository>();
 builder.Services.AddTransient<IHamsterRepository, HamsterRepository>();
+builder.Services.AddTransient<IMatchRepository, MatchRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -41,6 +42,22 @@ app.MapPost("/CreateTournament", async ([FromBody]int[] hamstersId, string title
         return Results.BadRequest();
 }).WithName("PostCreateTournament");
 
+app.MapPost("/CheckTournament/{id}", async (int id, [FromServices] ITournamentRepository _rep) =>
+{
+    try
+    {
+        var request = await _rep.CheckTournamentMatches(id);
+        if (request)
+            return Results.Ok();
+        else
+            return Results.BadRequest();
+    }
+    catch (Exception)
+    {
+        return Results.Problem("Internal Server Error", null, 500);
+    }
+
+}).WithName("CheckTournamentAndGenerateMatches");
 app.MapPost("/EndGame/{id}", async (int id,[FromServices] IMatchRepository _rep) =>
 {
     try

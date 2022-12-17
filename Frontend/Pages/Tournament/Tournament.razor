@@ -1,0 +1,14 @@
+﻿@page "/Tournament"
+@using DTO
+@inject IJSRuntime JS
+<h1>Tournament</h1>
+
+@code {
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        //galleryList = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/hamsters");
+        //StateHasChanged();
+    }
+}
