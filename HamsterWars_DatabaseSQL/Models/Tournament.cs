@@ -10,6 +10,7 @@ namespace HamsterWars_DatabaseSQL.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
+        public int NumberOfConsestants { get; set; }
         public List<Match> Matches { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }

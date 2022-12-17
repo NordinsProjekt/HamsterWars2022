@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -53,19 +54,32 @@ namespace HamsterWars_DatabaseSQL.DAL
             t.Title= title;
             t.StartDate = DateTime.Now;
             t.Matches = mList;
+            t.NumberOfConsestants = hamsters.Length;
             _context.Add(t);
             await _context.SaveChangesAsync();
             return true;
         }
 
-        public async Task<bool> CheckTournamentMatches(int id)
+        public async Task<bool> CheckTournamentMatches(int tourId)
         {
-            Tournament? t = await _context.Tournaments.FirstOrDefaultAsync(x=>x.Id == id);
+            Tournament? t = await _context.Tournaments.FirstOrDefaultAsync(x=>x.Id == tourId);
             if (t == null) return false;
+            if (t.IsCompleted) return false;
+
             int cMatches = t.Matches.Count;
             int cMatchesDone = t.Matches.Count(x => x.IsCompleted == true);
             if (cMatches != cMatchesDone) return false;
-
+            int numOfCon = t.NumberOfConsestants;
+            Match[] matchArr = t.Matches.OrderByDescending(t => t.TId).ToArray();
+            for (int i = 0; i < ((numOfCon-cMatchesDone)/2); i+=2)
+            {
+                List<Hamster> hList = new List<Hamster>();
+                hList.Add(matchArr[i].Result.Winner);
+                hList.Add(matchArr[i+1].Result.Winner);
+                Match m = new Match() { StartDate= DateTime.Now, Contestants = hList, Tour = t, TId = matchArr[0].TId +(i+1) };
+                _context.Add(m);
+            }
+            await _context.SaveChangesAsync();
             return true;
         }
 
