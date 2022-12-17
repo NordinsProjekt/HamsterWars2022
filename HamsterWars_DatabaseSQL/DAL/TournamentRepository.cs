@@ -33,12 +33,14 @@ namespace HamsterWars_DatabaseSQL.DAL
         }
 
         public async Task<IEnumerable<TournamentDTO>> GetTournaments()
-            => MappingFunctions.MapTournamentListToTournamentDTOList(await _context.Tournaments.Include(m => m.Matches)
-                .ThenInclude(mr => mr.Result).ThenInclude(w => w.Winner).ToListAsync());
+            => MappingFunctions.MapTournamentListToTournamentDTOList(await _context.Tournaments
+                .Include(m => m.Matches).ThenInclude(mr => mr.Result).ThenInclude(w => w.Winner)
+                .Include(m => m.Matches).ThenInclude(mr => mr.Result).ThenInclude(l => l.Looser)
+                .ToListAsync());
 
         public async Task<TournamentDTO> GetTournamentByID(int tournamentId)
-            => MappingFunctions.MapTournamentToTournamentDTO(await _context.Tournaments.Include(m=>m.Matches).ThenInclude(h=>h.Contestants)
-             .Where(x => x.Id == tournamentId).FirstOrDefaultAsync());
+            => MappingFunctions.MapTournamentToTournamentDTO(await _context.Tournaments
+                .Include(m=>m.Matches).ThenInclude(h=>h.Contestants).Where(x => x.Id == tournamentId).FirstOrDefaultAsync());
 
         public async Task<bool> CreateTournament(int[] hamsters, string title)
         {
@@ -82,12 +84,13 @@ namespace HamsterWars_DatabaseSQL.DAL
             int numOfCon = t.NumberOfConsestants;
             Match[] matchArr = t.Matches.OrderByDescending(t => t.TId).ToArray();
             int max = (numOfCon - cMatchesDone) / 2;
+            int tIdCounter = (int)matchArr[0].TId;
             for (int i = 0; i <= max; i+=2)
             {
                 List<Hamster> hList = new List<Hamster>();
                 hList.Add(matchArr[i].Result.Winner);
                 hList.Add(matchArr[i+1].Result.Winner);
-                Match m = new Match() { StartDate= DateTime.Now, Contestants = hList, Tour = t, TId = matchArr[0].TId +(i+1) };
+                Match m = new Match() { StartDate= DateTime.Now, Contestants = hList, Tour = t, TId = ++tIdCounter };
                 _context.Add(m);
             }
             await _context.SaveChangesAsync();
