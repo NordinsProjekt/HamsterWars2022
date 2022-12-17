@@ -9,8 +9,8 @@ namespace HamsterAPI.Controllers
     [ApiController]
     public class TournamentController : ControllerBase
     {
-        ITournamentRepository _matchRep;
-        public TournamentController(ITournamentRepository _rep) => _matchRep = _rep;
+        ITournamentRepository _tournamentRep;
+        public TournamentController(ITournamentRepository _rep) => _tournamentRep = _rep;
         // GET: api/<TournamentController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -24,7 +24,7 @@ namespace HamsterAPI.Controllers
         {
             try
             {
-                var request = await _matchRep.GetTournamentByID(id);
+                var request = await _tournamentRep.GetTournamentByID(id);
                 if (request != null)
                     return Ok(request);
                 else

@@ -16,6 +16,7 @@ namespace HamsterWars_DatabaseSQL.Models
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set;}
         public Tournament? Tour { get; set; }
+        public MatchResult? Result { get; set; }
 
     }
 }

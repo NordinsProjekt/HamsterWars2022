@@ -56,10 +56,20 @@ namespace HamsterWars_DatabaseSQL.DAL
             _context.Add(t);
             await _context.SaveChangesAsync();
             return true;
-
         }
 
-        private async Task<List<Hamster>> GetHamstersFromIdArray(int[] hamsters)
+        public async Task<bool> CheckTournamentMatches(int id)
+        {
+            Tournament? t = await _context.Tournaments.FirstOrDefaultAsync(x=>x.Id == id);
+            if (t == null) return false;
+            int cMatches = t.Matches.Count;
+            int cMatchesDone = t.Matches.Count(x => x.IsCompleted == true);
+            if (cMatches != cMatchesDone) return false;
+
+            return true;
+        }
+
+        public async Task<List<Hamster>> GetHamstersFromIdArray(int[] hamsters)
         {
             List<Hamster> hList = new List<Hamster>();
             for (int i = 0; i < hamsters.Length; i++)
@@ -72,7 +82,7 @@ namespace HamsterWars_DatabaseSQL.DAL
             return hList;
         }
 
-        private List<Match> GetMatchesFromHamsterList(List<Hamster> hamsterList)
+        public List<Match> GetMatchesFromHamsterList(List<Hamster> hamsterList)
         {
             Random rnd = new Random();
             List<Match> matches = new List<Match>();
