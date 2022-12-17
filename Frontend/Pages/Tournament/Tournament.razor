@@ -2,13 +2,23 @@
 @using DTO
 @inject IJSRuntime JS
 <h1>Tournament</h1>
+@if (tournamentList != null)
+{
+    @foreach (var t in tournamentList)
+    {
+        <p>@t.Title</p>
+        <p>@t.Matches.OrderByDescending(x=>x.TId).First().Result.Winner.Name</p>
+        <br />
+    }
+}
 
 @code {
-
+    List<TournamentDTO> tournamentList { get; set; }
+    TournamentDTO? tournament { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        //galleryList = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/hamsters");
-        //StateHasChanged();
+        tournamentList = await JS.InvokeAsync<List<TournamentDTO>>("getAPI", "https://localhost:7232/tournament");
+        StateHasChanged();
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HamsterAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class TournamentController : ControllerBase
     {
