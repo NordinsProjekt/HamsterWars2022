@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\Component\TournamentGallery.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Hub\" />
     <Folder Include="Pages\Betting\" />
@@ -134,6 +138,18 @@
     <Content Update="wwwroot\img\hamsters\hamster-9.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Component\TournamentGallery.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Component\TournamentGallery.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Component\TournamentGallery.razor" />
   </ItemGroup>
 
 </Project>

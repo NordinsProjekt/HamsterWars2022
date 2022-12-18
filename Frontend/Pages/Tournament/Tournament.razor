@@ -1,28 +1,10 @@
-﻿@page "/Tournament"
+﻿@page "/tournament"
 @using DTO
+@using Frontend.Pages.Component;
 @inject IJSRuntime JS
-<h1>Tournament</h1>
-@if (tournamentList != null)
-{
-    @foreach (var t in tournamentList)
-    {
-        <h2>@t.Title (@t.NumberOfConsestants)</h2>
-        <p>
-            <b>Winner:</b> @t.Matches.OrderByDescending(x=>x.TId).First().Result.Winner.Name
-        </p>
-        <div>
-            @foreach (var match in t.Matches.OrderBy(x=>x.TId))
-            {
-                <ul>
-                    <li>Match (@match.TId)</li>
-                    <li>@match.Result.Winner.Name (@match.Result.WinnerScore) - @match.Result.Looser.Name (@match.Result.LooserScore)</li>
-                </ul>
-            }
-        </div>
-        <br />
-    }
-}
 
+<h1>Tournament</h1>
+<Tour
 @code {
     List<TournamentDTO> tournamentList { get; set; }
     TournamentDTO? tournament { get; set; }
