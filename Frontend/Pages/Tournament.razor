@@ -1,9 +1,9 @@
 ﻿@page "/tournament"
-@using DTO
 @using Frontend.Pages.Component
+@using Frontend.DTO
 @inject IJSRuntime JS
 <h1>Tournament</h1>
-<TournamentGallery />
+<TournamentGallery tournamentList="tournamentList" />
 @code {
     List<TournamentDTO> tournamentList { get; set; }
     TournamentDTO? tournament { get; set; }
