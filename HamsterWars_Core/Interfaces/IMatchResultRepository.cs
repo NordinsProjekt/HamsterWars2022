@@ -11,6 +11,7 @@ namespace HamsterWars_Core.Interfaces
     {
         public Task<IEnumerable<HamsterDTO>> GetTop5Hamsters();
         public Task<IEnumerable<HamsterDTO>> GetLow5Hamsters();
+        public Task<IEnumerable<MatchResultDTO>> Get10Lastest();
         public Task<MatchResultDTO[]> GetMatchWinners(int id);
         public Task<int?[]> GetDefeatedHamsters(int winnerHamsterId);
         public Task<ScoreCardDTO> GetChallengerScoreCard(int challenger, int defender);

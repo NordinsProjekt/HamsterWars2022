@@ -33,7 +33,7 @@ namespace HamsterAPI.Controllers
             }
             
         }
-        
+
         // GET api/<HamsterCotroller>/Random
         [HttpGet("random")]
         [ProducesResponseType(200)]

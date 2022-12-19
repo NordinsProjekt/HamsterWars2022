@@ -21,6 +21,8 @@ namespace Frontend.Pages.Component
 
             int listCount2 = tour.NumberOfConsestants / 4;
             int currentIndex = 0;
+            //Räknar ut hur många matcher det var i varje runda, och ställer de på var sin sida av finalen.
+            //4-(kvart)-(semi)-(Final)-(semi)-(kvart)-4
             for (int i = 1; i <= bracket.Count; i++)
             {
                 if (listCount2 == 0)

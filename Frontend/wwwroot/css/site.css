@@ -82,10 +82,10 @@ a, .btn-link {
     max-width: 800px;
 }
 .MatchCard {
-    padding: 5px;
+    margin: 5px;
     border: 1px solid black;
     width: 250px;
-    height: 200px;
+    height: 150px;
     margin-bottom: 10px;
 }
 .TourCard {
@@ -94,5 +94,10 @@ a, .btn-link {
     display:flex;
     flex-direction: column;
     margin-left: 10px;
+}
+.WindowBar {
+    background-color:lightgrey;
+    text-align: center;
+    border-bottom: 1px solid black;
 }
 

@@ -3,23 +3,45 @@
 @using DTO
 @inject IJSRuntime JS
 <h1>Statistics</h1>
-<h2>Top 5 ATH</h2>
-@foreach (var hamster in top5List)
-{
-    <HamsterInfo infoHamster="hamster" />
-}
-<h2>Worst 5 ATH</h2>
-@foreach (var hamster in low5List)
-{
-    <HamsterInfo infoHamster="hamster" />
-}
+<div class="d-flex align-content-stretch flex-wrap flex-row">
+    <div>
+        <h2>Top 5 ATH</h2>
+        @foreach (var hamster in top5List)
+        {
+            <HamsterInfo infoHamster="hamster" />
+        }
+    </div>
+    <div>
+        <h2>Worst 5 ATH</h2>
+        @foreach (var hamster in low5List)
+        {
+            <HamsterInfo infoHamster="hamster" />
+        }
+    </div>
+</div>
+<div class="d-flex align-content-stretch flex-wrap"
+    <h2>Latest 10 Match Results</h2>>
+    @foreach (var mr in latest10)
+    {
+        <div>
+            <div class="MatchCard">
+                <h3 class="WindowBar">Match Nr @mr.MatchId</h3>
+                <p>@mr.Winner.Name (@mr.WinnerScore)</p>
+                <hr />
+                <p>@mr.Looser.Name (@mr.LooserScore)</p>
+            </div>
+        </div>
+    }
+</div>
 @code {
     public List<HamsterDTO> top5List = new List<HamsterDTO>();
     public List<HamsterDTO> low5List = new List<HamsterDTO>();
+    public List<MatchResultDTO> latest10 = new List<MatchResultDTO>();
 
     protected override async Task OnInitializedAsync()
     {
         top5List = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/Winners");
         low5List = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/Losers");
+        latest10 = await JS.InvokeAsync<List<MatchResultDTO>>("getAPI", "https://localhost:7232/Score/Last10MatchResults");
     }
 }
