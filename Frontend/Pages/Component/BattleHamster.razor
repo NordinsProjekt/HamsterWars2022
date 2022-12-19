@@ -1,5 +1,8 @@
 ﻿@using DTO
 <div class="d-flex align-content-stretch flex-wrap flex-row">
+    @{
+        int x = 0;
+    }
     @foreach (var hamster in Battle.Contestants)
     {
         <div class="battleCons" @onclick="(() => HamsterBattle(hamster.Id))">
@@ -9,6 +12,13 @@
             <p><b>Loves: </b>@hamster.Loves</p>
             <img id="large" src="img/hamsters/@hamster.ImgName" />
         </div>
+        @if (x== 0)
+        {
+            <div class="battleCons">
+                <img width="200px" src="img/misc/NicePng_battle-png_8007556.png" />
+            </div>
+        }
+        x++;
     }
 </div>
 @code {

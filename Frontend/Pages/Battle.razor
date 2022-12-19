@@ -8,10 +8,14 @@
 <h1>Battle</h1>
 @if (score != null)
 {
-    foreach (var hamster in score.Contestants)
+    <div class="d-flex align-content-stretch flex-wrap flex-row">
+    @foreach (var hamster in score.Contestants)
     {
+        <div class="HamsterBattleScreen">
         <HamsterInfo infoHamster="hamster" />
+        </div>
     }   
+    </div>
 }
 @if (battle != null)
 {
@@ -20,6 +24,7 @@
 else
 {
     <button class="btn btn-primary" @onclick="CreateBattle">Generate match</button>
+    <CreateMatch onCreateCustomMatch="DoBattle" />
 }
 
 @code {
@@ -42,8 +47,13 @@ else
     {
         VoteDTO vote = new VoteDTO(matchVote[0], matchVote[1]);
         await JS.InvokeVoidAsync("postAPI", "https://localhost:7232/vote/", vote);
-        await JS.InvokeVoidAsync("getAPI", "https://localhost:7232/matches/EndMatch/"+matchVote[0]);
+        await JS.InvokeVoidAsync("postAPI", "https://localhost:7101/EndMatch/" + matchVote[0]);
         score = await JS.InvokeAsync<MatchDTO>("getAPI", "https://localhost:7232/matches/" + matchVote[0]);
         battle = null;
+    }
+
+    public async Task DoBattle(int id)
+    {
+        battle = await JS.InvokeAsync<MatchDTO>("getAPI", "https://localhost:7232/matches/" + id);
     }
 }

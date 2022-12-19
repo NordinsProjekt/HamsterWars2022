@@ -33,11 +33,11 @@ namespace HamsterAPI.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             try
             {
-                var match = _matchRep.GetMatchByID(id);
+                var match = await _matchRep.GetMatchByID(id);
                 if (match != null)
                     return Ok(match);
                 else
