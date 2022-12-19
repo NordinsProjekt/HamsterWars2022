@@ -2,14 +2,26 @@
 @using Frontend.Pages.Component
 @using Frontend.DTO
 @inject IJSRuntime JS
-<ShowTournaments tournamentList="tournamentList" />
+@if (tournamentList != null)
+{
+    <ShowTournament tour="tournament" />
+    <ShowTournaments tournamentList="tournamentList" onShowTournament="GetTournamentIdAsync" />
+}
+
+
 @code {
     List<TournamentDTO> tournamentList { get; set; }
     TournamentDTO? tournament { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        tournamentList = await JS.InvokeAsync<List<TournamentDTO>>("getAPI", "https://localhost:7232/tournament");
-        StateHasChanged();
+        if (firstRender)
+        {
+            tournamentList = await JS.InvokeAsync<List<TournamentDTO>>("getAPI", "https://localhost:7232/tournament");
+            StateHasChanged();
+        }
     }
+
+    public async Task GetTournamentIdAsync(int id)
+        => tournament = tournamentList.FirstOrDefault(x => x.Id == id);
 }

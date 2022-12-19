@@ -6,6 +6,32 @@ namespace IntergrationTest
 {
     public class Tournament
     {
+        [Trait("Create Tournament", "4 Hamster Tournament to finish")]
+        [Fact]
+        public async Task CreateTournamentWithFourHamsters_CheckTheEndResult_ShouldHaveAWinner_AND_IsCompletedTRUE()
+        {
+            HamsterContext _context = new HamsterContext();
+            TournamentRepository tourRep = new TournamentRepository(_context);
+            MatchResultRepository mrRep = new MatchResultRepository(_context);
+            MatchRepository mRep = new MatchRepository(_context);
+            VoteRepository vRep = new VoteRepository(_context);
+            int[] hArr = { 1, 2, 3, 4 };
+            await tourRep.CreateTournament(hArr, "Mini 4");
+            int index = _context.Tournaments.OrderByDescending(x => x.Id).Select(id => id.Id).First();
+            for (int i = 0; i < 2; i++)
+            {
+                var t = await tourRep.GetTournamentByID(index);
+                foreach (var match in t.Matches)
+                {
+                    VoteDTO v = new VoteDTO(match.Id, match.Contestants.First().Id);
+                    await vRep.VoteOnMatch(v);
+                    await mRep.EndMatchAndCountVotes(match.Id);
+                }
+                await tourRep.CheckTournamentMatches(index);
+            }
+            var tournament = await tourRep.GetTournamentByID(index);
+            Assert.True(tournament.IsCompleted);
+        }
         [Trait("Create Tournament", "8 Hamster Tournament to finish")]
         [Fact]
         public async Task CreateTournamentWithEightHamsters_CheckTheEndResult_ShouldHaveAWinner_AND_IsCompletedTRUE()

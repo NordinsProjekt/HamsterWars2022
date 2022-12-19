@@ -81,3 +81,18 @@ a, .btn-link {
     min-width: 400px;
     max-width: 800px;
 }
+.MatchCard {
+    padding: 5px;
+    border: 1px solid black;
+    width: 250px;
+    height: 200px;
+    margin-bottom: 10px;
+}
+.TourCard {
+    align-items: center;
+    justify-content: center;
+    display:flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+

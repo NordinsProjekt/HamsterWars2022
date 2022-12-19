@@ -1,0 +1,25 @@
+﻿@using DTO
+
+@if (tour!=null)
+{
+    <h3>ShowTournament</h3>
+    <div class="d-flex align-content-stretch flex-wrap flex-row">
+        @{
+            MakeBrackets();
+        }
+        @foreach (var list in bracket)
+        {
+            <div class="TourCard">
+            @foreach (var m in list)
+            {
+                    <div class="MatchCard">
+                        <h3 class="WindowBar">Match @m.TId</h3>
+                        <p>@m.Result.Winner.Name (@m.Result.WinnerScore)</p>
+                        <hr />
+                        <p>@m.Result.Looser.Name (@m.Result.LooserScore)</p>
+                    </div>
+            }
+            </div>
+        }
+    </div>       
+}
