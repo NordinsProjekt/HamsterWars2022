@@ -68,7 +68,21 @@ namespace HamsterWars_DatabaseSQL
                 new Hamster { Id = 9, Age = 4, FavFood = "Ice cream", ImgName = "hamster-9.jpg",
                     Name = "Snowden", Games = 1, Losses = 1, Loves = "IoT", Wins = 0 },
                 new Hamster { Id = 10, Age = 3, FavFood = "Ice cream", ImgName = "hamster-10.jpg",
-                    Name = "Ice Queen", Games = 1, Losses = 1, Loves = "Snowmen", Wins = 0 }
+                    Name = "Ice Queen", Games = 1, Losses = 1, Loves = "Snowmen", Wins = 0 },
+                new Hamster { Id = 11, Age = 2, FavFood = "Spinach", ImgName = "hamster-11.jpg",
+                    Name = "Glissa the Traitor", Games = 0, Losses = 0, Loves = "Atrefacts", Wins = 0 },
+                new Hamster { Id = 12, Age = 1, FavFood = "Grass", ImgName = "hamster-12.jpg",
+                    Name = "Courser of Kruphix", Games = 0, Losses = 0, Loves = "Boats", Wins = 0 },
+                new Hamster { Id = 13, Age = 0, FavFood = "Cinnamon", ImgName = "hamster-13.jpg",
+                    Name = "Lys Alana Huntsmaster", Games = 0, Losses = 0, Loves = "Dogs", Wins = 0 },
+                new Hamster { Id = 14, Age = 1, FavFood = "Rats", ImgName = "hamster-14.jpg",
+                    Name = "Vraska the Unseen", Games = 0, Losses = 0, Loves = "Snakes", Wins = 0 },
+                new Hamster { Id = 15, Age = 2, FavFood = "Steaks", ImgName = "hamster-15.jpg",
+                    Name = "Harald, King of Hamsters", Games = 0, Losses = 0, Loves = "Sleep", Wins = 0 },
+                new Hamster { Id = 16, Age = 3, FavFood = "Wine", ImgName = "hamster-16.jpg",
+                    Name = "Lathril, Blade of the Night", Games = 0, Losses = 0, Loves = "Sneaking around", Wins = 0 },
+                new Hamster { Id = 17, Age = 3, FavFood = "Crackers", ImgName = "hamster-17.jpg",
+                    Name = "Sheoldred, the Apocalypse", Games = 0, Losses = 0, Loves = "Tears of her enemies", Wins = 0 }
                 );
             modelBuilder.Entity<Match>().HasData(
                 new Match { Id = 1, StartDate = DateTime.Now, IsCompleted = false, EndDate = null },

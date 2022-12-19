@@ -72,9 +72,10 @@ namespace HamsterWars_DatabaseSQL.DAL
             int cMatches = t.Matches.Count;
             int cMatchesDone = t.Matches.Count(x => x.IsCompleted == true);
 
-            if ((t.NumberOfConsestants - cMatchesDone) == 1)
+            if ((t.NumberOfConsestants - cMatchesDone) <= 1)
             {
                 t.IsCompleted = true;
+                t.EndDate= DateTime.Now;
                 _context.Update(t);
                 await _context.SaveChangesAsync();
                 return true;
@@ -83,9 +84,9 @@ namespace HamsterWars_DatabaseSQL.DAL
 
             int numOfCon = t.NumberOfConsestants;
             Match[] matchArr = t.Matches.OrderByDescending(t => t.TId).ToArray();
-            int max = (numOfCon - cMatchesDone) / 2;
+            int max = (numOfCon - cMatchesDone);
             int tIdCounter = (int)matchArr[0].TId;
-            for (int i = 0; i <= max; i+=2)
+            for (int i = 0; i < max; i+=2)
             {
                 List<Hamster> hList = new List<Hamster>();
                 hList.Add(matchArr[i].Result.Winner);
@@ -105,7 +106,7 @@ namespace HamsterWars_DatabaseSQL.DAL
                 Hamster? h = await _context.Hamsters.Where(x => x.Id == hamsters[i]).FirstOrDefaultAsync();
                 if (h != null) hList.Add(h);
                 else
-                    return new List<Hamster>();
+                    return new List<Hamster>(); //borde kasta fel
             }
             return hList;
         }
