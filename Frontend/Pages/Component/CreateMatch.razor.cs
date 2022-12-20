@@ -49,9 +49,9 @@ namespace Frontend.Pages.Component
             }
         }
         public async Task ShowGalleryScreenV()
-            => HamsterListV = await GetHamsters();
+            => listV = await GetHamsters();
         public async Task ShowGalleryScreenH()
-            => HamsterListH = await GetHamsters();
+            => listH = await GetHamsters();
 
 
         public async Task ShowHamsterV(int id)

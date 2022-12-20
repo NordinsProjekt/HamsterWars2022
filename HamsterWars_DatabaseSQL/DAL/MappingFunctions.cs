@@ -31,6 +31,8 @@ namespace HamsterWars_DatabaseSQL.DAL
         }
         public static HamsterDTO MapHamsterToHamsterDTO(Hamster hamster)
             => hamster.Adapt<HamsterDTO>();
+        public static IEnumerable<HamsterDTO> MapHamsterToHamsterDTOList(IEnumerable<Hamster> hamsterList)
+            => hamsterList.Adapt<IEnumerable<HamsterDTO>>();
         public static Hamster MapHamsterCreateDTOToHamsterEntity(HamsterCreateDTO hamster)
             => hamster.Adapt<Hamster>();
 

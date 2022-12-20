@@ -39,8 +39,8 @@ namespace HamsterWars_DatabaseSQL.DAL
 
         public async Task Save() => await _context.SaveChangesAsync();
 
-        async Task<IEnumerable<HamsterFullDTO>> IHamsterRepository.GetHamsters()
-            => MappingFunctions.MapHamsterToHamsterFullDTOList(await _context.Hamsters.Include(match => match.Matches).Where(y => y.IsDeleted == false).ToListAsync());
+        async Task<IEnumerable<HamsterDTO>> IHamsterRepository.GetHamsters()
+            => MappingFunctions.MapHamsterToHamsterDTOList(await _context.Hamsters.Where(y => y.IsDeleted == false).ToListAsync());
 
         HamsterFullDTO IHamsterRepository.RandomHamster()
             => MappingFunctions.MapHamsterToHamsterFullDTO(_context.Hamsters.Include(match => match.Matches).Where(y => y.IsDeleted == false).ToList()
