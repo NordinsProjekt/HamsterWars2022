@@ -118,5 +118,9 @@ namespace HamsterWars_DatabaseSQL.DAL
             await Save();
             return true;
         }
+        public async Task<IEnumerable<MatchFullDTO>> Get10Lastest()
+            => MappingFunctions.MapMatchToMatchFullDTO(await _context.Matches.Include(c=>c.Contestants).Include(r=>r.Result)
+                .ThenInclude(w=>w.Winner).Include(r=>r.Result).ThenInclude(l=>l.Looser).Where(da=>da.EndDate != null)
+                .OrderByDescending(da=>da.EndDate).Take(10).ToListAsync());
     }
 }

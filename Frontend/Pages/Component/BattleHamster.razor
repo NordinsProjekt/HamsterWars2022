@@ -28,5 +28,8 @@
     public EventCallback<int[]> onBattleWinner { get; set; }
 
     public async Task HamsterBattle(int hamsterId)
-        => await onBattleWinner.InvokeAsync(new int[2] { Battle.Id, hamsterId });
+    {
+        await onBattleWinner.InvokeAsync(new int[2] { Battle.Id, hamsterId });
+    }
+
 }

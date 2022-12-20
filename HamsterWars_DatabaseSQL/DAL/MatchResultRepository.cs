@@ -79,10 +79,6 @@ namespace HamsterWars_DatabaseSQL.DAL
 
         public async Task<int[]> GetHighestGamesTop5()
             => await _context.Hamsters.OrderByDescending(x => x.Games).Select(y => y.Id).Take(5).ToArrayAsync();
-        public async Task<IEnumerable<MatchResultDTO>> Get10Lastest()
-            => MappingFunctions.MapMatchResultListToMatchResultDTOList(await _context.MatchResults.Include(w => w.Winner).Include(l => l.Looser)
-                    .Where(x => x.WinnerId != null && x.LooserId != null)
-                    .OrderByDescending(id => id.Id).Take(10).ToListAsync());
 
     }
 }

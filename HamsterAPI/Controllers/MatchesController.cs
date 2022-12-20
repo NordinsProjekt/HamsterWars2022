@@ -49,6 +49,21 @@ namespace HamsterAPI.Controllers
             }
         }
 
+        [HttpGet("Latest10Matches")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> Get10Latest()
+        {
+            try
+            {
+                return Ok(await _matchRep.Get10Lastest());
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
         // POST api/<MatchesController>
         [HttpPost]
         [ProducesResponseType(200)]
@@ -74,25 +89,6 @@ namespace HamsterAPI.Controllers
             }
             return BadRequest();
         }
-        //[HttpGet("EndMatch/{id}")]
-        //[ProducesResponseType(200)]
-        //[ProducesResponseType(404)]
-        //[ProducesResponseType(500)]
-        //public async Task<IActionResult> EndMatch(int id)
-        //{
-        //    try
-        //    {
-        //        if (await _matchRep.EndMatchAndCountVotes(id))
-        //            return Ok();
-        //        else
-        //            return NotFound();
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return StatusCode(500);
-        //    }
-
-        //}
 
         // DELETE api/<MatchesController>/5
         [HttpDelete("{id}")]

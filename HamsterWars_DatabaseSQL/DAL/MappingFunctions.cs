@@ -45,6 +45,9 @@ namespace HamsterWars_DatabaseSQL.DAL
         }
         public static MatchFullDTO MapMatchToMatchFullDTO(Models.Match match)
             => match.Adapt<MatchFullDTO>();
+
+        public static IEnumerable<MatchFullDTO> MapMatchToMatchFullDTO(IEnumerable<Models.Match> matchlist)
+            => matchlist.Adapt<IEnumerable<MatchFullDTO>>();
         public static MatchResultDTO MapMatchResultToMatchResultDTO(MatchResult mr)
             => mr.Adapt<MatchResultDTO>();
         public static IEnumerable<MatchResultDTO> MapMatchResultListToMatchResultDTOList(List<Models.MatchResult> matchResults)
