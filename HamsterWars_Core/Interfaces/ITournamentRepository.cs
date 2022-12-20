@@ -11,7 +11,7 @@ namespace HamsterWars_Core.Interfaces
     {
         Task<IEnumerable<TournamentDTO>> GetTournaments();
         Task<TournamentDTO> GetTournamentByID(int tournamentId);
-        Task<bool> CreateTournament(int[] hamsters, string title);
+        Task<int> CreateTournament(int[] hamsters, string title);
         Task<bool> CheckTournamentMatches(int tourId);
     }
 }

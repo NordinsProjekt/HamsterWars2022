@@ -38,8 +38,8 @@ app.UseHttpsRedirection();
 app.MapPost("/CreateTournament", async ([FromBody]int[] hamstersId, string title, [FromServices] ITournamentRepository _rep) =>
 {
     var request = await _rep.CreateTournament(hamstersId,title);
-    if (request)
-        return Results.Ok();
+    if (request >0)
+        return Results.Ok(request);
     else
         return Results.BadRequest();
 }).WithName("PostCreateTournament");

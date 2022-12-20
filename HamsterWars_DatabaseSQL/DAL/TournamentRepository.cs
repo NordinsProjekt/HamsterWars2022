@@ -43,15 +43,15 @@ namespace HamsterWars_DatabaseSQL.DAL
             => MappingFunctions.MapTournamentToTournamentDTO(await _context.Tournaments
                 .Include(m=>m.Matches).ThenInclude(h=>h.Contestants).Where(x => x.Id == tournamentId).FirstOrDefaultAsync());
 
-        public async Task<bool> CreateTournament(int[] hamsters, string title)
+        public async Task<int> CreateTournament(int[] hamsters, string title)
         {
             if (string.IsNullOrWhiteSpace(title))
-                return false;
+                return -1;
             if (hamsters.Length % 2 != 0)
-                return false;
+                return -1;
             var hList = await _context.Hamsters.Where(item => hamsters.Contains(item.Id)).ToListAsync();
             if (hList.Count == 0)
-                return false;
+                return -1;
             var mList = GetMatchesFromHamsterList(hList);
             _context.AddRange(mList);
             Tournament t = new Tournament();
@@ -61,7 +61,7 @@ namespace HamsterWars_DatabaseSQL.DAL
             t.NumberOfConsestants = hamsters.Length;
             _context.Add(t);
             await _context.SaveChangesAsync();
-            return true;
+            return t.Id;
         }
 
         public async Task<bool> CheckTournamentMatches(int tourId)
