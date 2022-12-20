@@ -1,0 +1,14 @@
+﻿@using DTO
+<h1>BattleReport</h1>
+<p>Hamster vann</p>
+<p>Hamster förlorade</p>
+<p>Poängen</p>
+if (hamsterMatch != null)
+{
+
+}
+@code {
+    //Hämntar en match baserat på ID från parent komponent.
+    [Parameter]
+    public MatchFullDTO hamsterMatch { get; set; }
+}
