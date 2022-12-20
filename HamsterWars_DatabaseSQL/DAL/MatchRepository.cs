@@ -111,6 +111,7 @@ namespace HamsterWars_DatabaseSQL.DAL
                 }
                 hamster.Games++;
             }
+            m.EndDate = DateTime.Now;
             _context.RemoveRange(result);
             _context.Add(mr);
             _context.Update(m);
