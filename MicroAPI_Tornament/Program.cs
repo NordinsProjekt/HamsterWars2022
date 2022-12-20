@@ -4,7 +4,7 @@ using HamsterWars_DatabaseSQL.DAL;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -13,6 +13,16 @@ builder.Services.AddTransient<HamsterContext>();
 builder.Services.AddTransient<ITournamentRepository, TournamentRepository>();
 builder.Services.AddTransient<IHamsterRepository, HamsterRepository>();
 builder.Services.AddTransient<IMatchRepository, MatchRepository>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(MyAllowSpecificOrigins,
+                          policy =>
+                          {
+                              policy.WithOrigins("https://localhost:7092")
+                                                  .AllowAnyHeader()
+                                                  .AllowAnyMethod();
+                          });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -24,14 +34,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-//app.MapGet("/GetTournamentByID/{id}", (int id, [FromServices] ITournamentRepository _rep) =>
-//{
-//    var request = _rep.GetTournamentByID(id);
-//    if (request != null)
-//        return Results.Ok(request);
-//    else
-//        return Results.BadRequest();
-//}).WithName("GetTournamentByID");
 
 app.MapPost("/CreateTournament", async ([FromBody]int[] hamstersId, string title, [FromServices] ITournamentRepository _rep) =>
 {
@@ -58,7 +60,7 @@ app.MapPost("/CheckTournament/{id}", async (int id, [FromServices] ITournamentRe
     }
 
 }).WithName("CheckTournamentAndGenerateMatches");
-app.MapPost("/EndGame/{id}", async (int id,[FromServices] IMatchRepository _rep) =>
+app.MapPost("/EndMatch/{id}", async (int id,[FromServices] IMatchRepository _rep) =>
 {
     try
     {
@@ -72,7 +74,7 @@ app.MapPost("/EndGame/{id}", async (int id,[FromServices] IMatchRepository _rep)
     {
         return Results.Problem("Internal Server Error", null, 500);
     }
-}).WithName("EndGameAndUpdateStats");
+}).WithName("EndMatchAndUpdateStats");
 
 app.MapDelete("/hamster/{id}", async (int id,[FromServices] IHamsterRepository _rep) =>
 {
@@ -107,5 +109,5 @@ app.MapPut("/hamster/{id}/Restore", async (int id, [FromServices] IHamsterReposi
         return Results.Problem("Internal Server Error", null, 500);
     }
 }).WithName("RestoreHamster");
-
+app.UseCors(MyAllowSpecificOrigins);
 app.Run();

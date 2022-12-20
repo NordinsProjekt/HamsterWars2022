@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace HamsterWars_DatabaseSQL.DAL
 {
@@ -48,10 +49,10 @@ namespace HamsterWars_DatabaseSQL.DAL
                 return false;
             if (hamsters.Length % 2 != 0)
                 return false;
-            var hList = GetHamstersFromIdArray(hamsters);
-            if (hList.Result.Count == 0)
+            var hList = await _context.Hamsters.Where(item => hamsters.Contains(item.Id)).ToListAsync();
+            if (hList.Count == 0)
                 return false;
-            var mList = GetMatchesFromHamsterList(hList.Result);
+            var mList = GetMatchesFromHamsterList(hList);
             _context.AddRange(mList);
             Tournament t = new Tournament();
             t.Title= title;
@@ -72,9 +73,10 @@ namespace HamsterWars_DatabaseSQL.DAL
             int cMatches = t.Matches.Count;
             int cMatchesDone = t.Matches.Count(x => x.IsCompleted == true);
 
-            if ((t.NumberOfConsestants - cMatchesDone) == 1)
+            if ((t.NumberOfConsestants - cMatchesDone) <= 1)
             {
                 t.IsCompleted = true;
+                t.EndDate= DateTime.Now;
                 _context.Update(t);
                 await _context.SaveChangesAsync();
                 return true;
@@ -83,9 +85,10 @@ namespace HamsterWars_DatabaseSQL.DAL
 
             int numOfCon = t.NumberOfConsestants;
             Match[] matchArr = t.Matches.OrderByDescending(t => t.TId).ToArray();
-            int max = (numOfCon - cMatchesDone) / 2;
+            int max = (numOfCon - cMatchesDone);
             int tIdCounter = (int)matchArr[0].TId;
-            for (int i = 0; i <= max; i+=2)
+            matchArr = matchArr.Take(max).OrderBy(x=>x.TId).ToArray();
+            for (int i = 0; i < max; i+=2)
             {
                 List<Hamster> hList = new List<Hamster>();
                 hList.Add(matchArr[i].Result.Winner);
@@ -95,19 +98,6 @@ namespace HamsterWars_DatabaseSQL.DAL
             }
             await _context.SaveChangesAsync();
             return true;
-        }
-
-        public async Task<List<Hamster>> GetHamstersFromIdArray(int[] hamsters)
-        {
-            List<Hamster> hList = new List<Hamster>();
-            for (int i = 0; i < hamsters.Length; i++)
-            {
-                Hamster? h = await _context.Hamsters.Where(x => x.Id == hamsters[i]).FirstOrDefaultAsync();
-                if (h != null) hList.Add(h);
-                else
-                    return new List<Hamster>();
-            }
-            return hList;
         }
 
         public List<Match> GetMatchesFromHamsterList(List<Hamster> hamsterList)

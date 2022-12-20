@@ -31,5 +31,21 @@ namespace HamsterAPI.Controllers
                 return StatusCode(500);
             }
         }
+
+        [HttpGet("Last10MatchResults")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> Get()
+        {
+            try
+            {
+                return Ok(await _matchResultRep.Get10Lastest());
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+
+        }
     }
 }

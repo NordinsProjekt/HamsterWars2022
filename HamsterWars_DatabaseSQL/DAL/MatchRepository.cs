@@ -91,6 +91,7 @@ namespace HamsterWars_DatabaseSQL.DAL
             
             MatchResult mr = new MatchResult();
             mr.MatchId = id;
+            //Detta kommer "slumpa" en vinnare om det är samma resultat.
             foreach (var hamster in m.Contestants)
             {
                 if (hamster.Id == winner[0].HamsterId)

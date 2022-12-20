@@ -1,0 +1,19 @@
+﻿@using Frontend.DTO
+@using Frontend.Pages.Component
+@inject IJSRuntime JS
+<h2>Create Custom Match</h2>
+<button class="btn btn-primary" @onclick="CreateCustomMatch">Start custom</button>
+<div class="d-flex align-content-stretch flex-wrap flex-row">
+    <div class="HamsterBattleScreen">
+        <HamsterInfo infoHamster="infoV"/>
+            <button @onclick="ShowGalleryScreenV">Choose a Hamster from Gallery</button>
+        <button @onclick="RndHamsterV">Random Hamster</button>
+        <HamsterGallery galleryList="HamsterListV" onShowMore="ShowHamsterV" />
+    </div>
+    <div class="HamsterBattleScreen">
+        <HamsterInfo infoHamster="infoH" />
+        <button @onclick="ShowGalleryScreenH">Choose a Hamster from Gallery</button>
+        <button @onclick="RndHamsterH">Random Hamster</button>
+        <HamsterGallery galleryList="HamsterListH" onShowMore="ShowHamsterH" />
+    </div>
+</div>
