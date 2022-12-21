@@ -1,6 +1,7 @@
 ﻿using HamsterWars_Core.DTO;
 using HamsterWars_Core.Interfaces;
 using HamsterWars_DatabaseSQL.Models;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -139,5 +140,15 @@ namespace HamsterWars_DatabaseSQL.DAL
             }
             return matches;
         }
+
+        public async Task<IEnumerable<TournamentDTO>> GetTournamentsDone()
+            => await _context.Tournaments
+                .Include(m => m.Matches).ThenInclude(mr => mr.Result).ThenInclude(w => w.Winner)
+                .Include(m => m.Matches).ThenInclude(mr => mr.Result).ThenInclude(l => l.Looser).Where(done=>done.IsCompleted == true)
+                .ProjectToType<TournamentDTO>().ToListAsync();
+
+        public async Task<IEnumerable<TournamentDTO>> GetTournamentsOngoing()
+            => MappingFunctions.MapTournamentListToTournamentDTOList(await _context.Tournaments.Where(done => done.IsCompleted == false).Where(m => m.IsCompleted == false)
+                .Include(m => m.Matches).ThenInclude(c=>c.Contestants).ToListAsync());
     }
 }

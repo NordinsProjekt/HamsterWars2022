@@ -57,6 +57,14 @@
 
     protected override async Task OnInitializedAsync()
     {
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        top5List.Clear();
+        low5List.Clear();
+        latest10.Clear();
         switch (Stats.ToLower())
         {
             case "top5":
@@ -71,8 +79,6 @@
             default:
                 break;
         }
-        
-        
-        
+        StateHasChanged();
     }
 }

@@ -1,0 +1,28 @@
+﻿@using DTO
+@if (tour != null)
+{
+    <h3>MatchGallery</h3>
+    <p>Click on a match to vote</p>
+    <div class="d-flex flex-wrap">
+    @foreach (var match in tour.Matches)
+    {
+            <div class="p-2 bd-highlight" @onclick="(() => SendMatch(match.Id))">
+                <p><b>Match Id: </b>@match.Id <br />
+                    Startdate: @match.StartDate</p>
+                @foreach (var hamster in match.Contestants)
+                {
+                    <p>Hamster: @hamster.Name</p>
+                }
+            </div>
+    }
+    </div>
+}
+@code {
+    [Parameter]
+    public TournamentDTO tour { get; set; }
+    [Parameter]
+    public EventCallback<int> onMatchClick { get; set; }
+
+    public async Task SendMatch(int id)
+        => await onMatchClick.InvokeAsync(id);
+}

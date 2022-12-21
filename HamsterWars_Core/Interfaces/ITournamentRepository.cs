@@ -10,6 +10,8 @@ namespace HamsterWars_Core.Interfaces
     public interface ITournamentRepository
     {
         Task<IEnumerable<TournamentDTO>> GetTournaments();
+        Task<IEnumerable<TournamentDTO>> GetTournamentsDone();
+        Task<IEnumerable<TournamentDTO>> GetTournamentsOngoing();
         Task<TournamentDTO> GetTournamentByID(int tournamentId);
         Task<int> CreateTournament(int[] hamsters, string title);
         Task<bool> CheckTournamentMatches(int tourId);

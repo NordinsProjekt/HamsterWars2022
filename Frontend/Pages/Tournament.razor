@@ -16,7 +16,7 @@
     {
         if (firstRender)
         {
-            tournamentList = await JS.InvokeAsync<List<TournamentDTO>>("getAPI", "https://localhost:7232/tournament");
+            tournamentList = await JS.InvokeAsync<List<TournamentDTO>>("getAPI", "https://localhost:7232/tournament/done");
             StateHasChanged();
         }
     }
