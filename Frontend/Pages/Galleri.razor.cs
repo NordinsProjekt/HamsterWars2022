@@ -1,11 +1,12 @@
 ﻿using Microsoft.JSInterop;
 using Frontend.DTO;
 
+
 namespace Frontend.Pages
 {
     public partial class Galleri
     {
-        public List<HamsterDTO>? galleryList { get; set; } = new List<HamsterDTO>();
+        public List<HamsterMiniDTO>? galleryList { get; set; } = new List<HamsterMiniDTO>();
         public HamsterDTO? infoHamster { get; set; }
         public List<HamsterDTO> hamsterKilled { get; set; } = new List<HamsterDTO>();
         public bool ShowInputField { get; set; } = false;
@@ -16,7 +17,7 @@ namespace Frontend.Pages
         //}
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            galleryList = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/hamsters");
+            galleryList = await JS.InvokeAsync<List<HamsterMiniDTO>>("getAPI", "https://localhost:7232/hamsters/minimal");
             StateHasChanged();
         }
 

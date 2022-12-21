@@ -34,6 +34,21 @@ namespace HamsterAPI.Controllers
             
         }
 
+        [HttpGet("minimal")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetMinimalList()
+        {
+            try
+            {
+                return Ok(await _hamsterRep.GetHamstersMinimal());
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
         // GET api/<HamsterCotroller>/Random
         [HttpGet("random")]
         [ProducesResponseType(200)]

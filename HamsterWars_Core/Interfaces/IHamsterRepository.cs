@@ -11,6 +11,7 @@ namespace HamsterWars_Core.Interfaces
     {
         Task<IEnumerable<HamsterDTO>> GetHamsters();
         HamsterFullDTO RandomHamster();
+        Task<IEnumerable<HamsterMiniDTO>> GetHamstersMinimal();
         Task<HamsterFullDTO> GetHamsterByID(int hamsterId);
         Task<HamsterFullDTO> InsertHamsterAsync(HamsterCreateDTO hamster);
         Task<bool> UpdateHamster(HamsterPatchDTO changes,int hamsterId);

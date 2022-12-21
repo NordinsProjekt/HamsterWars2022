@@ -1,4 +1,5 @@
 ﻿@using DTO
+
 @if (galleryList != null)
 {
     <div class="d-flex flex-wrap">
@@ -13,7 +14,7 @@
 }
 @code {
     [Parameter]
-    public List<HamsterDTO>? galleryList { get; set; }
+    public List<HamsterMiniDTO>? galleryList { get; set; }
     [Parameter]
     public EventCallback<int> onShowMore { get; set; }
 

@@ -22,6 +22,9 @@ namespace HamsterWars_DatabaseSQL.DAL
                 list.Add(hamster.Adapt<HamsterFullDTO>());
             return list;
         }
+
+        //public static IEnumerable<HamsterMiniDTO> MapHamsterToHamsterMiniDTO(IEnumerable<Hamster> hamsterList)
+        //    => hamsterList.p
         public static IEnumerable<HamsterDTO> MapHamsterListToHamsterDTOList(List<Hamster> hamsterList)
         {
             List<HamsterDTO> list = new List<HamsterDTO>();

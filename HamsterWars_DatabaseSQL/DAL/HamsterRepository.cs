@@ -47,7 +47,6 @@ namespace HamsterWars_DatabaseSQL.DAL
                 .ElementAt(rnd.Next(_context.Hamsters.Count())));
         async Task<HamsterFullDTO> IHamsterRepository.GetHamsterByID(int hamsterId) 
             => MappingFunctions.MapHamsterToHamsterFullDTO(await _context.Hamsters.Where(hamster => hamster.Id == hamsterId).Where(y => y.IsDeleted == false).FirstOrDefaultAsync());
-
         public async Task<HamsterFullDTO> InsertHamsterAsync(HamsterCreateDTO hamster)
         {
             Hamster hamsterEntity = MappingFunctions.MapHamsterCreateDTOToHamsterEntity(hamster);
@@ -89,5 +88,8 @@ namespace HamsterWars_DatabaseSQL.DAL
             await Save();
             return true;
         }
+
+        async Task<IEnumerable<HamsterMiniDTO>> IHamsterRepository.GetHamstersMinimal()
+            => await _context.Hamsters.ProjectToType<HamsterMiniDTO>().ToListAsync();
     }
 }
