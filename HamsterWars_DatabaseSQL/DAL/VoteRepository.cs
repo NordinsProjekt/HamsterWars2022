@@ -39,9 +39,13 @@ namespace HamsterWars_DatabaseSQL.DAL
 
         public async Task<bool> VoteOnMatch(VoteDTO vote)
         {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             Models.Match m = _context.Matches.Include(x=>x.Contestants).Where(id=>id.Id == vote.MatchId).SingleOrDefault();
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             if (m.IsCompleted == true)
                 return false;
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             if (m == null || m.Contestants.Where(x=>x.Id == vote.HamsterId).FirstOrDefault() == null)
                 return false;

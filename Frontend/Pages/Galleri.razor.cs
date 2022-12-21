@@ -24,7 +24,7 @@ namespace Frontend.Pages
         public async Task ShowMore(int id)
         {
             hamsterKilled.Clear();
-            var h = galleryList.FirstOrDefault(x => x.Id == id);
+            var h = await JS.InvokeAsync<HamsterDTO>("getAPI", "https://localhost:7232/hamsters/" + id);
             if (h != null) { infoHamster = h; }
             var result = await JS.InvokeAsync<int[]>("getAPI", "https://localhost:7232/Defeated/" + infoHamster.Id);
             for (int i = 0; i < result.Length; i++)

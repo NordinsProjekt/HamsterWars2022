@@ -46,7 +46,9 @@ namespace HamsterWars_DatabaseSQL.DAL
             => MappingFunctions.MapHamsterToHamsterFullDTO(_context.Hamsters.Include(match => match.Matches).Where(y => y.IsDeleted == false).ToList()
                 .ElementAt(rnd.Next(_context.Hamsters.Count())));
         async Task<HamsterFullDTO> IHamsterRepository.GetHamsterByID(int hamsterId) 
+#pragma warning disable CS8604 // Possible null reference argument for parameter 'hamster' in 'HamsterFullDTO MappingFunctions.MapHamsterToHamsterFullDTO(Hamster hamster)'.
             => MappingFunctions.MapHamsterToHamsterFullDTO(await _context.Hamsters.Where(hamster => hamster.Id == hamsterId).Where(y => y.IsDeleted == false).FirstOrDefaultAsync());
+#pragma warning restore CS8604 // Possible null reference argument for parameter 'hamster' in 'HamsterFullDTO MappingFunctions.MapHamsterToHamsterFullDTO(Hamster hamster)'.
         public async Task<HamsterFullDTO> InsertHamsterAsync(HamsterCreateDTO hamster)
         {
             Hamster hamsterEntity = MappingFunctions.MapHamsterCreateDTOToHamsterEntity(hamster);
@@ -72,7 +74,9 @@ namespace HamsterWars_DatabaseSQL.DAL
             foreach (var item in changes.GetType().GetProperties())
             {
                 var value = item.GetValue(changes, null);
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 if (value != null) org.GetType().GetProperty(item.Name).SetValue(org, value, null);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             }
             _context.Update(org);
             await Save();

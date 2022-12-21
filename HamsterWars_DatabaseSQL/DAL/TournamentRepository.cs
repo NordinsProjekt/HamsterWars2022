@@ -34,14 +34,20 @@ namespace HamsterWars_DatabaseSQL.DAL
         }
 
         public async Task<IEnumerable<TournamentDTO>> GetTournaments()
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             => MappingFunctions.MapTournamentListToTournamentDTOList(await _context.Tournaments
                 .Include(m => m.Matches).ThenInclude(mr => mr.Result).ThenInclude(w => w.Winner)
                 .Include(m => m.Matches).ThenInclude(mr => mr.Result).ThenInclude(l => l.Looser)
                 .ToListAsync());
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
         public async Task<TournamentDTO> GetTournamentByID(int tournamentId)
+#pragma warning disable CS8604 // Possible null reference argument for parameter 'tournament' in 'TournamentDTO MappingFunctions.MapTournamentToTournamentDTO(Tournament tournament)'.
             => MappingFunctions.MapTournamentToTournamentDTO(await _context.Tournaments
                 .Include(m=>m.Matches).ThenInclude(h=>h.Contestants).Where(x => x.Id == tournamentId).FirstOrDefaultAsync());
+#pragma warning restore CS8604 // Possible null reference argument for parameter 'tournament' in 'TournamentDTO MappingFunctions.MapTournamentToTournamentDTO(Tournament tournament)'.
 
         public async Task<int> CreateTournament(int[] hamsters, string title)
         {
@@ -66,7 +72,9 @@ namespace HamsterWars_DatabaseSQL.DAL
 
         public async Task<bool> CheckTournamentMatches(int tourId)
         {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             Tournament? t = await _context.Tournaments.Include(m=>m.Matches).ThenInclude(mr=>mr.Result).ThenInclude(w=>w.Winner).FirstOrDefaultAsync(x=>x.Id == tourId);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             if (t == null) return false;
             if (t.IsCompleted) return false;
 
@@ -86,13 +94,23 @@ namespace HamsterWars_DatabaseSQL.DAL
             int numOfCon = t.NumberOfConsestants;
             Match[] matchArr = t.Matches.OrderByDescending(t => t.TId).ToArray();
             int max = (numOfCon - cMatchesDone);
+#pragma warning disable CS8629 // Nullable value type may be null.
             int tIdCounter = (int)matchArr[0].TId;
+#pragma warning restore CS8629 // Nullable value type may be null.
             matchArr = matchArr.Take(max).OrderBy(x=>x.TId).ToArray();
             for (int i = 0; i < max; i+=2)
             {
                 List<Hamster> hList = new List<Hamster>();
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8604 // Possible null reference argument for parameter 'item' in 'void List<Hamster>.Add(Hamster item)'.
                 hList.Add(matchArr[i].Result.Winner);
+#pragma warning restore CS8604 // Possible null reference argument for parameter 'item' in 'void List<Hamster>.Add(Hamster item)'.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8604 // Possible null reference argument for parameter 'item' in 'void List<Hamster>.Add(Hamster item)'.
                 hList.Add(matchArr[i+1].Result.Winner);
+#pragma warning restore CS8604 // Possible null reference argument for parameter 'item' in 'void List<Hamster>.Add(Hamster item)'.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                 Match m = new Match() { StartDate= DateTime.Now, Contestants = hList, Tour = t, TId = ++tIdCounter };
                 _context.Add(m);
             }

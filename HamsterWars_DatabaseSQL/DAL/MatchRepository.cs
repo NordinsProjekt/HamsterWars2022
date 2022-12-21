@@ -36,8 +36,10 @@ namespace HamsterWars_DatabaseSQL.DAL
             => MappingFunctions.MapMatchListToMatchDTOList(await _context.Matches.Include(hamster => hamster.Contestants).Include(ma=>ma.Result).ToListAsync());
 
         public async Task<MatchFullDTO> GetMatchByID(int matchId)
+#pragma warning disable CS8604 // Possible null reference argument for parameter 'match' in 'MatchFullDTO MappingFunctions.MapMatchToMatchFullDTO(Match match)'.
             => MappingFunctions.MapMatchToMatchFullDTO(await _context.Matches.Include(hamster => hamster.Contestants)
                 .Where(match => match.Id == matchId).FirstOrDefaultAsync());
+#pragma warning restore CS8604 // Possible null reference argument for parameter 'match' in 'MatchFullDTO MappingFunctions.MapMatchToMatchFullDTO(Match match)'.
 
         public async Task<bool> DeleteMatch(int matchId)
         {
@@ -119,8 +121,12 @@ namespace HamsterWars_DatabaseSQL.DAL
             return true;
         }
         public async Task<IEnumerable<MatchFullDTO>> Get10Lastest()
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             => MappingFunctions.MapMatchToMatchFullDTO(await _context.Matches.Include(c=>c.Contestants).Include(r=>r.Result)
                 .ThenInclude(w=>w.Winner).Include(r=>r.Result).ThenInclude(l=>l.Looser).Where(da=>da.EndDate != null)
                 .OrderByDescending(da=>da.EndDate).Take(10).ToListAsync());
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
     }
 }
