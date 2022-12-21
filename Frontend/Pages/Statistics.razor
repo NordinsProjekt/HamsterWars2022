@@ -1,50 +1,78 @@
-﻿@page "/statistics"
+﻿@page "/statistics/{Stats}"
 @using Frontend.Pages.Component
 @using DTO
 @inject IJSRuntime JS
 <h1>Statistics</h1>
 <div class="d-flex align-content-stretch flex-wrap flex-row">
-    <div>
-        <h2>Top 5 ATH</h2>
-        @foreach (var hamster in top5List)
-        {
-            <HamsterInfo infoHamster="hamster" />
-        }
-    </div>
-    <div>
-        <h2>Worst 5 ATH</h2>
-        @foreach (var hamster in low5List)
-        {
-            <HamsterInfo infoHamster="hamster" />
-        }
-    </div>
-</div>
-<h2>Latest 10 Match Results</h2>
-<div class="d-flex align-content-stretch flex-wrap">
-    @foreach (var m in latest10)
+    @if (top5List.Count != 0)
     {
         <div>
-            <div class="MatchDataCard">
-                <h3 class="WindowBar">Match Nr @m.Id</h3>
-                <p>Start: @m.StartDate <br />
-                   End: @m.EndDate</p>
-                <hr />
-                <p>@m.Result.Winner.Name (@m.Result.WinnerScore)</p>
-                <hr />
-                <p>@m.Result.Looser.Name (@m.Result.LooserScore)</p>
-            </div>
+            <h2>Top 5 ATH</h2>
+            @foreach (var hamster in top5List)
+            {
+                <HamsterInfo infoHamster="hamster" />
+            }
+        </div>
+    }
+    
+    @if (low5List.Count != 0)
+    {
+        <div>
+            <h2>Worst 5 ATH</h2>
+            @foreach (var hamster in low5List)
+            {
+                <HamsterInfo infoHamster="hamster" />
+            }
         </div>
     }
 </div>
+
+    @if (latest10.Count != 0)
+    {
+        <h2>Latest 10 Match Results</h2>
+        <div class="d-flex align-content-stretch flex-wrap flex-row" >
+        @foreach (var m in latest10)
+        {
+            <div>
+                <div class="MatchDataCard">
+                    <h3 class="WindowBar">Match Nr @m.Id</h3>
+                    <p>Start: @m.StartDate <br />
+                       End: @m.EndDate</p>
+                    <hr />
+                    <p>@m.Result.Winner.Name (@m.Result.WinnerScore)</p>
+                    <hr />
+                    <p>@m.Result.Looser.Name (@m.Result.LooserScore)</p>
+                </div>
+            </div>
+        }
+            </div>
+    }
+
 @code {
+    [Parameter]
+    public string Stats { get; set; }
     public List<HamsterDTO> top5List = new List<HamsterDTO>();
     public List<HamsterDTO> low5List = new List<HamsterDTO>();
     public List<MatchFullDTO> latest10 = new List<MatchFullDTO>();
 
     protected override async Task OnInitializedAsync()
     {
-        top5List = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/Winners");
-        low5List = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/Losers");
-        latest10 = await JS.InvokeAsync<List<MatchFullDTO>>("getAPI", "https://localhost:7232/matches/Latest10Matches");
+        switch (Stats.ToLower())
+        {
+            case "top5":
+                top5List = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/Winners");
+                break;
+            case "low5":
+                low5List = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/Losers");
+                break;
+            case "latest10":
+                latest10 = await JS.InvokeAsync<List<MatchFullDTO>>("getAPI", "https://localhost:7232/matches/Latest10Matches");
+                break;
+            default:
+                break;
+        }
+        
+        
+        
     }
 }
