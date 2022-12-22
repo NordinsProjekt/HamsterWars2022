@@ -6,8 +6,22 @@
             url: url,
             method: 'POST',
             data: JSON.stringify(args),
-            dataType: 'json',
             contentType: 'application/json'
+        });
+        return result;
+    } catch (error) {
+        console.error(error);
+        
+    }
+}
+
+async function postVoidAPI(url) {
+    let result;
+
+    try {
+        result = await $.ajax({
+            url: url,
+            method: 'POST',
         });
 
         return result;

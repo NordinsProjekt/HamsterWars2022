@@ -31,13 +31,13 @@ namespace Frontend.Pages
 
         public async Task ContinueTournament(int tourId)
         {
-            await JS.InvokeVoidAsync("postAPI", "https://localhost:7101/CheckTournament/" + tourId);
+            await JS.InvokeVoidAsync("postVoidAPI", "https://localhost:7101/CheckTournament/" + tourId);
             tournamentList = await JS.InvokeAsync<List<TournamentMiniDTO>>("getAPI", "https://localhost:7232/tournament/ongoing");
         }
 
         public async Task EndMatch(int matchId)
         {
-            await JS.InvokeVoidAsync("postAPI", "https://localhost:7101/EndMatch/" + matchId);
+            await JS.InvokeVoidAsync("postVoidAPI", "https://localhost:7101/EndMatch/" + matchId);
             tournamentList = await JS.InvokeAsync<List<TournamentMiniDTO>>("getAPI", "https://localhost:7232/tournament/ongoing");
             tournament = null;
         }
