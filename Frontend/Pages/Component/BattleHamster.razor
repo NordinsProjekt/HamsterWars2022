@@ -3,27 +3,31 @@
     @{
         int x = 0;
     }
-    @foreach (var hamster in Battle.Contestants)
+    @if (Battle != null)
     {
-        <div class="battleCons" @onclick="(() => HamsterBattle(hamster.Id))">
-            <h3>@hamster.Name</h3>
-            <p><b>Age: </b>@hamster.Age</p>
-            <p><b>Fav food: </b>@hamster.FavFood</p>
-            <p><b>Loves: </b>@hamster.Loves</p>
-            <img id="large" src="img/hamsters/@hamster.ImgName" />
-        </div>
-        @if (x== 0)
+        @foreach (var hamster in Battle.Contestants)
         {
-            <div class="battleCons">
-                <img width="200px" src="img/misc/NicePng_battle-png_8007556.png" />
+            <div class="battleCons" @onclick="(() => HamsterBattle(hamster.Id))">
+                <h3>@hamster.Name</h3>
+                <p><b>Age: </b>@hamster.Age</p>
+                <p><b>Fav food: </b>@hamster.FavFood</p>
+                <p><b>Loves: </b>@hamster.Loves</p>
+                <img id="large" src="img/hamsters/@hamster.ImgName" />
             </div>
+            @if (x == 0)
+            {
+                <div class="battleCons">
+                    <img width="200px" src="img/misc/NicePng_battle-png_8007556.png" />
+                </div>
+            }
+            x++;
         }
-        x++;
     }
+
 </div>
 @code {
     [Parameter]
-    public MatchDTO Battle { get; set; }
+    public MatchDTO? Battle { get; set; }
     [Parameter]
     public EventCallback<int[]> onBattleWinner { get; set; }
 

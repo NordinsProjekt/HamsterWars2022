@@ -6,33 +6,43 @@
 {
     @foreach (var t in tournamentList)
     {
-        <div @onclick="(() => SendTournament(t.Id))">
-            <h2>
-                @t.Title (@t.NumberOfConsestants)
+        <div>
+            <div @onclick="(() => SendTournament(t.Id))">
+                <h2>
+                    @t.Title (@t.NumberOfConsestants)
+                    @if (t.IsCompleted)
+                    {
+                        <b>Done</b>
+                    }
+                    else
+                    {
+                        <b>Ongoing</b>
+                    }
+                </h2>
                 @if (t.IsCompleted)
                 {
-                    <b>Done</b>
+                    <p>
+                    <b>@t.EndDate</b><br />
+                    @*<b>Winner:</b> @t.Matches.OrderByDescending(x=>x.TId).First().Result.Winner.Name*@
+                     </p>
                 }
-                else
-                {
-                    <b>Ongoing</b>
-                }
-            </h2>
-            <p>
-                <b>@t.EndDate</b><br />
-                <b>Winner:</b> @t.Matches.OrderByDescending(x=>x.TId).First().Result.Winner.Name
-            </p>
+            </div>
+            <button @onclick="(() =>CheckTournament(t.Id))">Continue Tournament</button>
         </div>
     }
 }
 
 @code {
     [Parameter]
-    public List<TournamentDTO> tournamentList { get; set; }
+    public List<TournamentMiniDTO> tournamentList { get; set; }
     [Parameter]
     public EventCallback<int> onShowTournament {get;set;}
+    [Parameter]
+    public EventCallback<int> onCheckTournament { get; set; }
 
     public async Task SendTournament(int id)
         => await onShowTournament.InvokeAsync(id);
+    public async Task CheckTournament(int id)
+        => await onCheckTournament.InvokeAsync(id);
 
 }

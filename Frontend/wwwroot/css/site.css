@@ -76,8 +76,8 @@ a, .btn-link {
 }
 
 .HamsterBattleScreen {
-    border: 5px solid black;
-    margin-right: 50px;
+    border: 1px solid black;
+    margin: 10px;
     min-width: 400px;
     max-width: 800px;
 }
@@ -109,5 +109,14 @@ a, .btn-link {
     background-color:lightgrey;
     text-align: center;
     border-bottom: 1px solid black;
+}
+.IndexPicture {
+    max-width: 600px;
+}
+@media (max-width: 600px) {
+    .IndexPicture {
+        width: 300px;
+        max-width: 350px;
+    }
 }
 

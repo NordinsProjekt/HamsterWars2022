@@ -23,6 +23,11 @@
 }
 else
 {
+    @if (HasVoted)
+    {
+        <br />
+        <center><img class="IndexPicture" src="img/misc/ThxVoting.jpg" /></center>
+    }
     <button class="btn btn-primary" @onclick="CreateBattle">Generate match</button>
     <CreateMatch onCreateCustomMatch="DoBattle" />
 }
@@ -30,6 +35,7 @@ else
 @code {
     MatchDTO? battle;
     MatchDTO? score;
+    public bool HasVoted { get; set; } = false;
 
     public async Task CreateBattle()
     {
@@ -50,10 +56,12 @@ else
         await JS.InvokeVoidAsync("postAPI", "https://localhost:7101/EndMatch/" + matchVote[0]);
         score = await JS.InvokeAsync<MatchDTO>("getAPI", "https://localhost:7232/matches/" + matchVote[0]);
         battle = null;
+        HasVoted = true;
     }
 
     public async Task DoBattle(int id)
     {
+        HasVoted = false;
         battle = await JS.InvokeAsync<MatchDTO>("getAPI", "https://localhost:7232/matches/" + id);
     }
 }

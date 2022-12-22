@@ -12,6 +12,8 @@ namespace Frontend.Pages.Component
         public void MakeBrackets() //Måste städa denna
         {
             bracket.Clear();
+            if (tour == null)
+                return;
             int numMatches = tour.Matches.Count;
             int maxBrackets = numMatches / 2;
             int numBrackets = (maxBrackets <= 0) ? 3 : 3 + maxBrackets;

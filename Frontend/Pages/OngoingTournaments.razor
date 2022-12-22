@@ -1,34 +1,13 @@
-﻿@using Frontend.Pages.Component
+﻿@page "/tournaments/ongoing"
+@using Frontend.Pages.Component
 @using DTO
 @inject IJSRuntime JS
 
 <h3>OngoingTournaments</h3>
-<BattleHamster Battle="match" onBattleWinner="Vote" />
-<MatchGallery tour="tournament" onMatchClick="GetMatchForBattle" />
-<ShowTournaments tournamentList="tournamentList" onShowTournament="GetTournament" />
-@code {
-    List<TournamentDTO> tournamentList { get; set; }
-    TournamentDTO? tournament { get; set; }
-    MatchDTO? match { get; set; }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            tournamentList = await JS.InvokeAsync<List<TournamentDTO>>("getAPI", "https://localhost:7232/tournament/ongoing");
-            StateHasChanged();
-        }
-    }
-    public void GetMatchForBattle(int matchId)
-    {
-        //tournament = tournamentList
-    }
-    public void GetTournament(int tourId)
-    {
-        tournament = tournamentList.Where(x => x.Id == tourId).FirstOrDefault();
-    }
-    public async Task Vote(int[] arr)
-    {
-        
-    }
+@if(HasVoted)
+{
+    <br /><center><img class="IndexPicture" src="img/misc/ThxVoting.jpg" /></center>
 }
+<BattleHamster Battle="match" onBattleWinner="Vote" />
+<MatchGallery tour="tournament" onMatchClick="GetMatchForBattle" onEndMatch="EndMatch" />
+<ShowTournaments tournamentList="tournamentList" onShowTournament="GetTournament" onCheckTournament="ContinueTournament" />

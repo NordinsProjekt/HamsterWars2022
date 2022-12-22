@@ -67,5 +67,7 @@ namespace HamsterWars_DatabaseSQL.DAL
             => tournament.Adapt<TournamentDTO>();
         public static List<TournamentDTO> MapTournamentListToTournamentDTOList(List<Tournament> tournamentList)
             => tournamentList.Adapt<List<TournamentDTO>>();
+        public static List<TournamentMiniDTO> MapTournamentListToTournamentMiniDTOList(List<Tournament> tournamentList)
+            => tournamentList.Adapt<List<TournamentMiniDTO>>();
     }
 }

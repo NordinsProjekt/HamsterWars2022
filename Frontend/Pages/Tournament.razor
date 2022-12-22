@@ -9,18 +9,18 @@
 }
 
 @code {
-    List<TournamentDTO> tournamentList { get; set; }
+    List<TournamentMiniDTO> tournamentList { get; set; }
     TournamentDTO? tournament { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            tournamentList = await JS.InvokeAsync<List<TournamentDTO>>("getAPI", "https://localhost:7232/tournament/done");
+            tournamentList = await JS.InvokeAsync<List<TournamentMiniDTO>>("getAPI", "https://localhost:7232/tournament/done");
             StateHasChanged();
         }
     }
 
     public async Task GetTournamentIdAsync(int id)
-        => tournament = tournamentList.FirstOrDefault(x => x.Id == id);
+        => tournament = await JS.InvokeAsync<TournamentDTO>("getAPI", "https://localhost:7232/tournament/"+id);
 }
