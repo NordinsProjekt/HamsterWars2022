@@ -1,0 +1,23 @@
+﻿@using DTO
+
+@if (AllHamstersList != null)
+{
+    <h3>Choose your hamster</h3>
+        <div class="d-flex flex-wrap">
+        @foreach (var hamster in AllHamstersList)
+        {
+                <div class="p-2 bd-highlight">
+                    <p><b>Name: </b>@hamster.Name</p>
+                <img id="small" src="img/hamsters/@hamster.ImgName" @onclick="(() => HamsterClicked(hamster.Id))">
+                </div>
+        }
+        </div>
+}
+@code {
+    [Parameter]
+    public List<HamsterMiniDTO>? AllHamstersList { get; set; }
+    [Parameter]
+    public EventCallback<int> onHamsterClicked { get; set; }
+
+    private async Task HamsterClicked(int id) => await onHamsterClicked.InvokeAsync(id);
+}

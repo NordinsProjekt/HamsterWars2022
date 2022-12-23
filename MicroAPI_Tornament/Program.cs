@@ -2,6 +2,7 @@ using HamsterWars_Core.Interfaces;
 using HamsterWars_DatabaseSQL;
 using HamsterWars_DatabaseSQL.DAL;
 using Microsoft.AspNetCore.Mvc;
+using HamsterWars_Core.DTO;
 
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -34,10 +35,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
-app.MapPost("/CreateTournament", async ([FromBody]int[] hamstersId, string title, [FromServices] ITournamentRepository _rep) =>
+app.MapPost("/CreateTournament", async ([FromBody]CreateTournamentDTO ct , [FromServices] ITournamentRepository _rep) =>
 {
-    var request = await _rep.CreateTournament(hamstersId,title);
+    var request = await _rep.CreateTournament(ct.Contestants,ct.Title);
     if (request >0)
         return Results.Ok(request);
     else

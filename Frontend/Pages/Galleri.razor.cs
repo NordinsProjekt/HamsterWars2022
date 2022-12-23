@@ -8,7 +8,7 @@ namespace Frontend.Pages
     {
         public List<HamsterDTO>? galleryList { get; set; } = new List<HamsterDTO>();
         public HamsterDTO? infoHamster { get; set; }
-        public List<HamsterDTO> hamsterKilled { get; set; } = new List<HamsterDTO>();
+        public List<HamsterMiniDTO> hamsterKilled { get; set; } = new List<HamsterMiniDTO>();
         public bool ShowInputField { get; set; } = false;
         //protected override async Task OnInitializedAsync()
         //{
@@ -26,12 +26,7 @@ namespace Frontend.Pages
             hamsterKilled.Clear();
             var h = await JS.InvokeAsync<HamsterDTO>("getAPI", "https://localhost:7232/hamsters/" + id);
             if (h != null) { infoHamster = h; }
-            var result = await JS.InvokeAsync<int[]>("getAPI", "https://localhost:7232/Defeated/" + infoHamster.Id);
-            for (int i = 0; i < result.Length; i++)
-            {
-                var hamster = await JS.InvokeAsync<HamsterDTO>("getAPI", "https://localhost:7232/hamsters/" + result[i]);
-                hamsterKilled.Add(hamster);
-            }
+            hamsterKilled = await JS.InvokeAsync<List<HamsterMiniDTO>>("getAPI", "https://localhost:7232/Defeated/" + infoHamster.Id);
             await JS.InvokeVoidAsync("OnScrollEvent");
             StateHasChanged();
         }
@@ -48,6 +43,12 @@ namespace Frontend.Pages
         {
             ShowInputField = true;
             infoHamster = null;
+        }
+
+        public void CloseCreateHamster()
+        {
+            ShowInputField = false;
+            StateHasChanged();
         }
         public async Task CreateHamsterObjekt(CreateHamsterDTO hamster)
         {

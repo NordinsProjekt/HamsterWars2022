@@ -113,6 +113,10 @@ a, .btn-link {
 .IndexPicture {
     max-width: 600px;
 }
+#DefeatedWindow {
+    min-width: 350px;
+    max-width: 1200px;
+}
 @media (max-width: 600px) {
     .IndexPicture {
         width: 300px;

@@ -1,0 +1,62 @@
+﻿@using DTO
+@inject IJSRuntime JS
+@inject NavigationManager nav
+<h1>CreateTournament</h1> <br />
+<input type="text" @bind="Title" /><button class="btn btn-primary" @onclick="CreateCustomTour">Create Tournament</button>
+<ChooseHamsters onHamsterClicked="AddToBattleList" AllHamstersList="HamsterRoster" />
+<BattleRoster  BattleList="BattleList" onRemoveHamster="RemoveFromBattleList"/>
+@code {
+    private List<HamsterMiniDTO>? HamsterRoster { get; set; } = new();
+    private List<HamsterMiniDTO>? BattleList { get; set; } = new();
+    public string Title { get; set; } = "Testing";
+    public string Message { get; set; } = "";
+
+    [Parameter]
+    public EventCallback<CreateTournamentDTO> onCreateCustomTournament { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            HamsterRoster = await JS.InvokeAsync<List<HamsterMiniDTO>>("getAPI", "https://localhost:7232/hamsters/minimal");
+            StateHasChanged();
+        }
+    }
+    public async Task CreateCustomTour()
+    {
+        if (BattleList.Count == 4 || BattleList.Count == 8 || BattleList.Count == 16)
+        {
+            int[] arr = BattleList.Select(h => h.Id).ToArray();
+            if (string.IsNullOrWhiteSpace(Title))
+                Title = "Generic Tournament";
+            CreateTournamentDTO ct = new CreateTournamentDTO(arr, Title);
+            await JS.InvokeVoidAsync("postAPI", "https://localhost:7101/CreateTournament", ct);
+            nav.NavigateTo("/", true);
+        }
+        else
+            Message = "Tournament can only have 4,8 or 16 hamsters";
+    }
+
+    public async Task AddToBattleList(int id)
+    {
+        if (BattleList.Where(h => h.Id == id).FirstOrDefault() == null)
+        {
+            HamsterMiniDTO h = HamsterRoster.Where(h => h.Id == id).First();
+            BattleList.Add(h);
+            HamsterRoster.Remove(h);
+            StateHasChanged();
+        }
+        
+    }
+
+    public async Task RemoveFromBattleList(int id)
+    {
+        if (BattleList.Where(h => h.Id == id).FirstOrDefault() != null)
+        {
+            HamsterMiniDTO h = BattleList.Where(h => h.Id == id).First();
+            HamsterRoster.Add(h);
+            BattleList.Remove(h);
+            StateHasChanged();
+        }
+    }
+}

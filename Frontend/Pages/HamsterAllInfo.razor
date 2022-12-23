@@ -1,0 +1,46 @@
+﻿@page "/Hamster/{id}"
+@inject IJSRuntime JS
+@using DTO
+@using Frontend.Pages.Component
+<h3>Hamster Info</h3>
+<HamsterInfo infoHamster="Hamster" Killed="KilledList" />
+@if (MatchesDone.Count > 0)
+{
+    <div class="d-flex flex-wrap" id="DefeatedWindow">
+        @foreach (var m in MatchesDone)
+        {
+            <div class="MatchCard">
+                <h3 class="WindowBar">Match @m.MatchId</h3>
+                @if(m.Winner.Id == @Hamster.Id){ <p><b>@m.Winner.Name (@m.WinnerScore)</b></p>} else { <p>@m.Winner.Name (@m.WinnerScore)</p>}
+                <hr />
+                @if(m.Looser.Id == @Hamster.Id){ <p><b>@m.Looser.Name (@m.LooserScore)</b></p>} else { <p>@m.Winner.Name (@m.LooserScore)</p>}
+            </div>
+        }
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string id { get; set; }
+    HamsterDTO Hamster { get; set; }
+    List<MatchResultSlimDTO> MatchesDone { get; set; } = new();
+    List<HamsterMiniDTO> KilledList { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (int.TryParse(id,out int x))
+            {
+                Hamster = await JS.InvokeAsync<HamsterDTO>("getAPI","https://localhost:7232/hamsters/" + x);
+                MatchesDone = await JS.InvokeAsync<List<MatchResultSlimDTO>>("getAPI", "https://localhost:7232/score/all/" + x);
+                KilledList = await JS.InvokeAsync<List<HamsterMiniDTO>>("getAPI", "https://localhost:7232/Defeated/" + x);
+            }
+            else
+            {
+                return;
+            }
+            StateHasChanged();
+        }
+    }
+}

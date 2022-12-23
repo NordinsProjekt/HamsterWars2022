@@ -1,6 +1,7 @@
 ﻿using HamsterWars_Core.DTO;
 using HamsterWars_Core.Interfaces;
 using HamsterWars_DatabaseSQL.Models;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -47,14 +48,13 @@ namespace HamsterWars_DatabaseSQL.DAL
 
         public async Task Save() => await _context.SaveChangesAsync();
 
-        public async Task<int?[]> GetDefeatedHamsters(int winnerHamsterId)
+        public async Task<List<HamsterMiniDTO>> GetDefeatedHamsters(int winnerHamsterId)
         {
             Hamster? winner = await _context.Hamsters.Where(x => x.Id == winnerHamsterId).FirstOrDefaultAsync();
             if (winner == null)
                 throw new ArgumentException("Hamstern finns inte");
-            var result = _context.MatchResults.Include(winner => winner.Winner).Include(loser=>loser.Looser)
-                .Where(x=>x.WinnerId== winnerHamsterId).Select(los=>los.LooserId).Distinct().ToArray();
-            return result;
+            return MappingFunctions.MapHamsterToHamsterMiniDTOList(await _context.MatchResults.Include(winner => winner.Winner).Include(loser => loser.Looser)
+                .Where(x => x.WinnerId == winnerHamsterId).Select(los => los.Looser).Distinct().ToListAsync());
         }
 
         public async Task<ScoreCardDTO> GetChallengerScoreCard(int challenger, int defender)
@@ -80,5 +80,12 @@ namespace HamsterWars_DatabaseSQL.DAL
         public async Task<int[]> GetHighestGamesTop5()
             => await _context.Hamsters.OrderByDescending(x => x.Games).Select(y => y.Id).Take(5).ToArrayAsync();
 
+        public async Task<IEnumerable<MatchResultSlimDTO>> GetAllMatchResultForHamster(int id)
+        {
+            Hamster h = await _context.Hamsters.Where(h=>h.Id== id).Where(h=>h.IsDeleted == false).FirstOrDefaultAsync();
+            if (h ==null)
+                throw new ArgumentException("Hamstern finns inte");
+            return await _context.MatchResults.Where(w=>w.WinnerId== id || w.LooserId == id).ProjectToType<MatchResultSlimDTO>().ToListAsync();
+        }
     }
 }

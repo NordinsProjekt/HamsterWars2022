@@ -1,0 +1,23 @@
+﻿@using DTO
+<h2>BattleRoster</h2>
+@if (BattleList != null)
+{
+    <h3>Choose your hamster</h3>
+    <div class="d-flex flex-wrap" id="DefeatedWindow">
+        @foreach (var hamster in BattleList)
+        {
+            <div class="p-2 bd-highlight" width="200px">
+                <p><b>Name: </b>@hamster.Name</p>
+                <img id="small" src="img/hamsters/@hamster.ImgName" @onclick="(() => RemoveHamster(hamster.Id))">
+            </div>
+        }
+    </div>
+}
+@code {
+    [Parameter]
+    public List<HamsterMiniDTO> BattleList { get; set; }
+    [Parameter]
+    public EventCallback<int> onRemoveHamster { get; set; }
+    public async void RemoveHamster(int id)
+        => await onRemoveHamster.InvokeAsync(id);
+}

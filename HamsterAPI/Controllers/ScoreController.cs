@@ -31,5 +31,24 @@ namespace HamsterAPI.Controllers
                 return StatusCode(500);
             }
         }
+        [HttpGet("all/{hamsterId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetAllMatchResult(int hamsterId)
+        {
+            try
+            {
+                return Ok(await _matchResultRep.GetAllMatchResultForHamster(hamsterId));
+            }
+            catch (ArgumentException ae)
+            {
+                return NotFound(ae.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
     }
 }
