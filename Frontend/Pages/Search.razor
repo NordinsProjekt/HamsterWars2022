@@ -1,5 +1,18 @@
-﻿<h3>Search</h3>
-
+﻿@page "/search/{Name}"
+@using Frontend.Pages.Component
+@using DTO
+@inject IJSRuntime JS
+<h1>Search</h1>
+<HamsterSearchResult SearchList="searchResult" />
 @code {
+    [Parameter]
+    public string Name { get; set; }
+    public List<HamsterMiniDTO> searchResult { get; set; }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            searchResult = await JS.InvokeAsync<List<HamsterMiniDTO>>("getAPI", "https://localhost:7232/Hamsters/search/" + Name);
+        StateHasChanged();
+    }
 }

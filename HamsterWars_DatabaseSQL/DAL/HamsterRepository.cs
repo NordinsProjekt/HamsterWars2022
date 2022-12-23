@@ -74,9 +74,7 @@ namespace HamsterWars_DatabaseSQL.DAL
             foreach (var item in changes.GetType().GetProperties())
             {
                 var value = item.GetValue(changes, null);
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 if (value != null) org.GetType().GetProperty(item.Name).SetValue(org, value, null);
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
             }
             _context.Update(org);
             await Save();
@@ -95,5 +93,8 @@ namespace HamsterWars_DatabaseSQL.DAL
 
         async Task<IEnumerable<HamsterMiniDTO>> IHamsterRepository.GetHamstersMinimal()
             => await _context.Hamsters.ProjectToType<HamsterMiniDTO>().ToListAsync();
+
+        public async Task<IEnumerable<HamsterMiniDTO>> GetHamstersSearchName(string name)
+            => await _context.Hamsters.Where(n=>n.Name.Contains(name)).ProjectToType<HamsterMiniDTO>().ToListAsync();
     }
 }

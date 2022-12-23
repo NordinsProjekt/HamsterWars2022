@@ -84,7 +84,6 @@ namespace HamsterAPI.Controllers
             {
                 return StatusCode(500);
             }
-
         }
 
         // POST api/<HamsterController>
@@ -138,6 +137,20 @@ namespace HamsterAPI.Controllers
             }
             return BadRequest();
 
+        }
+        [HttpGet("search/{name}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> SearchName(string name)
+        {
+            try
+            {
+                return Ok(await _hamsterRep.GetHamstersSearchName(name));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
         }
     }
 }

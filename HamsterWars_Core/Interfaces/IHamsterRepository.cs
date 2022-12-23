@@ -10,6 +10,7 @@ namespace HamsterWars_Core.Interfaces
     public interface IHamsterRepository
     {
         Task<IEnumerable<HamsterDTO>> GetHamsters();
+        Task<IEnumerable<HamsterMiniDTO>> GetHamstersSearchName(string name);
         HamsterFullDTO RandomHamster();
         Task<IEnumerable<HamsterMiniDTO>> GetHamstersMinimal();
         Task<HamsterFullDTO> GetHamsterByID(int hamsterId);

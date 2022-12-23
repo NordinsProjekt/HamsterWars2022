@@ -1,0 +1,17 @@
+﻿@using DTO
+
+@if (SearchList != null)
+{
+    <div class="d-flex flex-wrap">
+        @foreach (var hamster in SearchList)
+        {
+            <div class="p-2 bd-highlight"><a href="/Hamster/@hamster.Id"><p><b>Name: </b>@hamster.Name</p>
+                    <img id="small" src="img/hamsters/@hamster.ImgName"></a>
+            </div>
+        }
+    </div>
+}
+@code {
+    [Parameter]
+    public List<HamsterMiniDTO> SearchList { get; set; }
+}

@@ -1,4 +1,4 @@
-﻿
+﻿@inject NavigationManager nav
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">HamsterWars</a>
@@ -47,12 +47,14 @@
                 </li>*@
             </ul>
             <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" @bind="SearchText">
+                <button class="btn btn-outline-success" @onclick="(() => Search())">Search</button>
             </form>
         </div>
     </div>
 </nav>
 @code {
-
+    public string SearchText { get; set; }
+    public async Task Search()
+        => nav.NavigateTo("/search/" + SearchText, true);
 }
