@@ -2,10 +2,11 @@
 @inject IJSRuntime JS
 @using DTO
 @using Frontend.Pages.Component
-<h3>Hamster Info</h3>
+<h1>Hamster Info</h1>
 <HamsterInfo infoHamster="Hamster" Killed="KilledList" />
 @if (MatchesDone.Count > 0)
 {
+    <h2>Match result</h2>
     <div class="d-flex flex-wrap" id="DefeatedWindow">
         @foreach (var m in MatchesDone)
         {

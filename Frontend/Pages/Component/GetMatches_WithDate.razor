@@ -1,0 +1,18 @@
+﻿@using DTO
+<div>
+    <label for="StartDateInput">Start date: </label><input type="date" id="StartDateInput" @bind="StartDate" /><br />
+    <label for="EndDateInput">End Date: </label><input type="date" id="EndDateInput" @bind="EndDate" /><br />
+    <button @onclick="SearchWithDate">Search</button>
+</div>
+
+@code {
+    [Parameter]
+    public EventCallback<SelectedDatesDTO> onSelectedDateSpan { get; set; }
+    public DateOnly StartDate { get; set; }
+    public DateOnly EndDate { get; set; }
+
+    public async Task SearchWithDate()
+    {
+        
+    }
+}

@@ -63,5 +63,6 @@ else
     {
         HasVoted = false;
         battle = await JS.InvokeAsync<MatchDTO>("getAPI", "https://localhost:7232/matches/" + id);
+        StateHasChanged();
     }
 }

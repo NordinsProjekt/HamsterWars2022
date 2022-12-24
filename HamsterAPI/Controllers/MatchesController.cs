@@ -1,4 +1,5 @@
 ﻿using HamsterWars_Core.DTO;
+using HamsterWars_Core.Exception;
 using HamsterWars_Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -57,6 +58,34 @@ namespace HamsterAPI.Controllers
             try
             {
                 return Ok(await _matchRep.Get10Lastest());
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet("{hamsterId}/{startDate}/{endDate}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetHamsterMatchesWithDates([FromRouteAttribute]string? startDate, 
+            [FromRouteAttribute] string? endDate, [FromRouteAttribute] int hamsterId)
+        {
+            try
+            {
+                if (DateOnly.TryParse(startDate, out var dateOnlyStart))
+                    startDate = dateOnlyStart.ToString();
+                else
+                    startDate = "0001-01-01";
+                if (DateOnly.TryParse(endDate, out var dateOnlyEnd))
+                    endDate = dateOnlyEnd.ToString();
+                else
+                    endDate = "9999-12-31";
+                return Ok(await _matchRep.GetBetweenDates(DateOnly.Parse(startDate), DateOnly.Parse(endDate), hamsterId));
+            }
+            catch (HamsterDoesntExist ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (Exception)
             {
