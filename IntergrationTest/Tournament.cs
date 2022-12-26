@@ -33,6 +33,7 @@ namespace IntergrationTest
             var tournament = await tourRep.GetTournamentByID(result);
             Assert.True(tournament.IsCompleted);
         }
+
         [Trait("Create Tournament", "8 Hamster Tournament to finish")]
         [Fact]
         public async Task CreateTournamentWithEightHamsters_CheckTheEndResult_ShouldHaveAWinner_AND_IsCompletedTRUE()

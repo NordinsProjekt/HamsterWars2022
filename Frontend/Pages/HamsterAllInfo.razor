@@ -7,6 +7,7 @@
 @if (MatchesDone.Count > 0)
 {
     <h2>Match result</h2>
+    <GetMatches_WithDate ButtonName="Get Matches" onSelectedDateSpan="BetweenTheseDates" />
     <div class="d-flex flex-wrap" id="DefeatedWindow">
         @foreach (var m in MatchesDone)
         {
@@ -14,7 +15,7 @@
                 <h3 class="WindowBar">Match @m.MatchId</h3>
                 @if(m.Winner.Id == @Hamster.Id){ <p><b>@m.Winner.Name (@m.WinnerScore)</b></p>} else { <p>@m.Winner.Name (@m.WinnerScore)</p>}
                 <hr />
-                @if(m.Looser.Id == @Hamster.Id){ <p><b>@m.Looser.Name (@m.LooserScore)</b></p>} else { <p>@m.Winner.Name (@m.LooserScore)</p>}
+                @if(m.Looser.Id == @Hamster.Id){ <p><b>@m.Looser.Name (@m.LooserScore)</b></p>} else { <p>@m.Looser.Name (@m.LooserScore)</p>}
             </div>
         }
     </div>
@@ -43,5 +44,22 @@
             }
             StateHasChanged();
         }
+    }
+    public async Task BetweenTheseDates(SelectedDatesDTO values)
+    {
+        List<MatchDTO> list = await JS.InvokeAsync<List<MatchDTO>>
+            ("getAPI", "https://localhost:7232/matches/" + Hamster.Id + "/" + values.StartDate + "/" + values.EndDate);
+        MatchesDone.Clear();
+        foreach (var match in list)
+        {
+            MatchResultDTO mr = new(match.Id, match.Result.Winner, match.Result.WinnerScore, match.Result.Looser, match.Result.LooserScore);
+            MatchResultSlimDTO mrs = new(match.Id, 
+                new HamsterMiniDTO(mr.Winner.Id, mr.Winner.Name, mr.Winner.ImgName),
+                mr.WinnerScore, 
+                new HamsterMiniDTO(mr.Looser.Id, mr.Looser.Name, mr.Looser.ImgName), 
+                mr.LooserScore);
+            MatchesDone.Add(mrs);
+        }
+        StateHasChanged();
     }
 }

@@ -22,7 +22,7 @@ namespace Frontend.Pages
         {
             var m = tournament.Matches.Where(id => id.Id == matchId).FirstOrDefault();
             if (m != null)
-                match = new MatchDTO(m.Id, m.Contestants);
+                match = new MatchDTO(m.Id, m.Contestants,m.Result);
             HasVoted = false;
         }
 

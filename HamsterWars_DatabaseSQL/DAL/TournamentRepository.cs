@@ -35,8 +35,6 @@ namespace HamsterWars_DatabaseSQL.DAL
         }
 
         public async Task<IEnumerable<TournamentDTO>> GetTournaments()
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
             => MappingFunctions.MapTournamentListToTournamentDTOList(await _context.Tournaments
                 .Include(m => m.Matches).ThenInclude(mr => mr.Result).ThenInclude(w => w.Winner)
                 .Include(m => m.Matches).ThenInclude(mr => mr.Result).ThenInclude(l => l.Looser)

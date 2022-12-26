@@ -4,6 +4,7 @@
 <p>Click on a title to see more information</p>
 @if (tournamentList != null)
 {
+    <div>
     @foreach (var t in tournamentList)
     {
         <div>
@@ -30,6 +31,7 @@
             <button @onclick="(() =>CheckTournament(t.Id))">Continue Tournament</button>
         </div>
     }
+    </div>
 }
 
 @code {
