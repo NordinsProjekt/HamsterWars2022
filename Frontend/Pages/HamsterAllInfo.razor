@@ -4,10 +4,11 @@
 @using Frontend.Pages.Component
 <h1>Hamster Info</h1>
 <HamsterInfo infoHamster="Hamster" Killed="KilledList" />
+<h2>Match result</h2>
+<GetMatches_WithDate ButtonName="Get Matches" onSelectedDateSpan="BetweenTheseDates" />
 @if (MatchesDone.Count > 0)
 {
-    <h2>Match result</h2>
-    <GetMatches_WithDate ButtonName="Get Matches" onSelectedDateSpan="BetweenTheseDates" />
+
     <div class="d-flex flex-wrap" id="DefeatedWindow">
         @foreach (var m in MatchesDone)
         {
@@ -19,6 +20,10 @@
             </div>
         }
     </div>
+}
+else
+{
+    <p>No matches found!!</p>
 }
 
 @code {

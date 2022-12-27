@@ -45,14 +45,14 @@ else
         while (hamster1 == hamster2)
             hamster2 = await JS.InvokeAsync<HamsterDTO>("getAPI", "https://localhost:7232/hamsters/random");
         MatchCreateDTO m = new MatchCreateDTO(hamster1.Id, hamster2.Id, DateTime.Now, DateTime.Now);
-        battle = await JS.InvokeAsync<MatchDTO>("postAPI", "https://localhost:7232/matches/", m);
+        battle = await JS.InvokeAsync<MatchDTO>("postAPI", "https://localhost:7101/matches/", m);
         StateHasChanged();
     }
 
     public async Task Vote(int[] matchVote)
     {
         VoteDTO vote = new VoteDTO(matchVote[0], matchVote[1]);
-        await JS.InvokeVoidAsync("postAPI", "https://localhost:7232/vote/", vote);
+        await JS.InvokeVoidAsync("postAPI", "https://localhost:7101/vote/", vote);
         await JS.InvokeVoidAsync("postAPI", "https://localhost:7101/EndMatch/" + matchVote[0]);
         score = await JS.InvokeAsync<MatchDTO>("getAPI", "https://localhost:7232/matches/" + matchVote[0]);
         battle = null;

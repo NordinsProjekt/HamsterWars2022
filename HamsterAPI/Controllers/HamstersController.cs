@@ -87,30 +87,30 @@ namespace HamsterAPI.Controllers
         }
 
         // POST api/<HamsterController>
-        [HttpPost]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(404)]
-        [ProducesResponseType(500)]
-        public async Task<IActionResult> Post([FromBody] HamsterCreateDTO hamster)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    var result = await _hamsterRep.InsertHamsterAsync(hamster);
-                    if (result.Id > 0) { return Ok(result); }
-                    return BadRequest();
-                }
-                catch (Exception)
-                {
-                    return StatusCode(500);
-                }
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
+        //[HttpPost]
+        //[ProducesResponseType(200)]
+        //[ProducesResponseType(404)]
+        //[ProducesResponseType(500)]
+        //public async Task<IActionResult> Post([FromBody] HamsterCreateDTO hamster)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            var result = await _hamsterRep.InsertHamsterAsync(hamster);
+        //            if (result.Id > 0) { return Ok(result); }
+        //            return BadRequest();
+        //        }
+        //        catch (Exception)
+        //        {
+        //            return StatusCode(500);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return BadRequest();
+        //    }
+        //}
 
 
 

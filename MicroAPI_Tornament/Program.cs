@@ -3,8 +3,7 @@ using HamsterWars_DatabaseSQL;
 using HamsterWars_DatabaseSQL.DAL;
 using Microsoft.AspNetCore.Mvc;
 using HamsterWars_Core.DTO;
-using System.Web.Http.ModelBinding;
-using System.Web.Mvc;
+using HamsterWars_DatabaseSQL.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -114,28 +113,76 @@ app.MapPut("/hamster/{id}/Restore", async (int id, [FromServices] IHamsterReposi
 }).WithName("RestoreHamster");
 
 
-app.MapPost("/match", async ([FromBody] MatchCreateDTO value, [FromServices] IMatchRepository _rep) =>
+app.MapPost("/matches", async ([FromBody] MatchCreateDTO value, [FromServices] IMatchRepository _rep) =>
 {
     //Lägg till FluentValidation för detta.
-    //if (ModelState.)
-    //{
-    //    try
-    //    {
-    //        return Ok(await _matchRep.InsertMatch(value));
-    //    }
-    //    catch (ArgumentException ae)
-    //    {
-    //        return NotFound(ae.Message);
-    //    }
-    //    catch (Exception)
-    //    {
-    //        return StatusCode(500);
-    //    }
-    //}
-    //return BadRequest();
+    if (value.Hamster1Id > 0 || value.Hamster2Id > 0)
+    {
+        try
+        {
+            return Results.Ok(await _rep.InsertMatch(value));
+        }
+        catch (ArgumentException ae)
+        {
+            return Results.NotFound(ae.Message);
+        }
+        catch (Exception)
+        {
+            return Results.StatusCode(500);
+        }
+    }
+    else
+    {
+        return Results.BadRequest();
+    }
 }).WithName("AddNewMatch");
-{
 
-}
+app.MapPost("/hamsters", async ([FromBody] HamsterCreateDTO hamster, [FromServices] IHamsterRepository _rep) =>
+{
+    if (!string.IsNullOrWhiteSpace(hamster.Name) || !string.IsNullOrWhiteSpace(hamster.Loves) || !string.IsNullOrWhiteSpace(hamster.FavFood))
+    {
+        try
+        {
+            var result = await _rep.InsertHamsterAsync(hamster);
+            if (result.Id > 0) { return Results.Ok(result); }
+            return Results.BadRequest();
+        }
+        catch (Exception)
+        {
+            return Results.StatusCode(500);
+        }
+    }
+    else
+    {
+        return Results.BadRequest();
+    }
+}).WithName("AddNewHamsters").Produces(StatusCodes.Status400BadRequest)
+.Produces(StatusCodes.Status500InternalServerError)
+.Produces<int>(StatusCodes.Status200OK);//RequireHost("AddNewHamster");
+
+
+app.MapPost("/vote", async ([FromBody] VoteDTO vote, [FromServices] IVoteRepository _rep) =>
+{
+    if (vote.HamsterId > 0 || vote.MatchId > 0)
+    {
+        try
+        {
+            var result = await _rep.VoteOnMatch(vote);
+            if (result)
+                return Results.Ok();
+            else
+                return Results.NotFound();
+        }
+        catch (Exception)
+        {
+            return Results.StatusCode(500);
+        }
+    }
+    else
+    {
+        return Results.BadRequest();
+    }
+}).WithName("AddVote");
+
 app.UseCors(MyAllowSpecificOrigins);
 app.Run();

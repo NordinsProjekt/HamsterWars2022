@@ -22,9 +22,9 @@ namespace HamsterWars_DatabaseSQL
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
             
-            //.UseSqlServer(@"Server=DESKTOP-T2GL85N\SQLEXPRESS2019;Database=HamsterWars_MN_2022;Trusted_Connection=True;Encrypt=False");
-        //.UseSqlServer(@"Server=DESKTOP-MBPUR5V\SQLEXPRESS;Database=HamsterWars_MN_2022;Trusted_Connection=True;Encrypt=False");
-        .UseSqlServer(@"Server=LAPTOP-JG820AED\SQLEXPRESS;Database=HamsterWars_MN_2022;Trusted_Connection=True;Encrypt=False");
+        //.UseSqlServer(@"Server=DESKTOP-T2GL85N\SQLEXPRESS2019;Database=HamsterWars_MN_2022;Trusted_Connection=True;Encrypt=False");
+        .UseSqlServer(@"Server=DESKTOP-MBPUR5V\SQLEXPRESS;Database=HamsterWars_MN_2022;Trusted_Connection=True;Encrypt=False");
+        //.UseSqlServer(@"Server=LAPTOP-JG820AED\SQLEXPRESS;Database=HamsterWars_MN_2022;Trusted_Connection=True;Encrypt=False");
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Hamster>()
@@ -84,6 +84,7 @@ namespace HamsterWars_DatabaseSQL
                 new Hamster { Id = 17, Age = 3, FavFood = "Crackers", ImgName = "hamster-17.jpg",
                     Name = "Sheoldred, the Apocalypse", Games = 0, Losses = 0, Loves = "Tears of her enemies", Wins = 0 }
                 );
+
             modelBuilder.Entity<Match>().HasData(
                 new Match { Id = 1, StartDate = DateTime.Now, IsCompleted = false, EndDate = null },
                 new Match { Id = 2, StartDate = DateTime.Now, IsCompleted = true, EndDate = null },
@@ -102,6 +103,7 @@ namespace HamsterWars_DatabaseSQL
                 new Match { Id = 15, StartDate = DateTime.Now, IsCompleted = true, EndDate = null },
                 new Match { Id = 16, StartDate = DateTime.Now, IsCompleted = true, EndDate = null }
                 );
+
             modelBuilder.Entity<HamsterMatches>().HasData(
                 new HamsterMatches { HamsterId= 1, MatchId= 1,},
                 new HamsterMatches { HamsterId = 2, MatchId = 1 },

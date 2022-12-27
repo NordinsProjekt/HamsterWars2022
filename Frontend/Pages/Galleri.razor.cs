@@ -52,7 +52,7 @@ namespace Frontend.Pages
         }
         public async Task CreateHamsterObjekt(CreateHamsterDTO hamster)
         {
-            await JS.InvokeVoidAsync("postAPI", "https://localhost:7232/hamsters/", hamster);
+            await JS.InvokeVoidAsync("postAPI", "https://localhost:7101/hamsters", hamster);
             ShowInputField = false;
         }
     }

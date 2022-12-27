@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HamsterWars_Core\HamsterWars_Core.csproj" />
     <ProjectReference Include="..\HamsterWars_DatabaseSQL\HamsterWars_DatabaseSQL.csproj" />
   </ItemGroup>
 
