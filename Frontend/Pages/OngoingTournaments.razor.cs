@@ -45,7 +45,7 @@ namespace Frontend.Pages
         public async Task Vote(int[] arr)
         {
             VoteDTO v = new VoteDTO(arr[0], arr[1]);
-            await JS.InvokeVoidAsync("postAPI", "https://localhost:7232/vote/", v);
+            await JS.InvokeVoidAsync("postAPI", "https://localhost:7101/vote/", v);
             match = null;
             HasVoted = true;
         }

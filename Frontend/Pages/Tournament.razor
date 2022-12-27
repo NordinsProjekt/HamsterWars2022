@@ -22,5 +22,8 @@
     }
 
     public async Task GetTournamentIdAsync(int id)
-        => tournament = await JS.InvokeAsync<TournamentDTO>("getAPI", "https://localhost:7232/tournament/"+id);
+    {
+        await JS.InvokeVoidAsync("OnScrollEvent");
+        tournament = await JS.InvokeAsync<TournamentDTO>("getAPI", "https://localhost:7232/tournament/"+id);
+    }
 }

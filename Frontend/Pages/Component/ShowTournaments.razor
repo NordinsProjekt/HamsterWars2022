@@ -18,6 +18,7 @@
                     else
                     {
                         <b>Ongoing</b>
+                        <button @onclick="(() =>CheckTournament(t.Id))">Continue Tournament</button>
                     }
                 </h2>
                 @if (t.IsCompleted)
@@ -26,9 +27,10 @@
                     <b>@t.EndDate</b><br />
                     @*<b>Winner:</b> @t.Matches.OrderByDescending(x=>x.TId).First().Result.Winner.Name*@
                      </p>
+
                 }
             </div>
-            <button @onclick="(() =>CheckTournament(t.Id))">Continue Tournament</button>
+            
         </div>
     }
     </div>
@@ -43,7 +45,10 @@
     public EventCallback<int> onCheckTournament { get; set; }
 
     public async Task SendTournament(int id)
-        => await onShowTournament.InvokeAsync(id);
+    {
+        await onShowTournament.InvokeAsync(id);
+    }
+
     public async Task CheckTournament(int id)
         => await onCheckTournament.InvokeAsync(id);
 

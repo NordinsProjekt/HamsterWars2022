@@ -1,4 +1,5 @@
-﻿async function postAPI(url,args) {
+﻿
+async function postAPI(url, args) {
     let result;
 
     try {

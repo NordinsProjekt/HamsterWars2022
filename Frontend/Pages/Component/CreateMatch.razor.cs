@@ -90,7 +90,7 @@ namespace Frontend.Pages.Component
             if (infoV == null || infoH == null)
                 return;
             MatchCreateDTO m = new MatchCreateDTO(infoV.Id, infoH.Id, DateTime.Now, null);
-            var match = await JS.InvokeAsync<MatchDTO>("postAPI", "https://localhost:7232/matches/", m);
+            var match = await JS.InvokeAsync<MatchDTO>("postAPI", "https://localhost:7101/matches/", m);
             await onCreateCustomMatch.InvokeAsync(match.Id);
         }
     }
