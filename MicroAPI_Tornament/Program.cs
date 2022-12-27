@@ -3,6 +3,8 @@ using HamsterWars_DatabaseSQL;
 using HamsterWars_DatabaseSQL.DAL;
 using Microsoft.AspNetCore.Mvc;
 using HamsterWars_Core.DTO;
+using System.Web.Http.ModelBinding;
+using System.Web.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -60,6 +62,7 @@ app.MapPost("/CheckTournament/{id}", async (int id, [FromServices] ITournamentRe
     }
 
 }).WithName("CheckTournamentAndGenerateMatches");
+
 app.MapPost("/EndMatch/{id}", async (int id,[FromServices] IMatchRepository _rep) =>
 {
     try
@@ -109,5 +112,30 @@ app.MapPut("/hamster/{id}/Restore", async (int id, [FromServices] IHamsterReposi
         return Results.Problem("Internal Server Error", null, 500);
     }
 }).WithName("RestoreHamster");
+
+
+app.MapPost("/match", async ([FromBody] MatchCreateDTO value, [FromServices] IMatchRepository _rep) =>
+{
+    //Lägg till FluentValidation för detta.
+    //if (ModelState.)
+    //{
+    //    try
+    //    {
+    //        return Ok(await _matchRep.InsertMatch(value));
+    //    }
+    //    catch (ArgumentException ae)
+    //    {
+    //        return NotFound(ae.Message);
+    //    }
+    //    catch (Exception)
+    //    {
+    //        return StatusCode(500);
+    //    }
+    //}
+    //return BadRequest();
+}).WithName("AddNewMatch");
+{
+
+}
 app.UseCors(MyAllowSpecificOrigins);
 app.Run();
