@@ -4,6 +4,7 @@ using HamsterWars_DatabaseSQL.DAL;
 using Microsoft.AspNetCore.Mvc;
 using HamsterWars_Core.DTO;
 using HamsterWars_DatabaseSQL.Models;
+using System.Threading.Channels;
 
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -160,6 +161,22 @@ app.MapPost("/hamsters", async ([FromBody] HamsterCreateDTO hamster, [FromServic
 .Produces(StatusCodes.Status500InternalServerError)
 .Produces<int>(StatusCodes.Status200OK);//RequireHost("AddNewHamster");
 
+app.MapPut("/hamsters/{id}", async (int id, [FromBody] HamsterPatchDTO changes, [FromServices] IHamsterRepository _rep) =>
+{
+    try
+    {
+        if (await _rep.UpdateHamster(changes, id))
+            return Results.Ok();
+        return Results.NotFound();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex);
+        return Results.StatusCode(500);
+    }
+}).WithName("UpdateHamster").Produces(StatusCodes.Status404NotFound)
+.Produces(StatusCodes.Status500InternalServerError)
+.Produces<int>(StatusCodes.Status200OK);
 
 app.MapPost("/vote", async ([FromBody] VoteDTO vote, [FromServices] IVoteRepository _rep) =>
 {
