@@ -1,4 +1,6 @@
 ﻿using Frontend.DTO;
+using Newtonsoft.Json;
+
 namespace Frontend.Service
 {
     public class AdminService
@@ -14,8 +16,8 @@ namespace Frontend.Service
         public async Task<bool> VoteInBattle(int[] arr)
         {
             VoteDTO vote = new VoteDTO(arr[0], arr[1]);
-            await _httpClient.PostAsJsonAsync("vote", vote);
-            await _httpClient.PostAsJsonAsync("EndMatch", arr[0]);
+            var r2 = await _httpClient.PostAsJsonAsync("/vote", vote);
+            var r1 = await _httpClient.PostAsync("/EndMatch/"+arr[0],null);
             _httpClient.Dispose();
             //await JS.InvokeVoidAsync("postAPI", "https://localhost:7101/vote/", vote);
             //await JS.InvokeVoidAsync("postAPI", "https://localhost:7101/EndMatch/" + matchVote[0]);

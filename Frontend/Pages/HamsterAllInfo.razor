@@ -52,8 +52,9 @@ else
     }
     public async Task BetweenTheseDates(SelectedDatesDTO values)
     {
-        List<MatchDTO> list = await JS.InvokeAsync<List<MatchDTO>>
-            ("getAPI", "https://localhost:7232/matches/" + Hamster.Id + "/" + values.StartDate + "/" + values.EndDate);
+        List<MatchDTO> list = new();
+        list = await JS.InvokeAsync<List<MatchDTO>>
+        ("getAPI", "https://localhost:7232/matches/" + Hamster.Id + "/" + values.StartDate + "/" + values.EndDate);
         MatchesDone.Clear();
         foreach (var match in list)
         {
