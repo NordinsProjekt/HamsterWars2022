@@ -58,7 +58,7 @@ app.MapPost("/vote", async ([FromBody] VoteDTO vote, [FromServices] IVoteReposit
     {
         return Results.BadRequest();
     }
-}).WithName("AddVote 34e4231e23e23rf");
+}).WithName("AddVote");
 
 app.MapPost("/CreateTournament", async ([FromBody]CreateTournamentDTO ct , [FromServices] ITournamentRepository _rep) =>
 {

@@ -86,22 +86,22 @@ namespace HamsterWars_DatabaseSQL
                 );
 
             modelBuilder.Entity<Match>().HasData(
-                new Match { Id = 1, StartDate = DateTime.Now, IsCompleted = false, EndDate = null },
-                new Match { Id = 2, StartDate = DateTime.Now, IsCompleted = true, EndDate = null },
-                new Match { Id = 3, StartDate = DateTime.Now, IsCompleted = false, EndDate = null },
-                new Match { Id = 4, StartDate = DateTime.Now, IsCompleted = false, EndDate = null },
-                new Match { Id = 5, StartDate = DateTime.Now, IsCompleted = true, EndDate = null },
-                new Match { Id = 6, StartDate = DateTime.Now, IsCompleted = true, EndDate = null },
-                new Match { Id = 7, StartDate = DateTime.Now, IsCompleted = true, EndDate = null },
-                new Match { Id = 8, StartDate = DateTime.Now, IsCompleted = true, EndDate = null },
-                new Match { Id = 9, StartDate = DateTime.Now, IsCompleted = true, EndDate = null },
-                new Match { Id = 10, StartDate = DateTime.Now, IsCompleted = true, EndDate = null },
-                new Match { Id = 11, StartDate = DateTime.Now, IsCompleted = true, EndDate = null },
-                new Match { Id = 12, StartDate = DateTime.Now, IsCompleted = true, EndDate = null },
-                new Match { Id = 13, StartDate = DateTime.Now, IsCompleted = true, EndDate = null },
-                new Match { Id = 14, StartDate = DateTime.Now, IsCompleted = true, EndDate = null },
-                new Match { Id = 15, StartDate = DateTime.Now, IsCompleted = true, EndDate = null },
-                new Match { Id = 16, StartDate = DateTime.Now, IsCompleted = true, EndDate = null }
+                new Match { Id = 1, StartDate = DateTime.Now, IsCompleted = false, EndDate = DateTime.Now },
+                new Match { Id = 2, StartDate = DateTime.Now, IsCompleted = true, EndDate = DateTime.Now },
+                new Match { Id = 3, StartDate = DateTime.Now, IsCompleted = false, EndDate = DateTime.Now },
+                new Match { Id = 4, StartDate = DateTime.Now, IsCompleted = false, EndDate = DateTime.Now },
+                new Match { Id = 5, StartDate = DateTime.Now, IsCompleted = true, EndDate = DateTime.Now },
+                new Match { Id = 6, StartDate = DateTime.Now, IsCompleted = true, EndDate = DateTime.Now },
+                new Match { Id = 7, StartDate = DateTime.Now, IsCompleted = true, EndDate = DateTime.Now },
+                new Match { Id = 8, StartDate = DateTime.Now, IsCompleted = true, EndDate = DateTime.Now },
+                new Match { Id = 9, StartDate = DateTime.Now, IsCompleted = true, EndDate = DateTime.Now },
+                new Match { Id = 10, StartDate = DateTime.Now, IsCompleted = true, EndDate = DateTime.Now },
+                new Match { Id = 11, StartDate = DateTime.Now, IsCompleted = true, EndDate = DateTime.Now },
+                new Match { Id = 12, StartDate = DateTime.Now, IsCompleted = true, EndDate = DateTime.Now },
+                new Match { Id = 13, StartDate = DateTime.Now, IsCompleted = true, EndDate = DateTime.Now },
+                new Match { Id = 14, StartDate = DateTime.Now, IsCompleted = true, EndDate = DateTime.Now },
+                new Match { Id = 15, StartDate = DateTime.Now, IsCompleted = true, EndDate = DateTime.Now },
+                new Match { Id = 16, StartDate = DateTime.Now, IsCompleted = true, EndDate = DateTime.Now }
                 );
 
             modelBuilder.Entity<HamsterMatches>().HasData(
