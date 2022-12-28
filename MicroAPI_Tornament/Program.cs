@@ -4,7 +4,6 @@ using HamsterWars_DatabaseSQL.DAL;
 using Microsoft.AspNetCore.Mvc;
 using HamsterWars_Core.DTO;
 using System.Web.Mvc;
->>>>>>> Stashed changes
 
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -16,6 +15,7 @@ builder.Services.AddTransient<HamsterContext>();
 builder.Services.AddTransient<ITournamentRepository, TournamentRepository>();
 builder.Services.AddTransient<IHamsterRepository, HamsterRepository>();
 builder.Services.AddTransient<IMatchRepository, MatchRepository>();
+builder.Services.AddTransient<IVoteRepository, VoteRepository>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(MyAllowSpecificOrigins,
@@ -36,6 +36,29 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapPost("/vote", async ([FromBody] VoteDTO vote, [FromServices] IVoteRepository _rep) =>
+{
+    if (vote.HamsterId > 0 || vote.MatchId > 0)
+    {
+        try
+        {
+            var result = await _rep.VoteOnMatch(vote);
+            if (result)
+                return Results.Ok();
+            else
+                return Results.NotFound();
+        }
+        catch (Exception)
+        {
+            return Results.StatusCode(500);
+        }
+    }
+    else
+    {
+        return Results.BadRequest();
+    }
+}).WithName("AddVote 34e4231e23e23rf");
 
 app.MapPost("/CreateTournament", async ([FromBody]CreateTournamentDTO ct , [FromServices] ITournamentRepository _rep) =>
 {
@@ -178,28 +201,7 @@ app.MapPut("/hamsters/{id}", async (int id, [FromBody] HamsterPatchDTO changes, 
 .Produces(StatusCodes.Status500InternalServerError)
 .Produces<int>(StatusCodes.Status200OK);
 
-app.MapPost("/vote", async ([FromBody] VoteDTO vote, [FromServices] IVoteRepository _rep) =>
-{
-    if (vote.HamsterId > 0 || vote.MatchId > 0)
-    {
-        try
-        {
-            var result = await _rep.VoteOnMatch(vote);
-            if (result)
-                return Results.Ok();
-            else
-                return Results.NotFound();
-        }
-        catch (Exception)
-        {
-            return Results.StatusCode(500);
-        }
-    }
-    else
-    {
-        return Results.BadRequest();
-    }
-}).WithName("AddVote");
+
 
 app.UseCors(MyAllowSpecificOrigins);
 app.Run();

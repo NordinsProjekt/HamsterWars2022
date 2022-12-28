@@ -54,21 +54,8 @@ else
 
     public async Task Vote(int[] matchVote)
     {
-        await adminService.VoteInBattle(matchVote);
-        //VoteDTO vote = new VoteDTO(matchVote[0], matchVote[1]);
-        //await JS.InvokeVoidAsync("postAPI", "https://localhost:7101/vote/", vote);
-        //await JS.InvokeVoidAsync("postAPI", "https://localhost:7101/EndMatch/" + matchVote[0]);
-        score = await JS.InvokeAsync<MatchDTO>("getAPI", "https://localhost:7232/matches/" + matchVote[0]);
-        if (true)
-        {
-            battle = null;
-            HasVoted = true;
-        }
-        else
-        {
-            
-        }
-
+        if (await adminService.VoteInBattle(matchVote))
+            score = await JS.InvokeAsync<MatchDTO>("getAPI", "https://localhost:7232/matches/" + matchVote[0]);
     }
 
     public async Task DoBattle(int id)

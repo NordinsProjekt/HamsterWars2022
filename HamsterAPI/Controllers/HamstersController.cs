@@ -86,58 +86,6 @@ namespace HamsterAPI.Controllers
             }
         }
 
-        // POST api/<HamsterController>
-        //[HttpPost]
-        //[ProducesResponseType(200)]
-        //[ProducesResponseType(404)]
-        //[ProducesResponseType(500)]
-        //public async Task<IActionResult> Post([FromBody] HamsterCreateDTO hamster)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            var result = await _hamsterRep.InsertHamsterAsync(hamster);
-        //            if (result.Id > 0) { return Ok(result); }
-        //            return BadRequest();
-        //        }
-        //        catch (Exception)
-        //        {
-        //            return StatusCode(500);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return BadRequest();
-        //    }
-        //}
-
-
-
-        // PATCH api/<HamsterController>/5
-        //[HttpPatch("{id}")]
-        //[ProducesResponseType(200)]
-        //[ProducesResponseType(404)]
-        //[ProducesResponseType(500)]
-        //public async Task<IActionResult> Patch(int id, [FromBody] HamsterPatchDTO changes)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            if (await _hamsterRep.UpdateHamster(changes, id))
-        //                return Ok();
-        //            return NotFound();
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Console.WriteLine(ex);
-        //            return StatusCode(500);
-        //        }
-        //    }
-        //    return BadRequest();
-
-        //}
         [HttpGet("search/{name}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
