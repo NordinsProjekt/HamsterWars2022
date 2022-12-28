@@ -1,5 +1,6 @@
 ﻿@page "/battle"
 @using Frontend.Pages.Component
+@using Frontend.Service
 @using DTO
 @inject IJSRuntime JS
 @using System.Text.Json
@@ -33,6 +34,8 @@ else
 }
 
 @code {
+    [Inject]
+    AdminService adminService { get; set; }
     MatchDTO? battle;
     MatchDTO? score;
     public bool HasVoted { get; set; } = false;
@@ -51,12 +54,27 @@ else
 
     public async Task Vote(int[] matchVote)
     {
+<<<<<<< Updated upstream
         VoteDTO vote = new VoteDTO(matchVote[0], matchVote[1]);
         await JS.InvokeVoidAsync("postAPI", "https://localhost:7101/vote/", vote);
         await JS.InvokeVoidAsync("postAPI", "https://localhost:7101/EndMatch/" + matchVote[0]);
+=======
+        await adminService.VoteInBattle(matchVote);
+        //VoteDTO vote = new VoteDTO(matchVote[0], matchVote[1]);
+        //await JS.InvokeVoidAsync("postAPI", "https://localhost:7101/vote/", vote);
+        //await JS.InvokeVoidAsync("postAPI", "https://localhost:7101/EndMatch/" + matchVote[0]);
+>>>>>>> Stashed changes
         score = await JS.InvokeAsync<MatchDTO>("getAPI", "https://localhost:7232/matches/" + matchVote[0]);
-        battle = null;
-        HasVoted = true;
+        if (true)
+        {
+            battle = null;
+            HasVoted = true;
+        }
+        else
+        {
+            
+        }
+
     }
 
     public async Task DoBattle(int id)
