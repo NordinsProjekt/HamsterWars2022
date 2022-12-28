@@ -3,10 +3,6 @@ using HamsterWars_DatabaseSQL;
 using HamsterWars_DatabaseSQL.DAL;
 using Microsoft.AspNetCore.Mvc;
 using HamsterWars_Core.DTO;
-<<<<<<< Updated upstream
-using HamsterWars_DatabaseSQL.Models;
-using System.Threading.Channels;
-=======
 using System.Web.Mvc;
 >>>>>>> Stashed changes
 

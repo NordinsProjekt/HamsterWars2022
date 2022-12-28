@@ -54,16 +54,10 @@ else
 
     public async Task Vote(int[] matchVote)
     {
-<<<<<<< Updated upstream
-        VoteDTO vote = new VoteDTO(matchVote[0], matchVote[1]);
-        await JS.InvokeVoidAsync("postAPI", "https://localhost:7101/vote/", vote);
-        await JS.InvokeVoidAsync("postAPI", "https://localhost:7101/EndMatch/" + matchVote[0]);
-=======
         await adminService.VoteInBattle(matchVote);
         //VoteDTO vote = new VoteDTO(matchVote[0], matchVote[1]);
         //await JS.InvokeVoidAsync("postAPI", "https://localhost:7101/vote/", vote);
         //await JS.InvokeVoidAsync("postAPI", "https://localhost:7101/EndMatch/" + matchVote[0]);
->>>>>>> Stashed changes
         score = await JS.InvokeAsync<MatchDTO>("getAPI", "https://localhost:7232/matches/" + matchVote[0]);
         if (true)
         {
