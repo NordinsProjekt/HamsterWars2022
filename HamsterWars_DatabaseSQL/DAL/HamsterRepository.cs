@@ -92,7 +92,7 @@ namespace HamsterWars_DatabaseSQL.DAL
         }
 
         async Task<IEnumerable<HamsterMiniDTO>> IHamsterRepository.GetHamstersMinimal()
-            => await _context.Hamsters.ProjectToType<HamsterMiniDTO>().ToListAsync();
+            => await _context.Hamsters.Where(d=>d.IsDeleted == false).ProjectToType<HamsterMiniDTO>().ToListAsync();
 
         public async Task<IEnumerable<HamsterMiniDTO>> GetHamstersSearchName(string name)
             => await _context.Hamsters.Where(n=>n.Name.Contains(name)).ProjectToType<HamsterMiniDTO>().ToListAsync();

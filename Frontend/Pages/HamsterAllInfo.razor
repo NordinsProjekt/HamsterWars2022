@@ -3,28 +3,35 @@
 @using DTO
 @using Frontend.Pages.Component
 <h1>Hamster Info</h1>
-<HamsterInfo infoHamster="Hamster" Killed="KilledList" />
-<h2>Match result</h2>
-<GetMatches_WithDate ButtonName="Get Matches" onSelectedDateSpan="BetweenTheseDates" />
-@if (MatchesDone.Count > 0)
+@if (Hamster != null)
 {
-
-    <div class="d-flex flex-wrap" id="DefeatedWindow">
-        @foreach (var m in MatchesDone)
-        {
-            <div class="MatchCard">
-                <h3 class="WindowBar">Match @m.MatchId</h3>
-                @if(m.Winner.Id == @Hamster.Id){ <p><b>@m.Winner.Name (@m.WinnerScore)</b></p>} else { <p>@m.Winner.Name (@m.WinnerScore)</p>}
-                <hr />
-                @if(m.Looser.Id == @Hamster.Id){ <p><b>@m.Looser.Name (@m.LooserScore)</b></p>} else { <p>@m.Looser.Name (@m.LooserScore)</p>}
-            </div>
-        }
-    </div>
+    <HamsterInfo infoHamster="Hamster" Killed="KilledList" />
+    <h2>Match result</h2>
+    <GetMatches_WithDate ButtonName="Get Matches" onSelectedDateSpan="BetweenTheseDates" />
+    @if (MatchesDone != null)
+    {
+        <div class="d-flex flex-wrap" id="DefeatedWindow">
+            @foreach (var m in MatchesDone)
+            {
+                <div class="MatchCard">
+                    <h3 class="WindowBar">Match @m.MatchId</h3>
+                    @if(m.Winner.Id == @Hamster.Id){ <p><b>@m.Winner.Name (@m.WinnerScore)</b></p>} else { <p>@m.Winner.Name (@m.WinnerScore)</p>}
+                    <hr />
+                    @if(m.Looser.Id == @Hamster.Id){ <p><b>@m.Looser.Name (@m.LooserScore)</b></p>} else { <p>@m.Looser.Name (@m.LooserScore)</p>}
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>No matches found!!</p>
+    }
 }
 else
 {
-    <p>No matches found!!</p>
+    <p>Hamstern finns inte i databasen</p>
 }
+
 
 @code {
     [Parameter]

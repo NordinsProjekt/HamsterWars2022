@@ -2,6 +2,7 @@
 @inject IJSRuntime JS
 @inject NavigationManager nav
 <h1>CreateTournament</h1> <br />
+<h2>@Message</h2>
 <input type="text" @bind="Title" /><button class="btn btn-primary" @onclick="CreateCustomTour">Create Tournament</button>
 <ChooseHamsters onHamsterClicked="AddToBattleList" AllHamstersList="HamsterRoster" />
 <BattleRoster  BattleList="BattleList" onRemoveHamster="RemoveFromBattleList"/>
@@ -26,6 +27,7 @@
     {
         if (BattleList.Count == 4 || BattleList.Count == 8 || BattleList.Count == 16)
         {
+            Message = "";
             int[] arr = BattleList.Select(h => h.Id).ToArray();
             if (string.IsNullOrWhiteSpace(Title))
                 Title = "Generic Tournament";

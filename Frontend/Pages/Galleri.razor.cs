@@ -35,7 +35,7 @@ namespace Frontend.Pages
         {
             if (id == null || id <= 0)
                 return;
-            await JS.InvokeVoidAsync("delAPI", "https://localhost:7232/hamsters/" + id);
+            await JS.InvokeVoidAsync("delAPI", "https://localhost:7101/hamster/" + id);
             infoHamster = null;
             StateHasChanged();
         }

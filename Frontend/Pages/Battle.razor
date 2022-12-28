@@ -55,7 +55,13 @@ else
     public async Task Vote(int[] matchVote)
     {
         if (await adminService.VoteInBattle(matchVote))
+        {
             score = await JS.InvokeAsync<MatchDTO>("getAPI", "https://localhost:7232/matches/" + matchVote[0]);
+            HasVoted = true;
+            battle = null;
+        }
+        
+
     }
 
     public async Task DoBattle(int id)

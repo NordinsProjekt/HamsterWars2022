@@ -20,7 +20,7 @@ namespace Frontend.Service
             using (var httpClient = new HttpClient())
             {
                 httpClient.BaseAddress = new Uri(_api);
-                httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+                //httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
                 var r2 = await httpClient.PostAsJsonAsync("/vote", v);
                 var r1 = await httpClient.PostAsync("/EndMatch/" + arr[0], null);
                 if (r2.IsSuccessStatusCode && r1.IsSuccessStatusCode)
