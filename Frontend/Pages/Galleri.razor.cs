@@ -10,15 +10,15 @@ namespace Frontend.Pages
         public HamsterDTO? infoHamster { get; set; }
         public List<HamsterMiniDTO> hamsterKilled { get; set; } = new List<HamsterMiniDTO>();
         public bool ShowInputField { get; set; } = false;
-        //protected override async Task OnInitializedAsync()
-        //{
-        //    galleryList = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/hamsters");
-        //    StateHasChanged();
-        //}
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            galleryList = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/hamsters");
-            StateHasChanged();
+            if (firstRender)
+            {
+                galleryList = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/hamsters");
+                StateHasChanged();
+            }
+
         }
 
         public async Task ShowMore(int id)

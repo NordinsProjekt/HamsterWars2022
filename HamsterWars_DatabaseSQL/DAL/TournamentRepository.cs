@@ -69,7 +69,8 @@ namespace HamsterWars_DatabaseSQL.DAL
 
         public async Task<bool> CheckTournamentMatches(int tourId)
         {
-            Tournament? t = await _context.Tournaments.Include(m=>m.Matches).ThenInclude(mr=>mr.Result).ThenInclude(w=>w.Winner).FirstOrDefaultAsync(x=>x.Id == tourId);
+            Tournament? t = await _context.Tournaments.Include(m=>m.Matches).ThenInclude(mr=>mr.Result).ThenInclude(w=>w.Winner)
+                .FirstOrDefaultAsync(x=>x.Id == tourId);
             if (t == null) return false;
             if (t.IsCompleted) return false;
 
