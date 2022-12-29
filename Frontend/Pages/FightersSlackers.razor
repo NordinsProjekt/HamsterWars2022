@@ -1,0 +1,32 @@
+﻿@page "/FightersSlackers"
+@using Frontend.Pages.Component
+@using Frontend.DTO
+@inject IJSRuntime JS
+
+
+<h3>FightersSlackers</h3>
+    @if (Fighters.Count != 0)
+    {
+        <div>
+            <h2>Top 5 ATH</h2>
+            @foreach (var hamster in Fighters)
+            {
+                <HamsterInfo infoHamster="hamster" />
+            }
+        </div>
+    }
+    
+    @if (Slackers.Count != 0)
+    {
+        <div>
+            <h2>Worst 5 ATH</h2>
+            @foreach (var hamster in Slackers)
+            {
+                <HamsterInfo infoHamster="hamster" />
+            }
+        </div>
+    }
+@code {
+    public List<HamsterDTO> Fighters = new List<HamsterDTO>();
+    public List<HamsterDTO> Slackers = new List<HamsterDTO>();
+}

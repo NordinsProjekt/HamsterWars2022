@@ -1,7 +1,15 @@
 ﻿@using DTO
 <div>
-    <label for="StartDateInput">Start date:</label><input type="date" id="StartDateInput" @bind="StartDate" /><br />
-    <label for="EndDateInput">End date:</label><input type="date" id="EndDateInput" @bind="EndDate" /><br />
+    <div class="d-flex flex-row">
+    <div class="d-flex flex-column">
+        <label for="StartDateInput">Start date:</label>
+        <label for="EndDateInput">End date:</label>
+    </div>
+        <div class="d-flex flex-column">
+        <input type="date" id="StartDateInput" @bind="StartDate" />
+        <input type="date" id="EndDateInput" @bind="EndDate" />
+    </div>
+</div>
     <button @onclick="SendDateDTO">@ButtonName</button>
 </div>
 
