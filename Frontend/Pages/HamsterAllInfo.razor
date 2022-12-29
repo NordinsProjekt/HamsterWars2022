@@ -60,9 +60,10 @@ else
     public async Task BetweenTheseDates(SelectedDatesDTO values)
     {
         List<MatchDTO> list = new();
-        list = await JS.InvokeAsync<List<MatchDTO>>
-        ("getAPI", "https://localhost:7232/matches/" + Hamster.Id + "/" + values.StartDate + "/" + values.EndDate);
+        list = await JS.InvokeAsync<List<MatchDTO>>("getAPI", "https://localhost:7232/matches/" + Hamster.Id + "/" + values.StartDate.ToString().Replace("/", "-") + "/" + values.EndDate.ToString().Replace("/", "-"));
         MatchesDone.Clear();
+        if (list == null)
+            return;
         foreach (var match in list)
         {
             MatchResultDTO mr = new(match.Id, match.Result.Winner, match.Result.WinnerScore, match.Result.Looser, match.Result.LooserScore);

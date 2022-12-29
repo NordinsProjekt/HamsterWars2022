@@ -23,8 +23,8 @@ namespace HamsterWars_DatabaseSQL
             => optionsBuilder
             
         //.UseSqlServer(@"Server=DESKTOP-T2GL85N\SQLEXPRESS2019;Database=HamsterWars_MN_2022;Trusted_Connection=True;Encrypt=False");
-        .UseSqlServer(@"Server=DESKTOP-MBPUR5V\SQLEXPRESS;Database=HamsterWars_MN_2022;Trusted_Connection=True;Encrypt=False");
-        //.UseSqlServer(@"Server=LAPTOP-JG820AED\SQLEXPRESS;Database=HamsterWars_MN_2022;Trusted_Connection=True;Encrypt=False");
+        //.UseSqlServer(@"Server=DESKTOP-MBPUR5V\SQLEXPRESS;Database=HamsterWars_MN_2022;Trusted_Connection=True;Encrypt=False");
+        .UseSqlServer(@"Server=LAPTOP-JG820AED\SQLEXPRESS;Database=HamsterWars_MN_2022;Trusted_Connection=True;Encrypt=False");
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Hamster>()
@@ -50,25 +50,25 @@ namespace HamsterWars_DatabaseSQL
             //Seed
             modelBuilder.Entity<Hamster>().HasData(
                 new Hamster { Id = 1, Age = 2, FavFood = "Carrot", ImgName = "hamster-1.jpg",
-                    Name = "Destroyer of Worlds", Games = 1, Losses = 0, Loves = "Killing babies", Wins = 1 },
+                    Name = "Destroyer of Worlds", Games = 3, Losses = 1, Loves = "Killing babies", Wins = 2 },
                 new Hamster { Id = 2, Age = 1, FavFood = "Cucumber", ImgName = "hamster-2.jpg",
-                    Name = "Savior of Worlds", Games = 3, Losses = 0, Loves = "Helping elderly", Wins = 3 },
+                    Name = "Savior of Worlds", Games = 5, Losses = 2, Loves = "Helping elderly", Wins = 3 },
                 new Hamster { Id = 3, Age = 0, FavFood = "Apple", ImgName = "hamster-3.jpg",
-                    Name = "Protector of the Wastelands", Games = 3, Losses = 2, Loves = "Confronting Evil", Wins = 1 },
+                    Name = "Protector of the Wastelands", Games = 5, Losses = 2, Loves = "Confronting Evil", Wins = 3 },
                 new Hamster { Id = 4, Age = 4, FavFood = "Pepper", ImgName = "hamster-4.jpg",
-                    Name = "Grand Hamster", Games = 3, Losses = 1, Loves = "Sleeping", Wins = 2 },
+                    Name = "Grand Hamster", Games = 5, Losses = 1, Loves = "Sleeping", Wins = 4 },
                 new Hamster { Id = 5, Age = 2, FavFood = "Banana", ImgName = "hamster-5.jpg",
-                    Name = "Yellow Devil", Games = 3, Losses = 2, Loves = "Yellow things", Wins = 1 },
+                    Name = "Yellow Devil", Games = 4, Losses = 2, Loves = "Yellow things", Wins = 2 },
                 new Hamster { Id = 6, Age = 1, FavFood = "Snickers", ImgName = "hamster-6.jpg",
                     Name = "Wingman", Games = 1, Losses = 1, Loves = "Helping others", Wins = 0 },
                 new Hamster { Id = 7, Age = 1, FavFood = "Sugar", ImgName = "hamster-7.jpg",
-                    Name = "Rincewind", Games = 2, Losses = 1, Loves = "Reading books", Wins = 1 },
+                    Name = "Rincewind", Games = 4, Losses = 3, Loves = "Reading books", Wins = 1 },
                 new Hamster { Id = 8, Age = 7, FavFood = "Candy", ImgName = "hamster-8.jpg",
-                    Name = "Red dwarf", Games = 1, Losses = 0, Loves = "Small things", Wins = 1 },
+                    Name = "Red dwarf", Games = 2, Losses = 1, Loves = "Small things", Wins = 1 },
                 new Hamster { Id = 9, Age = 4, FavFood = "Ice cream", ImgName = "hamster-9.jpg",
-                    Name = "Snowden", Games = 1, Losses = 1, Loves = "IoT", Wins = 0 },
+                    Name = "Snowden", Games = 2, Losses = 2, Loves = "IoT", Wins = 0 },
                 new Hamster { Id = 10, Age = 3, FavFood = "Ice cream", ImgName = "hamster-10.jpg",
-                    Name = "Ice Queen", Games = 1, Losses = 1, Loves = "Snowmen", Wins = 0 },
+                    Name = "Ice Queen", Games = 2, Losses = 1, Loves = "Snowmen", Wins = 1 },
                 new Hamster { Id = 11, Age = 2, FavFood = "Spinach", ImgName = "hamster-11.jpg",
                     Name = "Glissa the Traitor", Games = 0, Losses = 0, Loves = "Atrefacts", Wins = 0 },
                 new Hamster { Id = 12, Age = 1, FavFood = "Grass", ImgName = "hamster-12.jpg",
@@ -117,9 +117,9 @@ namespace HamsterWars_DatabaseSQL
                 new HamsterMatches { HamsterId = 9, MatchId = 5, },
                 new HamsterMatches { HamsterId = 10, MatchId = 6, },
                 new HamsterMatches { HamsterId = 2, MatchId = 6, },
+
                 new HamsterMatches { HamsterId = 8, MatchId = 7, },
                 new HamsterMatches { HamsterId = 3, MatchId = 7, },
-
                 new HamsterMatches { HamsterId = 2, MatchId = 8, },
                 new HamsterMatches { HamsterId = 4, MatchId = 8, },
                 new HamsterMatches { HamsterId = 4, MatchId = 9, },
@@ -140,20 +140,6 @@ namespace HamsterWars_DatabaseSQL
                 new HamsterMatches { HamsterId = 5, MatchId = 16, }
 
                 );
-            modelBuilder.Entity<Vote>().HasData(
-                new Vote { Id = 1, MatchId = 1, HamsterId = 2 },
-                new Vote { Id = 2, MatchId = 2, HamsterId = 4 },
-                new Vote { Id = 3, MatchId = 2, HamsterId = 7 },
-                new Vote { Id = 4, MatchId = 2, HamsterId = 7 },
-                new Vote { Id = 5, MatchId = 2, HamsterId = 7 },
-                new Vote { Id = 6, MatchId = 2, HamsterId = 7 },
-                new Vote { Id = 7, MatchId = 2, HamsterId = 4 },
-                new Vote { Id = 8, MatchId = 2, HamsterId = 4 },
-                new Vote { Id = 9, MatchId = 2, HamsterId = 7 },
-                new Vote { Id = 10, MatchId = 5, HamsterId = 4 },
-                new Vote { Id = 11, MatchId = 6, HamsterId = 10 }, 
-                new Vote { Id = 12, MatchId = 7, HamsterId = 8 }
-                );
 
             modelBuilder.Entity<MatchResult>().HasData(
                 new MatchResult { Id = 1, MatchId = 8, WinnerId = 2, LooserId = 4, WinnerScore = 5, LooserScore = 2 },
@@ -164,7 +150,14 @@ namespace HamsterWars_DatabaseSQL
                 new MatchResult { Id = 6, MatchId = 13, WinnerId = 5, LooserId = 7, WinnerScore = 2, LooserScore = 0 },
                 new MatchResult { Id = 7, MatchId = 14, WinnerId = 7, LooserId = 9, WinnerScore = 5, LooserScore = 4 },
                 new MatchResult { Id = 8, MatchId = 15, WinnerId = 2, LooserId = 3, WinnerScore = 12, LooserScore = 8 },
-                new MatchResult { Id = 9, MatchId = 16, WinnerId = 4, LooserId = 5, WinnerScore = 12, LooserScore = 7 }
+                new MatchResult { Id = 9, MatchId = 16, WinnerId = 4, LooserId = 5, WinnerScore = 12, LooserScore = 7 },
+                new MatchResult { Id = 10, MatchId = 7, WinnerId = 3, LooserId = 8, WinnerScore = 12, LooserScore = 7 },
+                new MatchResult { Id = 11, MatchId = 6, WinnerId = 10, LooserId = 2, WinnerScore = 7, LooserScore = 3 },
+                new MatchResult { Id = 12, MatchId = 5, WinnerId = 4, LooserId = 9, WinnerScore = 3, LooserScore = 1 },
+                new MatchResult { Id = 13, MatchId = 4, WinnerId = 5, LooserId = 8, WinnerScore = 3, LooserScore = 1 },
+                new MatchResult { Id = 14, MatchId = 3, WinnerId = 3, LooserId = 1, WinnerScore = 11, LooserScore = 9 },
+                new MatchResult { Id = 15, MatchId = 2, WinnerId = 4, LooserId = 7, WinnerScore = 6, LooserScore = 5 },
+                new MatchResult { Id = 16, MatchId = 1, WinnerId = 1, LooserId = 2, WinnerScore = 6, LooserScore = 1 }
                 );
         }
     }
