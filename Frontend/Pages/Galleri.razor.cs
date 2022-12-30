@@ -18,15 +18,17 @@ namespace Frontend.Pages
                 galleryList = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/hamsters");
                 StateHasChanged();
             }
-
         }
 
         public async Task ShowMore(int id)
         {
             hamsterKilled.Clear();
             var h = await JS.InvokeAsync<HamsterDTO>("getAPI", "https://localhost:7232/hamsters/" + id);
-            if (h != null) { infoHamster = h; }
-            hamsterKilled = await JS.InvokeAsync<List<HamsterMiniDTO>>("getAPI", "https://localhost:7232/Defeated/" + infoHamster.Id);
+            if (h != null) 
+            { 
+                infoHamster = h;
+                hamsterKilled = await JS.InvokeAsync<List<HamsterMiniDTO>>("getAPI", "https://localhost:7232/Defeated/" + infoHamster.Id);
+            }
             await JS.InvokeVoidAsync("OnScrollEvent");
             StateHasChanged();
         }
@@ -37,12 +39,14 @@ namespace Frontend.Pages
                 return;
             await JS.InvokeVoidAsync("delAPI", "https://localhost:7101/hamster/" + id);
             infoHamster = null;
+            galleryList = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/hamsters");
             StateHasChanged();
         }
         public void ShowCreateHamster()
         {
             ShowInputField = true;
             infoHamster = null;
+            StateHasChanged();
         }
 
         public void CloseCreateHamster()

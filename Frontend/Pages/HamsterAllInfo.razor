@@ -49,12 +49,12 @@ else
                 Hamster = await JS.InvokeAsync<HamsterDTO>("getAPI","https://localhost:7232/hamsters/" + x);
                 MatchesDone = await JS.InvokeAsync<List<MatchResultSlimDTO>>("getAPI", "https://localhost:7232/score/all/" + x);
                 KilledList = await JS.InvokeAsync<List<HamsterMiniDTO>>("getAPI", "https://localhost:7232/Defeated/" + x);
+                StateHasChanged();
             }
             else
             {
                 return;
             }
-            StateHasChanged();
         }
     }
     public async Task BetweenTheseDates(SelectedDatesDTO values)

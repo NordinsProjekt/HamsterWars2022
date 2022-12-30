@@ -12,7 +12,9 @@
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
+        {
             searchResult = await JS.InvokeAsync<List<HamsterMiniDTO>>("getAPI", "https://localhost:7232/Hamsters/search/" + Name);
-        StateHasChanged();
+            StateHasChanged();
+        }
     }
 }

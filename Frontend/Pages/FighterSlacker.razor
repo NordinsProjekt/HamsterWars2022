@@ -1,27 +1,25 @@
 ﻿@page "/fs"
 @using Frontend.Pages.Component
 @using Frontend.DTO
-@using Microsoft.JSInterop;
 @inject IJSRuntime JS
 
-
-<h3>FightersSlackers</h3>
+<h3>Fighters VS Slackers</h3>
 <div class="d-flex flex-row">
     @if (Fighters.Count != 0)
     {
         <div>
-            <h2>Top 5 ATH</h2>
+            <h2>Top Fighters</h2>
             @foreach (var hamster in Fighters)
             {
                 <HamsterInfo infoHamster="hamster" />
             }
         </div>
     }
-    
+
     @if (Slackers.Count != 0)
     {
         <div>
-            <h2>Worst 5 ATH</h2>
+            <h2>Top Slackers</h2>
             @foreach (var hamster in Slackers)
             {
                 <HamsterInfo infoHamster="hamster" />

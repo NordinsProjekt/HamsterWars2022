@@ -4,7 +4,7 @@
 @inject IJSRuntime JS
 <h1>Statistics</h1>
 <div class="d-flex align-content-stretch flex-wrap flex-row">
-    @if (top5List.Count != 0)
+    @if (Stats == "top5" && top5List.Count != 0)
     {
         <div>
             <h2>Top 5 ATH</h2>
@@ -15,7 +15,7 @@
         </div>
     }
     
-    @if (low5List.Count != 0)
+    @if (Stats == "low5" && low5List.Count != 0)
     {
         <div>
             <h2>Worst 5 ATH</h2>
@@ -27,7 +27,7 @@
     }
 </div>
 
-    @if (latest10.Count != 0)
+@if (Stats == "latest10" && latest10.Count != 0)
     {
         <h2>Latest 10 Match Results</h2>
         <div class="d-flex align-content-stretch flex-wrap flex-row" >
@@ -57,28 +57,13 @@
 
     protected override async Task OnInitializedAsync()
     {
-
+        top5List = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/Winners");
+        low5List = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/Losers");
+        latest10 = await JS.InvokeAsync<List<MatchFullDTO>>("getAPI", "https://localhost:7232/matches/Latest10Matches");
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
-        {
-            switch (Stats.ToLower())
-            {
-                case "top5":
-                    top5List = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/Winners");
-                    break;
-                case "low5":
-                    low5List = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/Losers");
-                    break;
-                case "latest10":
-                    latest10 = await JS.InvokeAsync<List<MatchFullDTO>>("getAPI", "https://localhost:7232/matches/Latest10Matches");
-                    break;
-                default:
-                    break;
-            }
-            StateHasChanged();
-        }
+        
     }
 }

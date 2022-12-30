@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\FightersSlackers.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Hub\" />
   </ItemGroup>
@@ -149,18 +145,6 @@
     <Content Update="wwwroot\img\misc\ThxVoting.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\FightersSlackers.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Pages\FightersSlackers.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Pages\FightersSlackers.razor" />
   </ItemGroup>
 
 </Project>
