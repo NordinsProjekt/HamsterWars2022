@@ -62,23 +62,23 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        top5List.Clear();
-        low5List.Clear();
-        latest10.Clear();
-        switch (Stats.ToLower())
+        if (firstRender)
         {
-            case "top5":
-                top5List = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/Winners");
-                break;
-            case "low5":
-                low5List = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/Losers");
-                break;
-            case "latest10":
-                latest10 = await JS.InvokeAsync<List<MatchFullDTO>>("getAPI", "https://localhost:7232/matches/Latest10Matches");
-                break;
-            default:
-                break;
+            switch (Stats.ToLower())
+            {
+                case "top5":
+                    top5List = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/Winners");
+                    break;
+                case "low5":
+                    low5List = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/Losers");
+                    break;
+                case "latest10":
+                    latest10 = await JS.InvokeAsync<List<MatchFullDTO>>("getAPI", "https://localhost:7232/matches/Latest10Matches");
+                    break;
+                default:
+                    break;
+            }
+            StateHasChanged();
         }
-        StateHasChanged();
     }
 }

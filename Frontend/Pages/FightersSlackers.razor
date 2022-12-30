@@ -1,10 +1,12 @@
-﻿@page "/FightersSlackers"
+﻿@page "/fs"
 @using Frontend.Pages.Component
 @using Frontend.DTO
+@using Microsoft.JSInterop;
 @inject IJSRuntime JS
 
 
 <h3>FightersSlackers</h3>
+<div class="d-flex flex-row">
     @if (Fighters.Count != 0)
     {
         <div>
@@ -26,7 +28,18 @@
             }
         </div>
     }
+</div>
 @code {
     public List<HamsterDTO> Fighters = new List<HamsterDTO>();
     public List<HamsterDTO> Slackers = new List<HamsterDTO>();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            Fighters = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/ManyMatches");
+            Slackers = await JS.InvokeAsync<List<HamsterDTO>>("getAPI", "https://localhost:7232/FewMatches");
+            StateHasChanged();
+        }
+    }
 }

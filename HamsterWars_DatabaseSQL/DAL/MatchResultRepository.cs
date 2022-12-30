@@ -74,11 +74,11 @@ namespace HamsterWars_DatabaseSQL.DAL
             return card;
         }
 
-        public async Task<int[]> GetLowestGamesTop5()
-            => await _context.Hamsters.OrderBy(x => x.Games).Select(y=>y.Id).Take(5).ToArrayAsync();
+        public async Task<IEnumerable<HamsterDTO>> GetLowestGamesTop5()
+            => MappingFunctions.MapHamsterToHamsterDTOList(await _context.Hamsters.OrderBy(x => x.Games).Take(5).ToListAsync());
 
-        public async Task<int[]> GetHighestGamesTop5()
-            => await _context.Hamsters.OrderByDescending(x => x.Games).Select(y => y.Id).Take(5).ToArrayAsync();
+        public async Task<IEnumerable<HamsterDTO>> GetHighestGamesTop5()
+            => MappingFunctions.MapHamsterToHamsterDTOList(await _context.Hamsters.OrderByDescending(x => x.Games).Take(5).ToListAsync());
 
         public async Task<IEnumerable<MatchResultSlimDTO>> GetAllMatchResultForHamster(int id)
         {
